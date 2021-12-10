@@ -4,12 +4,30 @@ import java.io.Serializable;
 import java.sql.Date;
 
 public class User implements Serializable {
+    private int ID;
     private String name;
     private String surname;
     private String login;
     private String password;
     private String passport;
     private Date birthdate;
+
+    public User(int ID, String name, String surname, String login, String password, String passport) {
+        this.name = name;
+        this.surname = surname;
+        this.login = login;
+        this.password = password;
+        this.passport = passport;
+        //this.birthdate = birthdate;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
 
     public String getName() {
         return name;

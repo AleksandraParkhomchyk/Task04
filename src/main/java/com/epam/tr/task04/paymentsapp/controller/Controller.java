@@ -1,6 +1,7 @@
 package com.epam.tr.task04.paymentsapp.controller;
 
 import com.epam.tr.task04.paymentsapp.controller.impl.CommandProvider;
+import org.apache.log4j.Logger;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -8,6 +9,7 @@ import java.io.IOException;
 
 public class Controller extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    private static final Logger Log = Logger.getLogger(Controller.class);
 
     private final CommandProvider provider = new CommandProvider();
 

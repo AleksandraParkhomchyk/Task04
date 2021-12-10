@@ -8,16 +8,11 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
 
-// Class.forName("com.mysql.cj.jdbc.Driver");
-//"jdbc:mysql://localhost:3306/payments?useSSL=false", "root", "Fisowy_3"
-
 public final class ConnectionPool {
 
-    private static final ConnectionPool instance = new ConnectionPool();
+    //private static final ConnectionPool instance = new ConnectionPool();
+    private static ConnectionPool instance;
 
-    public static ConnectionPool getInstance() {
-        return instance;
-    }
 
     private BlockingQueue<Connection> connectionQueue;
     private BlockingQueue<Connection> givenAwayConQueue;
@@ -48,6 +43,14 @@ public final class ConnectionPool {
         }
     }
 
+    public static ConnectionPool getInstance() throws ConnectionPoolException {
+        instance = new ConnectionPool();
+        /*if (instance == null) {
+            instance.initPoolData();
+        }*/
+        return instance;
+    }
+
     public void initPoolData() throws ConnectionPoolException {
         Locale.setDefault(Locale.ENGLISH);
 
@@ -71,6 +74,18 @@ public final class ConnectionPool {
 
     public void dispose() {
         clearConnectionQueue();
+
+    }
+
+    public Connection takeConnection() throws ConnectionPoolException {
+        Connection connection = null;
+        try {
+            connection = connectionQueue.take();
+            givenAwayConQueue.add(connection);
+        } catch (InterruptedException e) {
+            throw new ConnectionPoolException("Error connecting data source", e);
+        }
+        return connection;
     }
 
     private void clearConnectionQueue() {
@@ -82,16 +97,6 @@ public final class ConnectionPool {
         }
     }
 
-    public Connection takeConnection() throws ConnectionPoolException {
-        Connection connection = null;
-        try {
-            connection = connectionQueue.take();
-            givenAwayConQueue.add(connection);
-        } catch (InterruptedException e) {
-
-        }
-        return connection;
-    }
 
     public void closeConnection(Connection con, Statement st, ResultSet rs) {
         try {
