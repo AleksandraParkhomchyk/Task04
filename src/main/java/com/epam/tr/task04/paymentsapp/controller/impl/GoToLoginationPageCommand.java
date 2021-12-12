@@ -11,8 +11,6 @@ import java.io.IOException;
 public class GoToLoginationPageCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        System.out.println("logg");
-        response.getWriter().print("lalalala");
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/logination.jsp");
         dispatcher.forward(request, response);

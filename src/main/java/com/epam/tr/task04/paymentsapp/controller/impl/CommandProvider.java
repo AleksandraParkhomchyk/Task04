@@ -9,11 +9,12 @@ public final class CommandProvider {
     private final Map<String, Command> commands = new HashMap<String, Command>();
 
     public CommandProvider() {
-        commands.put("Logination", new LoginationCommand());
-        commands.put("Registration", new RegistrationCommand());
+        commands.put("LOGINATION", new LoginationCommand());
+        commands.put("REGISTRATION", new RegistrationCommand());
 
         commands.put("GO_TO_REGISTRATION_PAGE", new GoToRegistrationPageCommand());
         commands.put("GO_TO_LOGINATION_PAGE", new GoToLoginationPageCommand());
+        commands.put("GO_TO_INDEX_PAGE", new GoToIndexPageCommand());
     }
 
     public final Command getCommand(String commandName) {

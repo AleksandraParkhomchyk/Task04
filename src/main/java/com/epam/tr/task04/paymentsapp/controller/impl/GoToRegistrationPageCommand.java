@@ -12,13 +12,6 @@ import java.io.IOException;
 public class GoToRegistrationPageCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        System.out.println("reeeeg");
-        response.getWriter().print("lalalala");
-
-        Greeting gr = new Greeting("HALLO, Hallo");
-        request.setAttribute("myobj", gr);
-
-        request.getAttribute("myobj");
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/registration.jsp");
         dispatcher.forward(request, response);

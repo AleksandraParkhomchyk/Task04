@@ -14,7 +14,7 @@ import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
 
-    private final String creatingUser = "INSERT INTO users(u_id, u_name, u_surname, u_login, u_password, u_passport, u_birth_date, roles_r_id, u_registration_date) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private final String creatingUser = "INSERT INTO users(u_name, u_surname, u_login, u_password, u_passport, u_birth_date, roles_r_id, u_registration_date) VALUES( ?, ?, ?, ?, ?, ?, ?, ?)";
     private final String selectAllUsers = "SELECT * FROM users";
 
     @Override
@@ -26,15 +26,14 @@ public class UserDAOImpl implements UserDAO {
             connection = ConnectionPool.getInstance().takeConnection();
             preparedStatement = connection.prepareStatement(creatingUser);
 
-            preparedStatement.setInt(1, 3);
-            preparedStatement.setString(2, user.getName());
-            preparedStatement.setString(3, user.getSurname());
-            preparedStatement.setString(4, user.getLogin());
-            preparedStatement.setString(5, user.getPassword());
-            preparedStatement.setString(6, user.getPassport());
-            preparedStatement.setDate(7, user.getBirthdate());
-            preparedStatement.setInt(8, 1);
-            preparedStatement.setDate(9, Date.valueOf("1980-04-09"));
+            preparedStatement.setString(1, user.getName());
+            preparedStatement.setString(2, user.getSurname());
+            preparedStatement.setString(3, user.getLogin());
+            preparedStatement.setString(4, user.getPassword());
+            preparedStatement.setString(5, user.getPassport());
+            preparedStatement.setDate(6, user.getBirthdate());
+            preparedStatement.setInt(7, 1);
+            preparedStatement.setDate(8, Date.valueOf("1980-04-09"));
 
             preparedStatement.executeUpdate();
 

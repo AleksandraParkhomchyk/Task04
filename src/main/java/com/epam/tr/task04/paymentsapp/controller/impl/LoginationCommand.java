@@ -6,15 +6,14 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 public class LoginationCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        System.out.println("Logination");
         String name;
         String surname;
 
@@ -22,9 +21,15 @@ public class LoginationCommand implements Command {
         surname = request.getParameter("password");
 
         boolean flag = true; //stub
+        String username = "Alex";
+
+        HttpSession session = request.getSession(true);
+        session.setAttribute("username", username);
+        session.setAttribute("role", "user");
+
 
         if(flag) {
-            request.setAttribute("userName", "Anna");
+            request.setAttribute("userName", "Alex");
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/mainPage.jsp");
             dispatcher.forward(request, response);
         }
