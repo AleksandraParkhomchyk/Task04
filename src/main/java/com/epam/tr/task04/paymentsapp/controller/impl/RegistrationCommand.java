@@ -13,16 +13,23 @@ public class RegistrationCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        System.out.println("Registration");
         String name;
         String surname;
+        String login;
+        String password;
+        String passport;
+        //Date birthdate;
 
         name = request.getParameter("name");
         surname = request.getParameter("surname");
+        login = request.getParameter("login");
+        password = request.getParameter("password");
+        passport = request.getParameter("passport");
+        //birthdate = request.getParameter("birthdate");
 
         boolean flag = true; //stub
 
-        if(flag) {
+        if (flag) {
             request.setAttribute("registrationInfo", "All ok");
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/mainPage.jsp");
             dispatcher.forward(request, response);

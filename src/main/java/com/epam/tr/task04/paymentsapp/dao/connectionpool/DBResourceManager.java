@@ -6,15 +6,16 @@ import java.util.ResourceBundle;
 public class DBResourceManager {
     private final static DBResourceManager instance = new DBResourceManager();
 
-     private ResourceBundle bundle = ResourceBundle.getBundle("config", Locale.ENGLISH);
+    private ResourceBundle bundle = ResourceBundle.getBundle("db", Locale.ENGLISH);
 
-     private DBResourceManager () {}
+    private DBResourceManager() {
+    }
 
     public static DBResourceManager getInstance() {
         return instance;
     }
 
-    public String getValue(String key){
+    public String getValue(String key) {
         return bundle.getString(key);
     }
 }

@@ -9,10 +9,12 @@ import java.util.List;
 
 public interface UserDAO {
 
-    public void saveUser(User user) throws DAOException;
+    String authorisation(String login, String password);
 
-    public List<User> findAllUsers() throws DAOException, ConnectionPoolException, SQLException;
+    void saveUser(User user) throws DAOException;
 
-    public User findById(int id) throws DAOException;
+    List<User> findAllUsers() throws DAOException, ConnectionPoolException, SQLException;
+
+    User findById(int id) throws DAOException;
 
 }

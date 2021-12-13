@@ -15,7 +15,7 @@
 <form action="Controller" method="get">
     <input type="hidden" name="command" value="LOGINATION">
     Login:
-    <input type="text" name="Login" value=""/>
+    <input type="text" name="login" value=""/>
     <br/>
     Password:
     <input type="password" name="password" value=""/>

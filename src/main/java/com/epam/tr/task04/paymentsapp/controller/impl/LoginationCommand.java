@@ -1,6 +1,8 @@
 package com.epam.tr.task04.paymentsapp.controller.impl;
 
 import com.epam.tr.task04.paymentsapp.controller.Command;
+import com.epam.tr.task04.paymentsapp.services.UserService;
+import com.epam.tr.task04.paymentsapp.services.ServiceFactory;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,24 +16,26 @@ public class LoginationCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String name;
-        String surname;
+        String login;
+        String password;
 
-        name = request.getParameter("name");
-        surname = request.getParameter("password");
+        login = request.getParameter("login");
+        password = request.getParameter("password");
 
-        boolean flag = true; //stub
-        String username = "Alex";
+        ServiceFactory serviceFactory = ServiceFactory.getInstance();
+        UserService userService = serviceFactory.getUserService();
+        String role = userService.authorisation(login, password);
 
         HttpSession session = request.getSession(true);
-        session.setAttribute("username", username);
-        session.setAttribute("role", "user");
 
 
-        if(flag) {
+        if (!"".equals(role)) {
+            session.setAttribute("role", role);
             request.setAttribute("userName", "Alex");
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/mainPage.jsp");
             dispatcher.forward(request, response);
+        } else {
+            //error
         }
 
     }

@@ -10,9 +10,7 @@ import java.util.concurrent.Executor;
 
 public final class ConnectionPool {
 
-    //private static final ConnectionPool instance = new ConnectionPool();
     private static ConnectionPool instance;
-
 
     private BlockingQueue<Connection> connectionQueue;
     private BlockingQueue<Connection> givenAwayConQueue;
@@ -35,23 +33,15 @@ public final class ConnectionPool {
         } catch (NumberFormatException e) {
             poolSize = 5;
         }
-
-        try {
-            initPoolData();
-        } catch (ConnectionPoolException e) {
-            throw new RuntimeException("Can't be initialized", e);
-        }
     }
 
     public static ConnectionPool getInstance() throws ConnectionPoolException {
         instance = new ConnectionPool();
-        /*if (instance == null) {
-            instance.initPoolData();
-        }*/
+        instance.initPoolData();
         return instance;
     }
 
-    public void initPoolData() throws ConnectionPoolException {
+    private void initPoolData() throws ConnectionPoolException {
         Locale.setDefault(Locale.ENGLISH);
 
         try {

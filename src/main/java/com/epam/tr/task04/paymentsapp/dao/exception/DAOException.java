@@ -1,6 +1,7 @@
 package com.epam.tr.task04.paymentsapp.dao.exception;
 
 public class DAOException extends Exception {
+    private static final long serialVersionUID = 1L;
 
     public DAOException() {
         super();

@@ -17,6 +17,7 @@ public class UserDAOImpl implements UserDAO {
     private final String creatingUser = "INSERT INTO users(u_name, u_surname, u_login, u_password, u_passport, u_birth_date, roles_r_id, u_registration_date) VALUES( ?, ?, ?, ?, ?, ?, ?, ?)";
     private final String selectAllUsers = "SELECT * FROM users";
 
+
     @Override
     public void saveUser(User user) throws DAOException {
         PreparedStatement preparedStatement = null;
@@ -38,23 +39,23 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DAOException(e);
         } catch (ConnectionPoolException e) {
-            e.printStackTrace();
+            throw new DAOException(e);
         } finally {
             try {
                 if (preparedStatement != null) {
                     preparedStatement.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw new DAOException(e);
             }
             try {
                 if (connection != null) {
                     connection.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw new DAOException(e);
             }
         }
         System.out.println("все ок");
@@ -111,5 +112,13 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User findById(int id) {
         return null;
+    }
+
+
+    @Override
+    public String authorisation(String login, String password) {
+
+
+        return "admin";
     }
 }

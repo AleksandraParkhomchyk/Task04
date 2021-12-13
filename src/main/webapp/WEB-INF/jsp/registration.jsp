@@ -22,6 +22,18 @@
     Surname:
     <input type="text" name="surname" value=""/>
     <br/>
+    Login:
+    <input type="text" name="login" value=""/>
+    <br/>
+    Password:
+    <input type="text" name="password" value=""/>
+    <br/>
+    Passport number:
+    <input type="text" name="passport" value=""/>
+    <br/>
+    Date of Birth:
+    <input type="date" name="birthdate" value=""/>
+    <br/>
     <input type="submit" value="Press Me"/>
 </form>
 <br/>

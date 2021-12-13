@@ -1,6 +1,6 @@
-package com.epam.tr.task04.paymentsapp.services.impl;
+package com.epam.tr.task04.paymentsapp.services;
 
-import com.epam.tr.task04.paymentsapp.services.UserService;
+import com.epam.tr.task04.paymentsapp.services.impl.UserServiceImpl;
 
 public final class ServiceFactory {
 
