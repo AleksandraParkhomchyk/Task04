@@ -1,6 +1,4 @@
-package com.epam.tr.task04.paymentsapp.controller.impl;
-
-import com.epam.tr.task04.paymentsapp.controller.Command;
+package com.epam.tr.task04.paymentsapp.controller;
 
 import java.util.HashMap;
 import java.util.Map;

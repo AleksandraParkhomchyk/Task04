@@ -1,4 +1,4 @@
-package com.epam.tr.task04.paymentsapp.controller.impl;
+package com.epam.tr.task04.paymentsapp.controller;
 
 import com.epam.tr.task04.paymentsapp.controller.Command;
 

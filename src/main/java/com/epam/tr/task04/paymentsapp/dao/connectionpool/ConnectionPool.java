@@ -35,9 +35,16 @@ public final class ConnectionPool {
         }
     }
 
-    public static ConnectionPool getInstance() throws ConnectionPoolException {
-        instance = new ConnectionPool();
-        instance.initPoolData();
+    public static ConnectionPool getInstance() {
+        if (instance == null) {
+            instance = new ConnectionPool();
+
+            try {
+                instance.initPoolData();
+            } catch (ConnectionPoolException e) {
+                e.printStackTrace();
+            }
+        }
         return instance;
     }
 
