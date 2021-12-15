@@ -1,12 +1,14 @@
 package com.epam.tr.task04.paymentsapp.controller;
 
-import com.epam.tr.task04.paymentsapp.controller.Command;
+import com.epam.tr.task04.paymentsapp.services.ServiceFactory;
+import com.epam.tr.task04.paymentsapp.services.UserService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
 
 public class RegistrationCommand implements Command {
 
@@ -18,16 +20,19 @@ public class RegistrationCommand implements Command {
         String login;
         String password;
         String passport;
-        //Date birthdate;
 
         name = request.getParameter("name");
         surname = request.getParameter("surname");
         login = request.getParameter("login");
         password = request.getParameter("password");
         passport = request.getParameter("passport");
-        //birthdate = request.getParameter("birthdate");
 
-        boolean flag = true; //stub
+        boolean flag;
+
+        ServiceFactory serviceFactory = ServiceFactory.getInstance();
+        UserService userService = serviceFactory.getUserService();
+        flag = userService.registration(name, surname, login, password, passport);
+
 
         if (flag) {
             request.setAttribute("registrationInfo", "All ok");

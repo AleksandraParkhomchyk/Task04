@@ -2,7 +2,13 @@ package com.epam.tr.task04.paymentsapp.services.impl;
 
 import com.epam.tr.task04.paymentsapp.dao.DAOFactory;
 import com.epam.tr.task04.paymentsapp.dao.UserDAO;
+import com.epam.tr.task04.paymentsapp.dao.exception.DAOException;
+import com.epam.tr.task04.paymentsapp.entity.User;
 import com.epam.tr.task04.paymentsapp.services.UserService;
+
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class UserServiceImpl implements UserService {
     @Override
@@ -21,8 +27,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean registration(String name, String surname) {
+    public boolean registration(String name, String surname, String login, String password, String passport){
 
-        return false;
+        DAOFactory factory = DAOFactory.getInstance();
+        UserDAO userDAO = factory.getUserDAO();
+
+        User newUser = new User();
+        newUser.setName(name);
+        newUser.setSurname(surname);
+        newUser.setLogin(login);
+        newUser.setPassword(password);
+        newUser.setPassport(passport);
+
+
+        try {
+            userDAO.saveUser(newUser);
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
+
+        return true;
     }
 }

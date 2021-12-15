@@ -1,6 +1,5 @@
 package com.epam.tr.task04.paymentsapp.controller;
 
-import com.epam.tr.task04.paymentsapp.controller.Command;
 import com.epam.tr.task04.paymentsapp.services.UserService;
 import com.epam.tr.task04.paymentsapp.services.ServiceFactory;
 

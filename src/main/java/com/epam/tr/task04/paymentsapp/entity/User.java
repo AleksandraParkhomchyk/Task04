@@ -1,7 +1,6 @@
 package com.epam.tr.task04.paymentsapp.entity;
 
 import java.io.Serializable;
-import java.sql.Date;
 
 public class User implements Serializable {
 
@@ -10,15 +9,17 @@ public class User implements Serializable {
     private String login;
     private String password;
     private String passport;
-    private Date birthdate;
 
-    public User(String name, String surname, String login, String password, String passport, Date birthdate) {
+    public User(String name, String surname, String login, String password, String passport) {
         this.name = name;
         this.surname = surname;
         this.login = login;
         this.password = password;
         this.passport = passport;
-        this.birthdate = birthdate;
+           }
+
+    public User() {
+
     }
 
     public String getName() {
@@ -61,13 +62,6 @@ public class User implements Serializable {
         this.passport = passport;
     }
 
-    public Date getBirthdate() {
-        return birthdate;
-    }
-
-    public void setBirthdate(Date birthdate) {
-        this.birthdate = birthdate;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -81,9 +75,7 @@ public class User implements Serializable {
         if (getLogin() != null ? !getLogin().equals(user.getLogin()) : user.getLogin() != null) return false;
         if (getPassword() != null ? !getPassword().equals(user.getPassword()) : user.getPassword() != null)
             return false;
-        if (getPassport() != null ? !getPassport().equals(user.getPassport()) : user.getPassport() != null)
-            return false;
-        return getBirthdate() != null ? getBirthdate().equals(user.getBirthdate()) : user.getBirthdate() == null;
+        return getPassport() != null ? getPassport().equals(user.getPassport()) : user.getPassport() == null;
     }
 
     @Override
@@ -93,7 +85,6 @@ public class User implements Serializable {
         result = 31 * result + (getLogin() != null ? getLogin().hashCode() : 0);
         result = 31 * result + (getPassword() != null ? getPassword().hashCode() : 0);
         result = 31 * result + (getPassport() != null ? getPassport().hashCode() : 0);
-        result = 31 * result + (getBirthdate() != null ? getBirthdate().hashCode() : 0);
         return result;
     }
 }

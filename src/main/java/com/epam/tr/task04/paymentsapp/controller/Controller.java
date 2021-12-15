@@ -29,7 +29,7 @@ public class Controller extends HttpServlet {
         process(request, response);
     }
 
-    private void process(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    private void process(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
 
         String commandName = request.getParameter("command");
 

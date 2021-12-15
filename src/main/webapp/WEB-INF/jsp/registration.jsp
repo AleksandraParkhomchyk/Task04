@@ -14,7 +14,7 @@
 <body>
 
 <h2>Registration</h2>
-<form action="Controller" method="post">
+<form action="controller" method="post">
     <input type="hidden" name="command" value="REGISTRATION">
     Name:
     <input type="text" name="name" value=""/>
@@ -31,23 +31,11 @@
     Passport number:
     <input type="text" name="passport" value=""/>
     <br/>
-    Date of Birth:
-    <input type="date" name="birthdate" value=""/>
-    <br/>
     <input type="submit" value="Press Me"/>
 </form>
 <br/>
 <a href="index.jsp">Back</a>
 
-<%
-    String errorMessage = (String) request.getAttribute("errorMessage");
-    if (errorMessage != null) {
-%>
-<h2>
-    <%
-            out.println(errorMessage);
-        }
-    %>
 </h2>
 </body>
 </html>
