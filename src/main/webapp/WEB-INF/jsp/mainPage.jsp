@@ -12,7 +12,7 @@
     <title>Workspace</title>
 </head>
 <body>
-<h1>Welcome to your workspace</h1>
+<h1>You are logged in successfully</h1>
 
 <%--<c:set var="message" scope="page" value="${2*2000}" />
 <c:out value="${message}" />--%>

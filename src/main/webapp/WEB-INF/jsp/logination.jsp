@@ -1,28 +1,36 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: A-PC
-  Date: 06.12.2021
-  Time: 20:16
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Login</title>
+    <title>Login Page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-<h2>Login</h2>
-<form action="Controller" method="get">
-    <input type="hidden" name="command" value="LOGINATION">
-    Login:
-    <input type="text" name="login" value=""/>
-    <br/>
-    Password:
-    <input type="password" name="password" value=""/>
-    <br/>
-    <input type="submit" value="Press Me"/>
-</form>
-<br/>
-<a href="index.jsp">Back</a>
+<div class="container">
+    <h2>Login</h2>
+    <div class="card">
+        <div class="card-body">
+            <form action="${pageContext.request.contextPath}/controller" method="post">
+                <input type="hidden" name="command" value="LOGINATION">
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Login</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" name="login"
+                               placeholder="Enter login">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Password</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" name="password"
+                               placeholder="Enter password">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            <br/>
+            <a href="index.jsp">Back</a>
+        </div>
+    </div>
+</div>
 </body>
 </html>
