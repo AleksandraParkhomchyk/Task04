@@ -5,6 +5,7 @@
 <head>
 
     <title>Payment Service</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <style type="text/css">
         h1 {
             color: slategray;
@@ -12,28 +13,18 @@
             font-family: Georgia, serif;
             font-size: 60px;
         }
-        .button {
-            background-color: slategray;
-            border: none;
-            color: white;
-            padding: 20px 34px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 20px;
-            margin: 4px 2px;
-            cursor: pointer;
-        }
-     </style>
+    </style>
 </head>
 <body>
 <h1>Welcome to payment service</h1>
 
-<br/>
-<a href="controller?command=GO_TO_LOGINATION_PAGE" class="button">Login</a>
+<%--<a href="controller?command=GO_TO_LOGINATION_PAGE" class="button">Login</a>
 <br/>
 <a href="controller?command=GO_TO_REGISTRATION_PAGE" class="button">Register</a>
-<br/>
+<br/>--%>
+
+<a href="controller?command=GO_TO_LOGINATION_PAGE" class="btn btn-primary btn-lg btn-block">Login</a>
+<a href="controller?command=GO_TO_REGISTRATION_PAGE" class="btn btn-secondary btn-lg btn-block">Register</a>
 
 </body>
 </html>

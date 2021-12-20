@@ -21,9 +21,11 @@ public class LoginationCommand implements Command {
         login = request.getParameter("login");
         password = request.getParameter("password");
 
+        String role;
+
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         UserService userService = serviceFactory.getUserService();
-        String role = userService.authorisation(login, password);
+        role = userService.authorisation(login, password);
 
         HttpSession session = request.getSession(true);
 

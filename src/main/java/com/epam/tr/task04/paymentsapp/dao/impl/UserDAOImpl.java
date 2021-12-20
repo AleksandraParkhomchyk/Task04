@@ -8,6 +8,7 @@ import com.epam.tr.task04.paymentsapp.entity.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class UserDAOImpl implements UserDAO {
 
     private final String creatingUser = "INSERT INTO users(u_name, u_surname, u_login, u_password, u_passport, roles_r_id) VALUES( ?, ?, ?, ?, ?, ?)";
     private final String selectAllUsers = "SELECT * FROM users";
+    private final String getLoginPasswordRole = "SELECT u_login, u_password, roles_r_id  FROM users";
 
 
     @Override
@@ -115,7 +117,33 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public String authorisation(String login, String password) {
 
+        String role = null;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
-        return "admin";
+        try {
+            connection = ConnectionPool.getInstance().takeConnection();
+            preparedStatement = connection.prepareStatement(getLoginPasswordRole);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String loginSQL = resultSet.getString(1);
+                if ((login.equals(resultSet.getString(1))) && (password.equals(resultSet.getString(2))) && ("1").equals(resultSet.getString(3))) {
+                    role = "user";
+                } else if ((login.equals(resultSet.getString(1))) && (password.equals(resultSet.getString(2))) && ("2").equals(resultSet.getString(3))) {
+                    role = "admin";
+                } else {
+                    role = "not a user";
+                }
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            e.printStackTrace();
+        }
+        return role;
     }
 }
+
+
+
+

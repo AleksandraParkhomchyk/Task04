@@ -1,8 +1,5 @@
 package com.epam.tr.task04.paymentsapp.controller;
 
-import com.epam.tr.task04.paymentsapp.controller.Command;
-import com.epam.tr.task04.paymentsapp.entity.Greeting;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
