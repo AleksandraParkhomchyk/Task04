@@ -1,6 +1,5 @@
 package com.epam.tr.task04.paymentsapp.services;
 
-import java.text.ParseException;
 
 public interface UserService {
 

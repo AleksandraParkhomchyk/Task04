@@ -9,22 +9,22 @@ import com.epam.tr.task04.paymentsapp.services.UserService;
 
 public class UserServiceImpl implements UserService {
     @Override
-    public String authorisation(String login, String password) {
+    public String authorisation(String login, String password){
         //1. validation
 
         DAOFactory factory = DAOFactory.getInstance();
         UserDAO userDAO = factory.getUserDAO();
 
+
         String role;
-
         role = userDAO.authorisation(login, password);
-
 
         return role;
     }
 
+
     @Override
-    public boolean registration(String name, String surname, String login, String password, String passport){
+    public boolean registration(String name, String surname, String login, String password, String passport) {
 
         DAOFactory factory = DAOFactory.getInstance();
         UserDAO userDAO = factory.getUserDAO();

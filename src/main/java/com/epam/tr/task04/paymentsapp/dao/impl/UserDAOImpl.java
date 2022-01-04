@@ -10,12 +10,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
 
     private final String creatingUser = "INSERT INTO users(u_name, u_surname, u_login, u_password, u_passport, roles_r_id) VALUES( ?, ?, ?, ?, ?, ?)";
-    private final String selectAllUsers = "SELECT * FROM users";
     private final String getLoginPasswordRole = "SELECT u_login, u_password, roles_r_id  FROM users";
 
 
@@ -57,60 +55,7 @@ public class UserDAOImpl implements UserDAO {
                 throw new DAOException(e);
             }
         }
-        System.out.println("все ок");
-    }
 
-    @Override
-    public List<User> findAllUsers() throws DAOException, ConnectionPoolException, SQLException {
-
-        /*List<User> allUsersList = new ArrayList<User>();
-        Connection connection = ConnectionPool.getInstance().takeConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(selectAllUsers);
-        ResultSet resultSet = preparedStatement.executeQuery();
-
-        try {
-            User user = new User();
-            while (resultSet.next()) {
-                user.setLogin(resultSet.getString(3));
-                user.setName(resultSet.getString(5));
-
-                System.out.println(resultSet.getString(3));
-
-                allUsersList.add(user);
-
-            }
-        } catch (SQLException e) {
-            throw new DAOException();
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-            } catch (SQLException e) {
-                throw new DAOException();
-            }
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } catch (SQLException e) {
-                throw new DAOException();
-            }
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                throw new DAOException();
-            }
-        }*/
-
-        return null;
-    }
-
-    @Override
-    public User findById(int id) {
-        return null;
     }
 
 
@@ -128,19 +73,39 @@ public class UserDAOImpl implements UserDAO {
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                String loginSQL = resultSet.getString(1);
+
                 if ((login.equals(resultSet.getString(1))) && (password.equals(resultSet.getString(2))) && ("1").equals(resultSet.getString(3))) {
                     role = "user";
+                    System.out.println("authorisation is OK");
+                    break;
                 } else if ((login.equals(resultSet.getString(1))) && (password.equals(resultSet.getString(2))) && ("2").equals(resultSet.getString(3))) {
                     role = "admin";
+                    break;
                 } else {
-                    role = "not a user";
+                  // todo:  throw new Exception() 400 Bad Request
                 }
             }
         } catch (SQLException | ConnectionPoolException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+
         return role;
+
     }
 }
 

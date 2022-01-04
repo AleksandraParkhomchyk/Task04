@@ -1,4 +1,4 @@
-package com.epam.tr.task04.paymentsapp.controller;
+package com.epam.tr.task04.paymentsapp.controller.command_impl;
 
 import com.epam.tr.task04.paymentsapp.controller.Command;
 
@@ -8,11 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class GoToLoginationPageCommand implements Command {
+public class GoToRegistrationPageCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/logination.jsp");
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/registration.jsp");
         dispatcher.forward(request, response);
     }
 }
