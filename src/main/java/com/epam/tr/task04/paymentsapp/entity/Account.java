@@ -18,6 +18,11 @@ public class Account implements Serializable {
     public Account(Integer id) {
         this.id = id;
     }
+
+    public Account() {
+
+    }
+
     public Integer getId() {
         return id;
     }

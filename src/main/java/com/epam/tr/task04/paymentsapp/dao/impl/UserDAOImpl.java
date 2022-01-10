@@ -35,9 +35,7 @@ public class UserDAOImpl implements UserDAO {
 
             preparedStatement.executeUpdate();
 
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        } catch (ConnectionPoolException e) {
+        } catch (SQLException | ConnectionPoolException e) {
             throw new DAOException(e);
         } finally {
             try {

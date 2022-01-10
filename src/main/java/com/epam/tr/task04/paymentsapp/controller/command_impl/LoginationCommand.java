@@ -33,11 +33,11 @@ public class LoginationCommand implements Command {
 
         if ("user".equals(role)) {
             session.setAttribute("role", role);
-           // request.setAttribute("userName", "Alex");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/mainPage.jsp");
+            session.setAttribute("login", login);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/userPage.jsp");
             dispatcher.forward(request, response);
             System.out.println("Зашел юзер");
-        } else if ("admin".equals(role)){
+        } else if ("admin".equals(role)) {
             session.setAttribute("role", role);
             //request.setAttribute("userName", "Alex");
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/adminPage.jsp");

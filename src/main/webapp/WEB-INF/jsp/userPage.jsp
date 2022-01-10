@@ -19,8 +19,11 @@
 <body>
 <div class="card">
     <div class="card-body">
-        <h4 class="card-title">Create an account</h4>
-        <a href="#!" class="btn btn-primary">Go somewhere</a>
+        <form action="${pageContext.request.contextPath}/controller" method="post">
+            <input type="hidden" name="command" value="CREATE ACCOUNT">
+            <h4 class="card-title">Create an account</h4>
+            <button type="submit" class="btn btn-primary">Start</button>
+        </form>
     </div>
 </div>
 <div class="card">
@@ -32,12 +35,6 @@
 <div class="card">
     <div class="card-body">
         <h4 class="card-title">Make a payment</h4>
-        <a href="#!" class="btn btn-primary">Go somewhere</a>
-    </div>
-</div>
-<div class="card">
-    <div class="card-body">
-        <h4 class="card-title">Request a payment</h4>
         <a href="#!" class="btn btn-primary">Go somewhere</a>
     </div>
 </div>

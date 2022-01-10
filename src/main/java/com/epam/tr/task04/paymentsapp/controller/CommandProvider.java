@@ -16,6 +16,8 @@ public final class CommandProvider {
         commands.put("GO_TO_LOGINATION_PAGE", new GoToLoginationPageCommand());
         commands.put("GO_TO_INDEX_PAGE", new GoToIndexPageCommand());
         commands.put("CHANGE_LANGUAGE", new ChangeLanguage());
+
+        commands.put("CREATE ACCOUNT", new CreateAccountCommand());
     }
 
     public final Command getCommand(String commandName) {
