@@ -6,15 +6,12 @@ import com.epam.tr.task04.paymentsapp.dao.connectionpool.ConnectionPoolException
 import com.epam.tr.task04.paymentsapp.dao.exception.DAOException;
 import com.epam.tr.task04.paymentsapp.entity.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class UserDAOImpl implements UserDAO {
 
     private final String creatingUser = "INSERT INTO users(u_name, u_surname, u_login, u_password, u_passport, roles_r_id) VALUES( ?, ?, ?, ?, ?, ?)";
-    private final String getLoginPasswordRole = "SELECT u_login, u_password, roles_r_id  FROM users";
+    private final String getLoginPasswordRole = "SELECT u_id, u_login, u_password, roles_r_id  FROM users";
 
 
     @Override
@@ -56,56 +53,59 @@ public class UserDAOImpl implements UserDAO {
 
     }
 
-
     @Override
-    public String authorisation(String login, String password) {
-
-        String role = null;
+    public User authorisation(String login, String password) throws DAOException {
+        User user = new User();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
+        ResultSet resultSet;
 
         try {
             connection = ConnectionPool.getInstance().takeConnection();
             preparedStatement = connection.prepareStatement(getLoginPasswordRole);
             resultSet = preparedStatement.executeQuery();
 
-            while (resultSet.next()) {
 
-                if ((login.equals(resultSet.getString(1))) && (password.equals(resultSet.getString(2))) && ("1").equals(resultSet.getString(3))) {
-                    role = "user";
-                    System.out.println("authorisation is OK");
-                    break;
-                } else if ((login.equals(resultSet.getString(1))) && (password.equals(resultSet.getString(2))) && ("2").equals(resultSet.getString(3))) {
-                    role = "admin";
-                    break;
-                } else {
-                  // todo:  throw new Exception() 400 Bad Request
+            while (resultSet.next()) {
+                try {
+
+                    if ((login.equals(resultSet.getString(2))) && (password.equals(resultSet.getString(3)))) {
+                        System.out.println("authorisation is OK");
+                        user.setId(resultSet.getInt(1));
+                        user.setLogin(resultSet.getString(2));
+                        user.setRole(resultSet.getInt(4));
+
+                    }
+
+                } catch (Exception exception) {
+                    throw new DAOException();
                 }
             }
+
         } catch (SQLException | ConnectionPoolException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         } finally {
             try {
                 if (preparedStatement != null) {
                     preparedStatement.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw new DAOException(e);
             }
             try {
                 if (connection != null) {
                     connection.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw new DAOException(e);
             }
-        }
-
-        return role;
-
+        } return user;
     }
 }
+
+
+
+
 
 
 

@@ -1,9 +1,10 @@
 package com.epam.tr.task04.paymentsapp.controller.command_impl;
 
 import com.epam.tr.task04.paymentsapp.controller.Command;
+import com.epam.tr.task04.paymentsapp.entity.User;
 import com.epam.tr.task04.paymentsapp.services.AccountService;
 import com.epam.tr.task04.paymentsapp.services.ServiceFactory;
-import com.epam.tr.task04.paymentsapp.services.UserService;
+import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,10 +19,21 @@ public class CreateAccountCommand implements Command {
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         AccountService accountService = serviceFactory.getAccountService();
 
+        User user = new User();
+        HttpSession session = request.getSession();
 
-        boolean result = accountService.createAccount();
+        Integer role = (Integer) session.getAttribute("role");
+        Integer id = (Integer) session.getAttribute("id");
 
-       // HttpSession session = request.getSession(true);
+        user.setRole(role);
+        user.setId(id);
+
+        boolean result = false;
+        try {
+            result = accountService.createAccount(user);
+        } catch (ServiceException e) {
+            e.printStackTrace();// todo: smth with exception
+        }
 
         if (!result) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/userPage.jsp");

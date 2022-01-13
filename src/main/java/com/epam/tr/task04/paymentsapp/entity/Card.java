@@ -4,11 +4,16 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Card implements Serializable {
+    private Integer id;
     private String cardNumber;
     private String cardType;
     private Date issueDate;
     private Date validThruDate;
     private boolean status;
+
+    public Integer getId() { return id; }
+
+    public void setId(Integer id) { this.id = id; }
 
     public String getCardNumber() {
         return cardNumber;

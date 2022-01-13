@@ -1,8 +1,10 @@
 package com.epam.tr.task04.paymentsapp.controller.command_impl;
 
 import com.epam.tr.task04.paymentsapp.controller.Command;
+import com.epam.tr.task04.paymentsapp.entity.User;
 import com.epam.tr.task04.paymentsapp.services.UserService;
 import com.epam.tr.task04.paymentsapp.services.ServiceFactory;
+import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -22,35 +24,31 @@ public class LoginationCommand implements Command {
         login = request.getParameter("login");
         password = request.getParameter("password");
 
-        String role;
-
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         UserService userService = serviceFactory.getUserService();
-        role = userService.authorisation(login, password);
-
         HttpSession session = request.getSession(true);
 
-
-        if ("user".equals(role)) {
-            session.setAttribute("role", role);
-            session.setAttribute("login", login);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/userPage.jsp");
+        try {
+            User user = userService.authorisation(login, password);
+            Integer role = user.getRole();
+            Integer id = user.getId();
+            if (role == 1) {
+                session.setAttribute("id", id);
+                session.setAttribute("role", role);
+                session.setAttribute("login", login);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/userPage.jsp");
+                dispatcher.forward(request, response);
+                System.out.println("Зашел юзер");
+            } else if (role == 2) {
+                session.setAttribute("role", role);
+                //request.setAttribute("userName", "Alex");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/adminPage.jsp");
+                dispatcher.forward(request, response);
+                System.out.println("Зашел админ");
+            }
+        } catch (ServiceException | NullPointerException e) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/errorPage.jsp");
             dispatcher.forward(request, response);
-            System.out.println("Зашел юзер");
-        } else if ("admin".equals(role)) {
-            session.setAttribute("role", role);
-            //request.setAttribute("userName", "Alex");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/adminPage.jsp");
-            dispatcher.forward(request, response);
-            System.out.println("Зашел админ");
-        } else {
-            session.setAttribute("role", role);
-            //request.setAttribute("userName", "Alex");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/loginErrorPage.jsp");
-            dispatcher.forward(request, response);
-            System.out.println("Не зашел");
-
-
         }
 
     }

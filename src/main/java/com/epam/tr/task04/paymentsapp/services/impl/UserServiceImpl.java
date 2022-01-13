@@ -5,21 +5,24 @@ import com.epam.tr.task04.paymentsapp.dao.UserDAO;
 import com.epam.tr.task04.paymentsapp.dao.exception.DAOException;
 import com.epam.tr.task04.paymentsapp.entity.User;
 import com.epam.tr.task04.paymentsapp.services.UserService;
+import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;
 
 
 public class UserServiceImpl implements UserService {
     @Override
-    public String authorisation(String login, String password){
+    public User authorisation(String login, String password) throws ServiceException {
         //1. validation
 
         DAOFactory factory = DAOFactory.getInstance();
         UserDAO userDAO = factory.getUserDAO();
 
+        try {
 
-        String role;
-        role = userDAO.authorisation(login, password);
-
-        return role;
+            User user = userDAO.authorisation(login, password);
+            return user;
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
 

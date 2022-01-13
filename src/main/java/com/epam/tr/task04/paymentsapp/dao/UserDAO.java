@@ -5,8 +5,8 @@ import com.epam.tr.task04.paymentsapp.entity.User;
 
 public interface UserDAO {
 
-    String authorisation(String login, String password);
-
     void saveUser(User user) throws DAOException;
+
+    User authorisation(String login, String password) throws DAOException;
 
 }

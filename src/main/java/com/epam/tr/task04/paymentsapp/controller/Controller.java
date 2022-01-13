@@ -4,6 +4,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.IOException;
 
+import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;
 import org.apache.log4j.Logger;
 
 public class Controller extends HttpServlet {
@@ -35,7 +36,11 @@ public class Controller extends HttpServlet {
 
         Command command = provider.getCommand(commandName);
 
-        command.execute(request, response);
+        try {
+            command.execute(request, response);
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
     }
 
 }

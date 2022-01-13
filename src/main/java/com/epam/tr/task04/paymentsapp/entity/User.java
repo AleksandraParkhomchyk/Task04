@@ -4,11 +4,13 @@ import java.io.Serializable;
 
 public class User implements Serializable {
 
+    private Integer id;
     private String name;
     private String surname;
     private String login;
     private String password;
     private String passport;
+    private Integer role;
 
     public User(String name, String surname, String login, String password, String passport) {
         this.name = name;
@@ -16,11 +18,15 @@ public class User implements Serializable {
         this.login = login;
         this.password = password;
         this.passport = passport;
-           }
+    }
 
     public User() {
 
     }
+
+    public Integer getId() { return id; }
+
+    public void setId(Integer id) { this.id = id; }
 
     public String getName() {
         return name;
@@ -62,29 +68,7 @@ public class User implements Serializable {
         this.passport = passport;
     }
 
+    public Integer getRole() { return role; }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
-
-        User user = (User) o;
-
-        if (getName() != null ? !getName().equals(user.getName()) : user.getName() != null) return false;
-        if (getSurname() != null ? !getSurname().equals(user.getSurname()) : user.getSurname() != null) return false;
-        if (getLogin() != null ? !getLogin().equals(user.getLogin()) : user.getLogin() != null) return false;
-        if (getPassword() != null ? !getPassword().equals(user.getPassword()) : user.getPassword() != null)
-            return false;
-        return getPassport() != null ? getPassport().equals(user.getPassport()) : user.getPassport() == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getName() != null ? getName().hashCode() : 0;
-        result = 31 * result + (getSurname() != null ? getSurname().hashCode() : 0);
-        result = 31 * result + (getLogin() != null ? getLogin().hashCode() : 0);
-        result = 31 * result + (getPassword() != null ? getPassword().hashCode() : 0);
-        result = 31 * result + (getPassport() != null ? getPassport().hashCode() : 0);
-        return result;
-    }
+    public void setRole(Integer role) { this.role = role; }
 }
