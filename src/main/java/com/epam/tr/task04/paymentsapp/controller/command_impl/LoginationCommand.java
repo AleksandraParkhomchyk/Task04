@@ -4,6 +4,7 @@ import com.epam.tr.task04.paymentsapp.controller.Command;
 import com.epam.tr.task04.paymentsapp.entity.User;
 import com.epam.tr.task04.paymentsapp.services.UserService;
 import com.epam.tr.task04.paymentsapp.services.ServiceFactory;
+import com.epam.tr.task04.paymentsapp.services.exception.NotAuthorizedException;
 import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;
 
 import javax.servlet.RequestDispatcher;
@@ -28,8 +29,14 @@ public class LoginationCommand implements Command {
         UserService userService = serviceFactory.getUserService();
         HttpSession session = request.getSession(true);
 
+
         try {
             User user = userService.authorisation(login, password);
+
+            if (user.getRole() == null) {
+                throw new ServiceException();
+            }
+
             Integer role = user.getRole();
             Integer id = user.getId();
             if (role == 1) {
@@ -46,7 +53,10 @@ public class LoginationCommand implements Command {
                 dispatcher.forward(request, response);
                 System.out.println("Зашел админ");
             }
-        } catch (ServiceException | NullPointerException e) {
+        } catch (NotAuthorizedException e) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/errorPage.jsp");
+            dispatcher.forward(request, response); //todo redirect
+        } catch (ServiceException e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/errorPage.jsp");
             dispatcher.forward(request, response);
         }

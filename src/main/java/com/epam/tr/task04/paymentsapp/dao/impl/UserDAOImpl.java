@@ -7,6 +7,7 @@ import com.epam.tr.task04.paymentsapp.dao.exception.DAOException;
 import com.epam.tr.task04.paymentsapp.entity.User;
 
 import java.sql.*;
+import java.util.Optional;
 
 public class UserDAOImpl implements UserDAO {
 
@@ -54,8 +55,8 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User authorisation(String login, String password) throws DAOException {
-        User user = new User();
+    public Optional<User> authorisation(String login, String password) throws DAOException {
+        User user = null;
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet;
@@ -68,20 +69,19 @@ public class UserDAOImpl implements UserDAO {
 
             while (resultSet.next()) {
                 try {
-
-                    if ((login.equals(resultSet.getString(2))) && (password.equals(resultSet.getString(3)))) {
+                    String loginFromDB = resultSet.getString(2);
+                    String passwordFromDB = resultSet.getString(3);
+                    if ((login.equals(loginFromDB)) && (password.equals(passwordFromDB))) {
                         System.out.println("authorisation is OK");
+                        user = new User();
                         user.setId(resultSet.getInt(1));
-                        user.setLogin(resultSet.getString(2));
+                        user.setLogin(loginFromDB);
                         user.setRole(resultSet.getInt(4));
-
                     }
-
-                } catch (Exception exception) {
+                } catch (Exception exp) {
                     throw new DAOException();
                 }
             }
-
         } catch (SQLException | ConnectionPoolException e) {
             throw new DAOException(e);
         } finally {
@@ -99,9 +99,11 @@ public class UserDAOImpl implements UserDAO {
             } catch (SQLException e) {
                 throw new DAOException(e);
             }
-        } return user;
+        }
+        return Optional.ofNullable(user);
     }
 }
+
 
 
 

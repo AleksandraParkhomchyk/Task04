@@ -5,7 +5,10 @@ import com.epam.tr.task04.paymentsapp.dao.UserDAO;
 import com.epam.tr.task04.paymentsapp.dao.exception.DAOException;
 import com.epam.tr.task04.paymentsapp.entity.User;
 import com.epam.tr.task04.paymentsapp.services.UserService;
+import com.epam.tr.task04.paymentsapp.services.exception.NotAuthorizedException;
 import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;
+
+import java.util.Optional;
 
 
 public class UserServiceImpl implements UserService {
@@ -18,8 +21,16 @@ public class UserServiceImpl implements UserService {
 
         try {
 
-            User user = userDAO.authorisation(login, password);
-            return user;
+            Optional<User> userOptional = userDAO.authorisation(login, password);
+
+            if (!userOptional.isPresent()){
+                //logger
+                throw new NotAuthorizedException();
+                // построить строку с сообщением и логгером
+
+            } else {
+                return userOptional.get();
+            }
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
