@@ -48,7 +48,6 @@ public class LoginationCommand implements Command {
                 System.out.println("Зашел юзер");
             } else if (role == 2) {
                 session.setAttribute("role", role);
-                //request.setAttribute("userName", "Alex");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/adminPage.jsp");
                 dispatcher.forward(request, response);
                 System.out.println("Зашел админ");
