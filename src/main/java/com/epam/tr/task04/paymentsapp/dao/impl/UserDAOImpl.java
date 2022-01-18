@@ -79,7 +79,7 @@ public class UserDAOImpl implements UserDAO {
                         user.setRole(resultSet.getInt(4));
                     }
                 } catch (Exception exp) {
-                    throw new DAOException();
+                    throw new DAOException(exp);
                 }
             }
         } catch (SQLException | ConnectionPoolException e) {

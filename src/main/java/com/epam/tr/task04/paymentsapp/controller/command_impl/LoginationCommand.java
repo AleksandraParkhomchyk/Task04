@@ -53,8 +53,8 @@ public class LoginationCommand implements Command {
                 System.out.println("Зашел админ");
             }
         } catch (NotAuthorizedException e) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/errorPage.jsp");
-            dispatcher.forward(request, response); //todo redirect
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/logination.jsp");
+            dispatcher.forward(request, response); //todo message
         } catch (ServiceException e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/errorPage.jsp");
             dispatcher.forward(request, response);

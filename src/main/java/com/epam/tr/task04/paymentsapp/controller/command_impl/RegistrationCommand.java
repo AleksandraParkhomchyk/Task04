@@ -37,7 +37,7 @@ public class RegistrationCommand implements Command {
 
         if (flag) {
             request.setAttribute("registrationInfo", "All ok");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/userPage.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/logination.jsp");
             dispatcher.forward(request, response);
         } else {
             request.setAttribute("errorMessage", "smth wrong");

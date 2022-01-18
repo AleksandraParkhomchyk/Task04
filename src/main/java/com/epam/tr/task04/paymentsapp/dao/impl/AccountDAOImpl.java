@@ -4,12 +4,10 @@ import com.epam.tr.task04.paymentsapp.dao.AccountDAO;
 import com.epam.tr.task04.paymentsapp.dao.connectionpool.ConnectionPool;
 import com.epam.tr.task04.paymentsapp.dao.connectionpool.ConnectionPoolException;
 import com.epam.tr.task04.paymentsapp.dao.exception.DAOException;
+import com.epam.tr.task04.paymentsapp.entity.Account;
 import com.epam.tr.task04.paymentsapp.entity.User;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class AccountDAOImpl implements AccountDAO {
 
@@ -19,13 +17,14 @@ public class AccountDAOImpl implements AccountDAO {
     int random_number = 1 + (int) (Math.random() * max);
 
     @Override
-    public boolean createAccount(User user) throws DAOException {
+    public Account createAccount(User user) throws DAOException {
+        Account account = null;
         PreparedStatement preparedStatement = null;
         Connection connection = null;
 
         try {
             connection = ConnectionPool.getInstance().takeConnection();
-            preparedStatement = connection.prepareStatement(createAccount);
+            preparedStatement = connection.prepareStatement(createAccount, Statement.RETURN_GENERATED_KEYS);
 
             preparedStatement.setString(1, String.valueOf(random_number));
             preparedStatement.setDouble(2, 0.00);
@@ -34,6 +33,15 @@ public class AccountDAOImpl implements AccountDAO {
 
             preparedStatement.executeUpdate();
 
+            account = new Account();
+            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    account.setId(generatedKeys.getInt(1));
+                }
+                else {
+                    throw new SQLException("Creating account failed, no ID obtained.");
+                }
+            }
 
         } catch (SQLException | ConnectionPoolException e) {
             throw new DAOException(e);
@@ -55,6 +63,6 @@ public class AccountDAOImpl implements AccountDAO {
             }
         }
 
-        return true;
+        return account;
     }
 }

@@ -1,10 +1,10 @@
 package com.epam.tr.task04.paymentsapp.services;
 
 import com.epam.tr.task04.paymentsapp.entity.Account;
-import com.epam.tr.task04.paymentsapp.entity.User;
+import com.epam.tr.task04.paymentsapp.entity.Card;
 import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;
 
-public interface AccountService {
+public interface CardService {
 
-    Account createAccount(User user) throws ServiceException;
+    Card createCard(Account account) throws ServiceException;
 }

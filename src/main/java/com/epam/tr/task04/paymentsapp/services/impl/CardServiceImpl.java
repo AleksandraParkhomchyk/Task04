@@ -1,24 +1,25 @@
 package com.epam.tr.task04.paymentsapp.services.impl;
 
-import com.epam.tr.task04.paymentsapp.dao.AccountDAO;
+import com.epam.tr.task04.paymentsapp.dao.CardDAO;
 import com.epam.tr.task04.paymentsapp.dao.DAOFactory;
 import com.epam.tr.task04.paymentsapp.dao.exception.DAOException;
 import com.epam.tr.task04.paymentsapp.entity.Account;
-import com.epam.tr.task04.paymentsapp.entity.User;
-import com.epam.tr.task04.paymentsapp.services.AccountService;
+import com.epam.tr.task04.paymentsapp.entity.Card;
+import com.epam.tr.task04.paymentsapp.services.CardService;
 import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;
 
-public class AccountServiceImpl implements AccountService {
+public class CardServiceImpl implements CardService {
     @Override
-    public Account createAccount(User user) throws ServiceException {
+    public Card createCard(Account account) throws ServiceException {
         DAOFactory factory = DAOFactory.getInstance();
-        AccountDAO accountDAO = factory.getAccountDAO();
+        CardDAO cardDAO = factory.getCardDAO();
 
         try {
-            Account account = accountDAO.createAccount(user);
-            return account;
+            Card card = cardDAO.createCard(account);
+            return card;
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
 }
+

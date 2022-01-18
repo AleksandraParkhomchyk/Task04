@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface CardDAO {
 
-    public boolean createCard(Account account) throws DAOException;
+    Card createCard(Account account) throws DAOException;
 
    /* public List<Card> findAllCards() throws DAOException;
 

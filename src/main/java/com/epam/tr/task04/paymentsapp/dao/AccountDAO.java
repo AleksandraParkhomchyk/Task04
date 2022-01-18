@@ -6,5 +6,5 @@ import com.epam.tr.task04.paymentsapp.entity.User;
 
 public interface AccountDAO {
 
-    public boolean createAccount(User user) throws DAOException;
+    public Account createAccount(User user) throws DAOException;
 }
