@@ -4,7 +4,6 @@ import com.epam.tr.task04.paymentsapp.controller.Command;
 import com.epam.tr.task04.paymentsapp.entity.Account;
 import com.epam.tr.task04.paymentsapp.entity.Card;
 import com.epam.tr.task04.paymentsapp.entity.User;
-import com.epam.tr.task04.paymentsapp.services.AccountService;
 import com.epam.tr.task04.paymentsapp.services.CardService;
 import com.epam.tr.task04.paymentsapp.services.ServiceFactory;
 import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;

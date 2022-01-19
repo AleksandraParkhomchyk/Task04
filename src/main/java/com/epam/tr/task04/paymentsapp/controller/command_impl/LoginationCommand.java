@@ -40,6 +40,7 @@ public class LoginationCommand implements Command {
             Integer role = user.getRole();
             Integer id = user.getId();
             if (role == 1) {
+                request.setAttribute("message", "Hello, " + login + "!");
                 session.setAttribute("id", id);
                 session.setAttribute("role", role);
                 session.setAttribute("login", login);

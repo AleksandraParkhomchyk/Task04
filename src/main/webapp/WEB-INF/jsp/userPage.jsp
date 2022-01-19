@@ -18,6 +18,8 @@
 </header>
 <body>
 
+<p><c:out value="${message}" /></p>
+
 <div class="card">
     <div class="card-body">
         <h4 class="card-title">Make a payment</h4>

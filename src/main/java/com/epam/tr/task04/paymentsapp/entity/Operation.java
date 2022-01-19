@@ -8,8 +8,7 @@ public class Operation implements Serializable {
     private Date date;
     private Double amount;
 
-    public Operation(Double amount) {
-        this.amount = amount;
+    public Operation() {
     }
 
     public Integer getId() {

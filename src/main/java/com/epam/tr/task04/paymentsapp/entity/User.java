@@ -13,6 +13,10 @@ public class User implements Serializable {
     private String passport;
     private Integer role;
 
+    public User() {
+
+    }
+
     public User(String name, String surname, String login, String password, String passport) {
         this.name = name;
         this.surname = surname;
@@ -21,13 +25,14 @@ public class User implements Serializable {
         this.passport = passport;
     }
 
-    public User() {
 
+    public Integer getId() {
+        return id;
     }
 
-    public Integer getId() { return id; }
-
-    public void setId(Integer id) { this.id = id; }
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -69,9 +74,13 @@ public class User implements Serializable {
         this.passport = passport;
     }
 
-    public Integer getRole() { return role; }
+    public Integer getRole() {
+        return role;
+    }
 
-    public void setRole(Integer role) { this.role = role; }
+    public void setRole(Integer role) {
+        this.role = role;
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -9,6 +9,9 @@ public class Account implements Serializable {
     private double balance;
     private Date accountOpeningDate;
 
+    public Account() {
+    }
+
     public Account(String accountNumber, double balance) {
         this.accountNumber = accountNumber;
         this.balance = balance;
@@ -19,10 +22,6 @@ public class Account implements Serializable {
         this.id = id;
     }
 
-    public Account() {
-
-    }
-
     public Integer getId() {
         return id;
     }
@@ -30,8 +29,6 @@ public class Account implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-
-
 
     public String getAccountNumber() {
         return accountNumber;

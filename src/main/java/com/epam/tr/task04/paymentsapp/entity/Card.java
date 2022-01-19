@@ -11,6 +11,9 @@ public class Card implements Serializable {
     private Date validThruDate;
     private boolean status;
 
+    public Card() {
+    }
+
     public Integer getId() { return id; }
 
     public void setId(Integer id) { this.id = id; }
