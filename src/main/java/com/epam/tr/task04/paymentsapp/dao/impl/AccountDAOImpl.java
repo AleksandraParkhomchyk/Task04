@@ -12,6 +12,8 @@ import java.sql.*;
 public class AccountDAOImpl implements AccountDAO {
 
     private final String createAccount = "INSERT INTO accounts(a_number, a_balance, a_openning_date, users_u_id) VALUES( ?, ?, ?, ?)";
+    private final String getAccountNumberByUserId = "SELECT a_id FROM accounts WHERE (users_u_id = ?)";
+
     Date date = new java.sql.Date(System.currentTimeMillis());
     final int max = 1000;
     int random_number = 1 + (int) (Math.random() * max);
@@ -37,8 +39,7 @@ public class AccountDAOImpl implements AccountDAO {
             try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     account.setId(generatedKeys.getInt(1));
-                }
-                else {
+                } else {
                     throw new SQLException("Creating account failed, no ID obtained.");
                 }
             }
@@ -64,5 +65,53 @@ public class AccountDAOImpl implements AccountDAO {
         }
 
         return account;
+    }
+
+    @Override
+    public String getAccountByUserId(Integer userId) throws DAOException {
+        String accountNumberDB = null;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = ConnectionPool.getInstance().takeConnection();
+            preparedStatement = connection.prepareStatement(getAccountNumberByUserId);
+            preparedStatement.setInt(1, userId);
+
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                accountNumberDB = resultSet.getString(1);
+            } else {
+                throw new DAOException("There is no account");
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DAOException(e);
+
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+        }
+        return accountNumberDB;
     }
 }

@@ -1,7 +1,6 @@
 package com.epam.tr.task04.paymentsapp.entity;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 public class User implements Serializable {
 

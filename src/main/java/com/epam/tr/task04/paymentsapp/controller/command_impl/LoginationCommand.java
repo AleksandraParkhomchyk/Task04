@@ -2,6 +2,7 @@ package com.epam.tr.task04.paymentsapp.controller.command_impl;
 
 import com.epam.tr.task04.paymentsapp.controller.Command;
 import com.epam.tr.task04.paymentsapp.entity.User;
+import com.epam.tr.task04.paymentsapp.services.AccountService;
 import com.epam.tr.task04.paymentsapp.services.UserService;
 import com.epam.tr.task04.paymentsapp.services.ServiceFactory;
 import com.epam.tr.task04.paymentsapp.services.exception.NotAuthorizedException;
@@ -27,23 +28,29 @@ public class LoginationCommand implements Command {
 
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         UserService userService = serviceFactory.getUserService();
+        AccountService accountService = serviceFactory.getAccountService();
         HttpSession session = request.getSession(true);
 
 
         try {
             User user = userService.authorisation(login, password);
+            Integer role = user.getRole();
+            Integer id = user.getId();
+            String accountNumber = accountService.getAccountByUserId(id);
+            //String cardNumber = cardService.getCardByLogin(user);
 
             if (user.getRole() == null) {
                 throw new ServiceException();
             }
 
-            Integer role = user.getRole();
-            Integer id = user.getId();
             if (role == 1) {
-                request.setAttribute("message", "Hello, " + login + "!");
+                request.setAttribute("message", "Hello, " + login + "!" + "AccountNumber" + accountNumber);
                 session.setAttribute("id", id);
                 session.setAttribute("role", role);
                 session.setAttribute("login", login);
+                session.setAttribute("accountNumber", accountNumber);
+                //session.setAttribute("cardNumber", cardNumber);
+
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/userPage.jsp");
                 dispatcher.forward(request, response);
                 System.out.println("Зашел юзер");

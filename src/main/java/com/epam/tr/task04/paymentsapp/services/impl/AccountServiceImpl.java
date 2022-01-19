@@ -21,4 +21,16 @@ public class AccountServiceImpl implements AccountService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public String getAccountByUserId(Integer userId) throws ServiceException {
+        DAOFactory factory = DAOFactory.getInstance();
+        AccountDAO accountDAO = factory.getAccountDAO();
+
+        try {
+            return accountDAO.getAccountByUserId(userId);
+        } catch (DAOException e){
+            throw new ServiceException(e);
+        }
+    }
 }
