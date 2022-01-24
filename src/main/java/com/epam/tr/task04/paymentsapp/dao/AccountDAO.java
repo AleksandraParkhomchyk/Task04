@@ -8,5 +8,5 @@ public interface AccountDAO {
 
     Account createAccount(User user) throws DAOException;
 
-    String getAccountByUserId(Integer userId) throws DAOException;
+    Account getAccountByUserId(Integer userId) throws DAOException;
 }

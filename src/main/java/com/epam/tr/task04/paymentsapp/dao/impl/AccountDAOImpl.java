@@ -12,7 +12,7 @@ import java.sql.*;
 public class AccountDAOImpl implements AccountDAO {
 
     private final String createAccount = "INSERT INTO accounts(a_number, a_balance, a_openning_date, users_u_id) VALUES( ?, ?, ?, ?)";
-    private final String getAccountNumberByUserId = "SELECT a_id FROM accounts WHERE (users_u_id = ?)";
+    private final String getAccountNumberByUserId = "SELECT a_id, a_balance FROM accounts WHERE (users_u_id = ?)";
 
     Date date = new java.sql.Date(System.currentTimeMillis());
     final int max = 1000;
@@ -68,8 +68,8 @@ public class AccountDAOImpl implements AccountDAO {
     }
 
     @Override
-    public String getAccountByUserId(Integer userId) throws DAOException {
-        String accountNumberDB = null;
+    public Account getAccountByUserId(Integer userId) throws DAOException {
+
         PreparedStatement preparedStatement = null;
         Connection connection = null;
         ResultSet resultSet = null;
@@ -82,7 +82,10 @@ public class AccountDAOImpl implements AccountDAO {
             resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                accountNumberDB = resultSet.getString(1);
+                Account account = new Account();
+                account.setAccountNumber(resultSet.getString(1));
+                account.setBalance(resultSet.getDouble(2));
+                return account;
             } else {
                 throw new DAOException("There is no account");
             }
@@ -112,6 +115,5 @@ public class AccountDAOImpl implements AccountDAO {
                 throw new DAOException(e);
             }
         }
-        return accountNumberDB;
     }
 }

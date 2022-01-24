@@ -1,6 +1,7 @@
 package com.epam.tr.task04.paymentsapp.controller.command_impl;
 
 import com.epam.tr.task04.paymentsapp.controller.Command;
+import com.epam.tr.task04.paymentsapp.entity.Account;
 import com.epam.tr.task04.paymentsapp.entity.User;
 import com.epam.tr.task04.paymentsapp.services.AccountService;
 import com.epam.tr.task04.paymentsapp.services.UserService;
@@ -36,7 +37,7 @@ public class LoginationCommand implements Command {
             User user = userService.authorisation(login, password);
             Integer role = user.getRole();
             Integer id = user.getId();
-            String accountNumber = accountService.getAccountByUserId(id);
+            Account account = accountService.getAccountByUserId(id);
             //String cardNumber = cardService.getCardByLogin(user);
 
             if (user.getRole() == null) {
@@ -44,11 +45,11 @@ public class LoginationCommand implements Command {
             }
 
             if (role == 1) {
-                request.setAttribute("message", "Hello, " + login + "!" + "AccountNumber" + accountNumber);
+                request.setAttribute("message", "Hello, " + login + "!" + " Account Number " + account.getAccountNumber() + ". Balance " + account.getBalance());
                 session.setAttribute("id", id);
                 session.setAttribute("role", role);
                 session.setAttribute("login", login);
-                session.setAttribute("accountNumber", accountNumber);
+                session.setAttribute("accountNumber", account);
                 //session.setAttribute("cardNumber", cardNumber);
 
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/userPage.jsp");

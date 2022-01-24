@@ -23,7 +23,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public String getAccountByUserId(Integer userId) throws ServiceException {
+    public Account getAccountByUserId(Integer userId) throws ServiceException {
         DAOFactory factory = DAOFactory.getInstance();
         AccountDAO accountDAO = factory.getAccountDAO();
 
