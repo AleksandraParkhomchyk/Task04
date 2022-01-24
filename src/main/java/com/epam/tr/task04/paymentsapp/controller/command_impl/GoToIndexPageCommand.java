@@ -10,13 +10,14 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class GoToIndexPageCommand implements Command {
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-        //HttpSession session = request.getSession();
-        //session.setAttribute("url", "/payments_app_war_exploded/controller?command=GO_TO_INDEX_PAGE");
+        HttpSession session = request.getSession();
+        session.setAttribute("url", "/payments_app_war_exploded/controller?command=GO_TO_INDEX_PAGE");
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/index.jsp");
         dispatcher.forward(request, response);
     }
 }

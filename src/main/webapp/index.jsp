@@ -4,14 +4,6 @@
 <!DOCTYPE html>
 <html>
 <header>
-    <ul class="nav justify-content-center">
-        <li class="nav-item">
-            <a class="nav-link" href="#!">Login</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#!">Register</a>
-        </li>
-    </ul>
 </header>
 <head>
     <title>Payment Service</title>
@@ -48,10 +40,14 @@
 <footer>
     <ul class="nav justify-content-center">
         <li class="nav-item">
-            <a class="nav-link" href="controller?command=CHANGE_LANGUAGE">EN</a>
+            <form action="controller?command=CHANGE_LANGUAGE" method="post">
+                <input type="hidden" name="locale" value="en"/> <input type="submit" value="${en_button}">
+            </form>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="controller?command=CHANGE_LANGUAGE">RU</a>
+            <form action="controller?command=CHANGE_LANGUAGE" method="post">
+                <input type="hidden" name="locale" value="ru"/> <input type="submit" value="${ru_button}"><br/>
+            </form>
         </li>
     </ul>
 </footer>
