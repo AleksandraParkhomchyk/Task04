@@ -75,6 +75,7 @@ public class AccountDAOImpl implements AccountDAO {
         PreparedStatement preparedStatement = null;
         Connection connection = null;
         ResultSet resultSet = null;
+        Account account = new Account();
 
         try {
             connection = ConnectionPool.getInstance().takeConnection();
@@ -83,15 +84,13 @@ public class AccountDAOImpl implements AccountDAO {
 
             resultSet = preparedStatement.executeQuery();
 
-            if (resultSet.next()) {
-                Account account = new Account();
-                account.setId(resultSet.getInt(1));
-                account.setAccountNumber(resultSet.getString(2));
-                account.setBalance(resultSet.getDouble(3));
-                return account;
-            } else {
-                throw new DAOException("There is no account");
-            }
+            resultSet.next();
+            account.setId(resultSet.getInt(1));
+            account.setAccountNumber(resultSet.getString(2));
+            account.setBalance(resultSet.getDouble(3));
+
+            return account;
+
         } catch (SQLException | ConnectionPoolException e) {
             throw new DAOException(e);
 
@@ -123,7 +122,6 @@ public class AccountDAOImpl implements AccountDAO {
     @Override
     public boolean accountPayment(Account account, String accountNumber, Double amount) throws DAOException {
 
-
         PreparedStatement preparedStatement = null;
         Connection connection = null;
 
@@ -154,6 +152,7 @@ public class AccountDAOImpl implements AccountDAO {
             } catch (SQLException e) {
                 throw new DAOException(e);
             }
-        } return true;
+        }
+        return true;
     }
 }

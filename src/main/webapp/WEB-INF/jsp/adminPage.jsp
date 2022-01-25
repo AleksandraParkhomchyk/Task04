@@ -14,7 +14,7 @@
             <tbody>
             <c:forEach items="${requestScope.AllUsers}" var="user">
             <tr>
-                <td data-th="Product">
+                <td data-th="Users">
                     <div class="row">
                         <div class="col-sm-10">
                             <h4 class="margin">${user.id}</h4>

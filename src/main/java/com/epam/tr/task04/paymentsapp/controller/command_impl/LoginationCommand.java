@@ -38,7 +38,6 @@ public class LoginationCommand implements Command {
             Integer role = user.getRole();
             Integer id = user.getId();
 
-
             if (user.getRole() == null) {
                 throw new ServiceException();
             }
@@ -50,7 +49,6 @@ public class LoginationCommand implements Command {
                 session.setAttribute("role", role);
                 session.setAttribute("login", login);
                 session.setAttribute("accountNumber", account);
-                //session.setAttribute("cardNumber", cardNumber);
 
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/userPage.jsp");
                 dispatcher.forward(request, response);
@@ -62,8 +60,8 @@ public class LoginationCommand implements Command {
                 System.out.println("Зашел админ");
             }
         } catch (NotAuthorizedException e) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/logination.jsp");
-            dispatcher.forward(request, response); //todo message
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/errorPage.jsp");
+            dispatcher.forward(request, response);
         } catch (ServiceException e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/errorPage.jsp");
             dispatcher.forward(request, response);

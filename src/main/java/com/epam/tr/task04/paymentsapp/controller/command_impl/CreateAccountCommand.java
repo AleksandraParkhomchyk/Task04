@@ -29,25 +29,19 @@ public class CreateAccountCommand implements Command {
         user.setRole(role);
         user.setId(id);
 
-        Account account = null;
         try {
-            account = accountService.createAccount(user);
-
+            Account account = accountService.getAccountByUserId(id);
+            Integer a_id = account.getId();
+            if (a_id == null){
+                accountService.createAccount(user);
+                session.setAttribute("a_id", a_id);
+            } else {
+                System.out.println("Счет уже cуществует");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/errorPage.jsp");
+                dispatcher.forward(request, response);
+            }
         } catch (ServiceException e) {
             e.printStackTrace();// todo: smth with exception
-        }
-
-        Integer a_id = account.getId();
-
-        if (account == null) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/userPage.jsp");
-            dispatcher.forward(request, response);
-            System.out.println("Счет не создан");
-        } else {
-            session.setAttribute("a_id", a_id);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/successPage.jsp");
-            dispatcher.forward(request, response);
-            System.out.println("Счет создан");
         }
     }
 }

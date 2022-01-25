@@ -21,6 +21,7 @@ public final class CommandProvider {
         commands.put("CREATE_CARD", new CreateCardCommand());
         commands.put("PAYMENT_ACCOUNT", new PaymentAccountCommand());
         commands.put("GET_ALL_USERS", new GetAllUsersCommand());
+        commands.put("GO_TO_USERS_PAGE", new GoToUsersPageCommand());
 
     }
 
