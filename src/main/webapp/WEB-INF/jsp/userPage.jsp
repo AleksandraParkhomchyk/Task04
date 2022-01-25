@@ -18,14 +18,27 @@
 </header>
 <body>
 
-<p><c:out value="${message}" /></p>
+<p><c:out value="${requestScope.message}"/></p>
 
 <div class="card">
     <div class="card-body">
+        <form action="${pageContext.request.contextPath}/controller" method="post">
+            <input type="hidden" name="command" value="PAYMENT_ACCOUNT">
         <h4 class="card-title">Make a payment</h4>
-        <a href="#!" class="btn btn-primary">Go somewhere</a>
+        <label class="col-sm-2 col-form-label">Account number</label>
+        <div class="col-sm-7">
+            <input type="text" class="form-control" name="account">
+        </div>
     </div>
+    <div class="card-body">
+        <label class="col-sm-2 col-form-label">Amount</label>
+        <div class="col-sm-7">
+            <input type="text" class="form-control" name="amount">
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Pay</button>
 </div>
+
 <div class="card">
     <div class="card-body">
         <h4 class="card-title">Block the card</h4>
@@ -45,7 +58,7 @@
     <div class="card-body">
         <form action="${pageContext.request.contextPath}/controller" method="post">
             <input type="hidden" name="command" value="CREATE_CARD">
-        <h4 class="card-title">Create a card</h4>
+            <h4 class="card-title">Create a card</h4>
             <button type="submit" class="btn btn-primary">Start</button>
         </form>
     </div>

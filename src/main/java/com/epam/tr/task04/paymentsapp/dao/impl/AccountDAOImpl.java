@@ -12,7 +12,9 @@ import java.sql.*;
 public class AccountDAOImpl implements AccountDAO {
 
     private final String createAccount = "INSERT INTO accounts(a_number, a_balance, a_openning_date, users_u_id) VALUES( ?, ?, ?, ?)";
-    private final String getAccountNumberByUserId = "SELECT a_id, a_balance FROM accounts WHERE (users_u_id = ?)";
+    private final String getAccountNumberByUserId = "SELECT a_id, a_number, a_balance FROM accounts WHERE (users_u_id = ?)";
+    private final String afterPaymentBalance = "UPDATE accounts SET a_balance = ? WHERE (a_id = ?)";
+
 
     Date date = new java.sql.Date(System.currentTimeMillis());
     final int max = 1000;
@@ -83,8 +85,9 @@ public class AccountDAOImpl implements AccountDAO {
 
             if (resultSet.next()) {
                 Account account = new Account();
-                account.setAccountNumber(resultSet.getString(1));
-                account.setBalance(resultSet.getDouble(2));
+                account.setId(resultSet.getInt(1));
+                account.setAccountNumber(resultSet.getString(2));
+                account.setBalance(resultSet.getDouble(3));
                 return account;
             } else {
                 throw new DAOException("There is no account");
@@ -115,5 +118,42 @@ public class AccountDAOImpl implements AccountDAO {
                 throw new DAOException(e);
             }
         }
+    }
+
+    @Override
+    public boolean accountPayment(Account account, String accountNumber, Double amount) throws DAOException {
+
+
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+
+        try {
+            connection = ConnectionPool.getInstance().takeConnection();
+            preparedStatement = connection.prepareStatement(afterPaymentBalance);
+            double finalBalance = account.getBalance() - amount;
+            preparedStatement.setDouble(1, finalBalance);
+            preparedStatement.setInt(2, account.getId());
+
+            int result = preparedStatement.executeUpdate();
+            System.out.println(result);
+
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DAOException(e);
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+        } return true;
     }
 }

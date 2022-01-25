@@ -19,6 +19,8 @@ public final class CommandProvider {
 
         commands.put("CREATE_ACCOUNT", new CreateAccountCommand());
         commands.put("CREATE_CARD", new CreateCardCommand());
+        commands.put("PAYMENT_ACCOUNT", new PaymentAccountCommand());
+
     }
 
     public final Command getCommand(String commandName) {

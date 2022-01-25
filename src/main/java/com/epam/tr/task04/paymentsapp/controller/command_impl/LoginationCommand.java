@@ -45,7 +45,7 @@ public class LoginationCommand implements Command {
             }
 
             if (role == 1) {
-                request.setAttribute("message", "Hello, " + login + "!" + " Account Number " + account.getAccountNumber() + ". Balance " + account.getBalance());
+                request.setAttribute("message", "Hello!" + "Your account number is " + account.getAccountNumber() + ". Balance " + account.getBalance());
                 session.setAttribute("id", id);
                 session.setAttribute("role", role);
                 session.setAttribute("login", login);
