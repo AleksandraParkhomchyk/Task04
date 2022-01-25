@@ -20,6 +20,7 @@ public final class CommandProvider {
         commands.put("CREATE_ACCOUNT", new CreateAccountCommand());
         commands.put("CREATE_CARD", new CreateCardCommand());
         commands.put("PAYMENT_ACCOUNT", new PaymentAccountCommand());
+        commands.put("GET_ALL_USERS", new GetAllUsersCommand());
 
     }
 

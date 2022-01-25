@@ -12,9 +12,7 @@ public class User implements Serializable {
     private String passport;
     private Integer role;
 
-    public User() {
-
-    }
+    public User() {    }
 
     public User(String name, String surname, String login, String password, String passport) {
         this.name = name;
@@ -22,6 +20,9 @@ public class User implements Serializable {
         this.login = login;
         this.password = password;
         this.passport = passport;
+    }
+
+    public User(Integer id, String login, String password, String name, String surname, String passport, Integer role) {
     }
 
 

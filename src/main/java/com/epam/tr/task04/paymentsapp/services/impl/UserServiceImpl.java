@@ -8,6 +8,7 @@ import com.epam.tr.task04.paymentsapp.services.UserService;
 import com.epam.tr.task04.paymentsapp.services.exception.NotAuthorizedException;
 import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -23,7 +24,7 @@ public class UserServiceImpl implements UserService {
 
             Optional<User> userOptional = userDAO.authorisation(login, password);
 
-            if (!userOptional.isPresent()){
+            if (!userOptional.isPresent()) {
                 //logger
                 throw new NotAuthorizedException();
                 // построить строку с сообщением и логгером
@@ -59,4 +60,18 @@ public class UserServiceImpl implements UserService {
 
         return true;
     }
+
+    @Override
+    public List<User> getAllUsers() throws ServiceException {
+        DAOFactory factory = DAOFactory.getInstance();
+        UserDAO userDAO = factory.getUserDAO();
+        List<User> list;
+        try {
+            list = userDAO.getAllUsers();
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+        return list;
+    }
 }
+

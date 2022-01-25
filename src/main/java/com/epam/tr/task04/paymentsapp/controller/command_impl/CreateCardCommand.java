@@ -47,7 +47,7 @@ public class CreateCardCommand implements Command {
             System.out.println("Карта не создана");
         } else {
             session.setAttribute("с_id", c_id);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/accountCreated.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/successPage.jsp");
             dispatcher.forward(request, response);
             System.out.println("Карта создана");
         }

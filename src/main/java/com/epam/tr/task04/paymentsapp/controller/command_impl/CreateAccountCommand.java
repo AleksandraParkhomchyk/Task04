@@ -45,7 +45,7 @@ public class CreateAccountCommand implements Command {
             System.out.println("Счет не создан");
         } else {
             session.setAttribute("a_id", a_id);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/accountCreated.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/successPage.jsp");
             dispatcher.forward(request, response);
             System.out.println("Счет создан");
         }

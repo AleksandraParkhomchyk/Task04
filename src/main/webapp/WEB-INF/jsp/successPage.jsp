@@ -11,6 +11,6 @@
     <title>Success</title>
 </head>
 <body>
-<h1>Your account was created. Congratulations!</h1>
+<h1>Success</h1>
 </body>
 </html>

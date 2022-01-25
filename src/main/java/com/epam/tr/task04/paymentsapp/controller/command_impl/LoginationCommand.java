@@ -37,14 +37,14 @@ public class LoginationCommand implements Command {
             User user = userService.authorisation(login, password);
             Integer role = user.getRole();
             Integer id = user.getId();
-            Account account = accountService.getAccountByUserId(id);
-            //String cardNumber = cardService.getCardByLogin(user);
+
 
             if (user.getRole() == null) {
                 throw new ServiceException();
             }
 
             if (role == 1) {
+                Account account = accountService.getAccountByUserId(id);
                 request.setAttribute("message", "Hello!" + "Your account number is " + account.getAccountNumber() + ". Balance " + account.getBalance());
                 session.setAttribute("id", id);
                 session.setAttribute("role", role);

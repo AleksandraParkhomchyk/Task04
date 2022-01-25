@@ -7,12 +7,15 @@ import com.epam.tr.task04.paymentsapp.dao.exception.DAOException;
 import com.epam.tr.task04.paymentsapp.entity.User;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class UserDAOImpl implements UserDAO {
 
     private final String creatingUser = "INSERT INTO users(u_name, u_surname, u_login, u_password, u_passport, roles_r_id) VALUES( ?, ?, ?, ?, ?, ?)";
     private final String getLoginPasswordRole = "SELECT u_id, u_login, u_password, roles_r_id  FROM users";
+    private final String getAllUsersFromDB = "SELECT * FROM users";
 
 
     @Override
@@ -101,6 +104,58 @@ public class UserDAOImpl implements UserDAO {
             }
         }
         return Optional.ofNullable(user);
+    }
+
+    @Override
+    public List<User> getAllUsers() throws DAOException {
+        List<User> list = new ArrayList<User>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = ConnectionPool.getInstance().takeConnection();
+            preparedStatement = connection.prepareStatement(getAllUsersFromDB);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                User user = new User();
+                user.setId(resultSet.getInt(1));
+                user.setLogin(resultSet.getString(2));
+                user.setPassword(resultSet.getString(3));
+                user.setName(resultSet.getString(4));
+                user.setSurname(resultSet.getString(5));
+                user.setPassport(resultSet.getString(6));
+                user.setRole(resultSet.getInt(7));
+                list.add(user);
+
+            }
+            return list;
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DAOException(e);
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+        }
     }
 }
 
