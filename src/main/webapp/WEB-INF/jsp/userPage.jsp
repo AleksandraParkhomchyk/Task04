@@ -26,7 +26,6 @@
     <div class="card-body">
         <form action="${pageContext.request.contextPath}/controller" method="post">
             <input type="hidden" name="command" value="PAYMENT_ACCOUNT">
-            <h4 class="card-title">Make a payment</h4>
             <label class="col-sm-2 col-form-label">Account number</label>
             <div class="col-sm-7">
                 <input type="text" class="form-control" name="account">
@@ -36,7 +35,7 @@
                 <input type="text" class="form-control" name="amount">
             </div>
             <br>
-            <button type="submit" class="btn btn-primary">Pay</button>
+            <button type="submit" class="btn btn-primary">Make a payment</button>
         </form>
     </div>
 </div>
@@ -44,13 +43,12 @@
     <div class="card-body">
         <form action="${pageContext.request.contextPath}/controller" method="post">
             <input type="hidden" name="command" value="PAYMENT_ACCOUNT">
-            <h4 class="card-title">Get cash from account</h4>
             <label class="col-sm-2 col-form-label">Amount</label>
             <div class="col-sm-7">
                 <input type="text" class="form-control" name="cash_amount">
             </div>
             <br>
-            <button type="submit" class="btn btn-primary">Make a request</button>
+            <button type="submit" class="btn btn-primary">Get cash from account</button>
         </form>
     </div>
 </div>
@@ -60,16 +58,42 @@
     <div class="card-body">
         <form action="${pageContext.request.contextPath}/controller" method="post">
             <input type="hidden" name="command" value="CREATE_ACCOUNT">
-            <h4 class="card-title">Create an account</h4>
-            <button type="submit" class="btn btn-primary">Make a request</button>
+            <button type="submit" class="btn btn-primary">Create an account</button>
         </form>
     </div>
 </div>
 
 <div class="card">
     <div class="card-body">
-        <h4 class="card-title">Close account</h4>
-        <a href="#!" class="btn btn-primary">Make a request</a>
+        <a href="#!" class="btn btn-primary">Close account</a>
     </div>
 </div>
 
+<form action="${pageContext.request.contextPath}/controller" method="post">
+    <input type="hidden" name="command" value="GET_USERS_TRANSACTIONS">
+    <br>
+    <button type="submit" class="btn btn-primary">Show all transactions</button>
+    <div class="container">
+        <table id="users" class="table table-hover table-condensed">
+            <tbody>
+            <c:forEach items="${requestScope.AllTransactions}" var="transaction">
+            <tr>
+                <td data-th="Users">
+                    <div class="row">
+                        <div class="col-sm-10">
+                            <h4 class="margin">${transaction.id}</h4>
+                        </div>
+                    </div>
+                </td>
+                <td data-th="Name">${transaction.date}</td>
+                <td data-th="Surname">${transaction.amount}</td>
+                <td data-th="Passport">${transaction.startBalance}</td>
+                <td data-th="Passport">${transaction.endBalance}</td>
+                <td data-th="Passport">${transaction.outAccount}</td>
+                <td data-th="Passport">${transaction.inAccount}</td>
+            </tr>
+            </c:forEach>
+</form>
+
+</body>
+</html>

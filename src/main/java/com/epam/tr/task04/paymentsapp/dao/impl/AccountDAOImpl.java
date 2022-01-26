@@ -14,7 +14,7 @@ public class AccountDAOImpl implements AccountDAO {
     private final String createAccount = "INSERT INTO accounts(a_number, a_balance, a_openning_date, a_status, users_u_id) VALUES(?, ?, ?, ?, ?)";
     private final String getAccountNumberByUserId = "SELECT a_id, a_number, a_balance FROM accounts WHERE (users_u_id = ?)";
     private final String afterPaymentBalance = "UPDATE accounts SET a_balance = ? WHERE (a_id = ?)";
-    private final String paymentTransaction = "INSERT INTO transactions(t_date, t_amount, t_from_account, t_to_account, users_u_id, transaction_type_tt_id) values (?, ?, ?, ?, ?, ?)";
+    private final String paymentTransaction = "INSERT INTO transactions(t_date, t_amount, t_from_account, t_before_acc_balance, t_after_acc_balance, t_to_account, users_u_id, transaction_type_tt_id) values (?, ?, ?, ?, ?, ?, ?, ?)";
 
 
     Date date = new java.sql.Date(System.currentTimeMillis());
@@ -151,9 +151,11 @@ public class AccountDAOImpl implements AccountDAO {
             writeTransaction.setDate(1, date);
             writeTransaction.setDouble(2, amount);
             writeTransaction.setString(3, account.getAccountNumber());
-            writeTransaction.setString(4, accountNumber);
-            writeTransaction.setInt(5, 1);
-            writeTransaction.setInt(6, 1);
+            writeTransaction.setDouble(4, account.getBalance());
+            writeTransaction.setDouble(5, finalBalance);
+            writeTransaction.setString(6, accountNumber);
+            writeTransaction.setInt(7, 1);
+            writeTransaction.setInt(8, 1);
 
             writeTransaction.executeUpdate();
 
