@@ -31,10 +31,14 @@ public class PaymentAccountCommand implements Command {
 
         try {
             Account account = accountService.getAccountByUserId(userId);
-            accountService.accountPayment(account, accountNumber, amount);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/successPage.jsp");
-            dispatcher.forward(request, response);
-
+            boolean result = accountService.accountPayment(account, accountNumber, amount);
+            if (result) {
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/successPage.jsp");
+                dispatcher.forward(request, response);
+            } else {
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/errorPage.jsp");
+                dispatcher.forward(request, response);
+            }
         } catch (ServiceException e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/errorPage.jsp");
             dispatcher.forward(request, response);

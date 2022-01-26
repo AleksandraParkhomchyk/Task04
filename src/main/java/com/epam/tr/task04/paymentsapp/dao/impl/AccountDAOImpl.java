@@ -14,6 +14,7 @@ public class AccountDAOImpl implements AccountDAO {
     private final String createAccount = "INSERT INTO accounts(a_number, a_balance, a_openning_date, a_status, users_u_id) VALUES(?, ?, ?, ?, ?)";
     private final String getAccountNumberByUserId = "SELECT a_id, a_number, a_balance FROM accounts WHERE (users_u_id = ?)";
     private final String afterPaymentBalance = "UPDATE accounts SET a_balance = ? WHERE (a_id = ?)";
+    private final String paymentTransaction = "INSERT INTO transactions(t_date, t_amount, t_from_account, t_to_account, users_u_id, transaction_type_tt_id) values (?, ?, ?, ?, ?, ?)";
 
 
     Date date = new java.sql.Date(System.currentTimeMillis());
@@ -123,26 +124,59 @@ public class AccountDAOImpl implements AccountDAO {
 
     @Override
     public boolean accountPayment(Account account, String accountNumber, Double amount) throws DAOException {
+        Connection connection;
+        PreparedStatement writeNewBalance = null;
+        PreparedStatement writeTransaction = null;
 
-        PreparedStatement preparedStatement = null;
-        Connection connection = null;
+        boolean result = true;
 
         try {
             connection = ConnectionPool.getInstance().takeConnection();
-            preparedStatement = connection.prepareStatement(afterPaymentBalance);
-            double finalBalance = account.getBalance() - amount;
-            preparedStatement.setDouble(1, finalBalance);
-            preparedStatement.setInt(2, account.getId());
-
-            int result = preparedStatement.executeUpdate();
-            System.out.println(result);
-
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (ConnectionPoolException e) {
             throw new DAOException(e);
+        }
+
+        try {
+            writeNewBalance = connection.prepareStatement(afterPaymentBalance);
+            writeTransaction = connection.prepareStatement(paymentTransaction);
+
+            connection.setAutoCommit(false);
+
+            double finalBalance = account.getBalance() - amount;
+            writeNewBalance.setDouble(1, finalBalance);
+            writeNewBalance.setInt(2, account.getId());
+
+            writeNewBalance.executeUpdate();
+
+            writeTransaction.setDate(1, date);
+            writeTransaction.setDouble(2, amount);
+            writeTransaction.setString(3, account.getAccountNumber());
+            writeTransaction.setString(4, accountNumber);
+            writeTransaction.setInt(5, 1);
+            writeTransaction.setInt(6, 1);
+
+            writeTransaction.executeUpdate();
+
+            connection.commit();
+
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+                result = false;
+            } catch (SQLException exception) {
+                throw new DAOException(e);
+            }
         } finally {
             try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
+                if (writeNewBalance != null) {
+                    writeNewBalance.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+            try {
+                if (writeTransaction != null) {
+                    writeTransaction.close();
                 }
             } catch (SQLException e) {
                 throw new DAOException(e);
@@ -155,6 +189,6 @@ public class AccountDAOImpl implements AccountDAO {
                 throw new DAOException(e);
             }
         }
-        return true;
+        return result;
     }
 }

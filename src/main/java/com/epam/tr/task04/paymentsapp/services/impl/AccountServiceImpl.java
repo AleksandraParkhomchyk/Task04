@@ -41,7 +41,8 @@ public class AccountServiceImpl implements AccountService {
         AccountDAO accountDAO = factory.getAccountDAO();
 
         try {
-            return accountDAO.accountPayment(account, accountNumber, amount);
+            boolean result = accountDAO.accountPayment(account, accountNumber, amount);
+            return result;
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
