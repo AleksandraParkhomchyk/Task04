@@ -22,6 +22,7 @@ public final class CommandProvider {
         commands.put("PAYMENT_ACCOUNT", new PaymentAccountCommand());
         commands.put("GET_ALL_USERS", new GetAllUsersCommand());
         commands.put("GO_TO_USERS_PAGE", new GoToUsersPageCommand());
+        commands.put("LOG_OUT_COMMAND", new LogOutCommand());
 
     }
 

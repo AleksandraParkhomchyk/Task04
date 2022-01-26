@@ -22,6 +22,9 @@
 </head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <body>
+
+<p><c:out value="${sessionScope.wrong}"/></p>
+
 <div class="container">
     <h2>${page_name}</h2>
     <div class="card">

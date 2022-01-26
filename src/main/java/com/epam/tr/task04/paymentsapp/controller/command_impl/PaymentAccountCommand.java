@@ -32,9 +32,12 @@ public class PaymentAccountCommand implements Command {
         try {
             Account account = accountService.getAccountByUserId(userId);
             boolean result = accountService.accountPayment(account, accountNumber, amount);
+            Account account1 = accountService.getAccountByUserId(userId);
             if (result) {
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/successPage.jsp");
-                dispatcher.forward(request, response);
+                session.setAttribute("message1", "Hello! " + "Your account number is " + account1.getAccountNumber() + ". Balance " + account1.getBalance());
+                session.setAttribute("success", "Payment made successful");
+                response.sendRedirect("/payments_app_war_exploded/controller?command=GO_TO_USERS_PAGE");
+
             } else {
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/errorPage.jsp");
                 dispatcher.forward(request, response);

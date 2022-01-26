@@ -19,14 +19,19 @@ public class Controller extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        LOGGER.debug("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        LOGGER.debug(String.format("requested url: %s", request.getRequestURI()));
+
         process(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        LOGGER.debug(String.format("requested url: %s", request.getRequestURI()));
+
         process(request, response);
     }
     private void process(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+
+
 
         String commandName = request.getParameter("command");
         Command command = provider.getCommand(commandName);

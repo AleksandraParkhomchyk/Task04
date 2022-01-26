@@ -69,8 +69,10 @@ public class LoginationCommand implements Command {
                 System.out.println("Зашел админ");
             }
         } catch (NotAuthorizedException e) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/errorPage.jsp");
-            dispatcher.forward(request, response);
+
+            session.setAttribute("wrong", "Wrong login or password");
+            response.sendRedirect("/payments_app_war_exploded/controller?command=GO_TO_LOGINATION_PAGE");
+
         } catch (ServiceException e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/errorPage.jsp");
             dispatcher.forward(request, response);

@@ -3,12 +3,11 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
-
-
+<!--
 
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
-    </welcome-file-list>
+    </welcome-file-list>-->
 
     <servlet>
         <servlet-name>Controller</servlet-name>
@@ -20,18 +19,18 @@
         <url-pattern>/controller</url-pattern>
     </servlet-mapping>
 
-<filter>
-    <filter-name>Charset Filter</filter-name>
-    <filter-class>com.epam.tr.task04.paymentsapp.controller.filter.CharsetFilter</filter-class>
-    <init-param>
-        <param-name>requestEncoding</param-name>
-        <param-value>utf-8</param-value>
-    </init-param>
-</filter>
+    <filter>
+        <filter-name>Charset Filter</filter-name>
+        <filter-class>com.epam.tr.task04.paymentsapp.controller.filter.CharsetFilter</filter-class>
+        <init-param>
+            <param-name>requestEncoding</param-name>
+            <param-value>utf-8</param-value>
+        </init-param>
+    </filter>
 
-<filter-mapping>
-    <filter-name>Charset Filter</filter-name>
-    <url-pattern>/*</url-pattern>
-</filter-mapping>
+    <filter-mapping>
+        <filter-name>Charset Filter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
 </web-app>
