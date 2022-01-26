@@ -54,7 +54,7 @@ public class LoginationCommand implements Command {
                     System.out.println("Зашел юзер без счета");
 
                 } else {
-                    request.setAttribute("message", "Hello!" + "Your account number is " + account.getAccountNumber() + ". Balance " + account.getBalance());
+                    request.setAttribute("message", "Hello! " + "Your account number is " + account.getAccountNumber() + ". Balance " + account.getBalance());
                     session.setAttribute("accountNumber", account);
                     System.out.println("Зашел юзер со счетом");
                 }

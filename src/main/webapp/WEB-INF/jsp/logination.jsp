@@ -20,7 +20,6 @@
 <head>
     <title>${page_name}</title>
 </head>
-
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <body>
 <div class="container">

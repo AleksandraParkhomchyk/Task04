@@ -1,7 +1,6 @@
 package com.epam.tr.task04.paymentsapp.controller.command_impl;
 
 import com.epam.tr.task04.paymentsapp.controller.Command;
-import com.epam.tr.task04.paymentsapp.entity.Account;
 import com.epam.tr.task04.paymentsapp.entity.User;
 import com.epam.tr.task04.paymentsapp.services.AccountService;
 import com.epam.tr.task04.paymentsapp.services.ServiceFactory;
@@ -22,28 +21,22 @@ public class CreateAccountCommand implements Command {
 
         User user = new User();
         HttpSession session = request.getSession();
-
-        Integer role = (Integer) session.getAttribute("role");
         Integer id = (Integer) session.getAttribute("id");
-
-        user.setRole(role);
         user.setId(id);
 
-        try {
-            Account account = accountService.getAccountByUserId(id);
-
-            if (account.getId() == null){
+        if (session.getAttribute("accountNumber")== null) {
+            try {
                 accountService.createAccount(user);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/successPage.jsp");
                 dispatcher.forward(request, response);
 
-            } else {
-                System.out.println("Счет уже cуществует");
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/errorPage.jsp");
-                dispatcher.forward(request, response);
+            } catch (ServiceException e) {
+                e.printStackTrace(); //todo: exception
             }
-        } catch (ServiceException e) {
-            e.printStackTrace();// todo: smth with exception
+        } else {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/errorPage.jsp");
+            dispatcher.forward(request, response);
         }
     }
 }
+

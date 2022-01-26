@@ -9,7 +9,7 @@
 <header>
     <ul class="nav justify-content-center">
         <li class="nav-item">
-            <a class="nav-link active" href="#!">Home</a>
+            <a class="nav-link active" href="${pageContext.request.contextPath}/controller?command=GO_TO_INDEX_PAGE">Home</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#!">Logout</a>

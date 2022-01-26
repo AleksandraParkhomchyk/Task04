@@ -17,7 +17,7 @@ public class GoToIndexPageCommand implements Command {
         HttpSession session = request.getSession();
         session.setAttribute("url", "/payments_app_war_exploded/controller?command=GO_TO_INDEX_PAGE");
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/index.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
         dispatcher.forward(request, response);
     }
 }

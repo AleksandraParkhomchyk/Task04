@@ -11,7 +11,7 @@ import java.sql.*;
 
 public class AccountDAOImpl implements AccountDAO {
 
-    private final String createAccount = "INSERT INTO accounts(a_number, a_balance, a_openning_date, users_u_id) VALUES( ?, ?, ?, ?)";
+    private final String createAccount = "INSERT INTO accounts(a_number, a_balance, a_openning_date, a_status, users_u_id) VALUES(?, ?, ?, ?, ?)";
     private final String getAccountNumberByUserId = "SELECT a_id, a_number, a_balance FROM accounts WHERE (users_u_id = ?)";
     private final String afterPaymentBalance = "UPDATE accounts SET a_balance = ? WHERE (a_id = ?)";
 
@@ -33,7 +33,8 @@ public class AccountDAOImpl implements AccountDAO {
             preparedStatement.setString(1, String.valueOf(random_number));
             preparedStatement.setDouble(2, 0.00);
             preparedStatement.setDate(3, date);
-            preparedStatement.setInt(4, user.getId());
+            preparedStatement.setInt(4, 1);
+            preparedStatement.setInt(5, user.getId());
 
             preparedStatement.executeUpdate();
 

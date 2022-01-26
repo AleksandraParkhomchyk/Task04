@@ -18,29 +18,22 @@ public class Controller extends HttpServlet {
         super();
     }
 
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         LOGGER.debug("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
         process(request, response);
-
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         process(request, response);
     }
-
     private void process(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         String commandName = request.getParameter("command");
-
         Command command = provider.getCommand(commandName);
-
         try {
             command.execute(request, response);
         } catch (ServiceException e) {
             e.printStackTrace();
         }
     }
-
 }

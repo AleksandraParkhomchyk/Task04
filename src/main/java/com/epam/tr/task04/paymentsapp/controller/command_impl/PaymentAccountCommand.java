@@ -35,7 +35,6 @@ public class PaymentAccountCommand implements Command {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/successPage.jsp");
             dispatcher.forward(request, response);
 
-
         } catch (ServiceException e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/errorPage.jsp");
             dispatcher.forward(request, response);
