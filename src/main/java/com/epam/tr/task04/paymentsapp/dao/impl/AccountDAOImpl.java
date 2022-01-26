@@ -41,8 +41,9 @@ public class AccountDAOImpl implements AccountDAO {
             try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     account.setId(generatedKeys.getInt(1));
+                    return account;
                 } else {
-                    throw new SQLException("Creating account failed, no ID obtained.");
+                    return account;
                 }
             }
 
@@ -65,8 +66,6 @@ public class AccountDAOImpl implements AccountDAO {
                 throw new DAOException(e);
             }
         }
-
-        return account;
     }
 
     @Override

@@ -43,16 +43,23 @@ public class LoginationCommand implements Command {
             }
 
             if (role == 1) {
-                Account account = accountService.getAccountByUserId(id);
-                request.setAttribute("message", "Hello!" + "Your account number is " + account.getAccountNumber() + ". Balance " + account.getBalance());
                 session.setAttribute("id", id);
                 session.setAttribute("role", role);
                 session.setAttribute("login", login);
-                session.setAttribute("accountNumber", account);
 
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/userPage.jsp");
-                dispatcher.forward(request, response);
-                System.out.println("Зашел юзер");
+                try {
+                    Account account = accountService.getAccountByUserId(id);
+                    request.setAttribute("message", "Hello!" + "Your account number is " + account.getAccountNumber() + ". Balance " + account.getBalance());
+                    session.setAttribute("accountNumber", account);
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/userPage.jsp");
+                    dispatcher.forward(request, response);
+                    System.out.println("Зашел юзер co счетом");
+                } catch (ServiceException e) {
+                    request.setAttribute("message", "Hello, please create an account");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/userPage.jsp");
+                    dispatcher.forward(request, response);
+                    System.out.println("Зашел юзер без счета");
+                }
             } else if (role == 2) {
                 session.setAttribute("role", role);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/adminPage.jsp");
