@@ -31,10 +31,12 @@ public class CreateAccountCommand implements Command {
 
         try {
             Account account = accountService.getAccountByUserId(id);
-            Integer a_id = account.getId();
-            if (a_id == null){
+
+            if (account.getId() == null){
                 accountService.createAccount(user);
-                session.setAttribute("a_id", a_id);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/successPage.jsp");
+                dispatcher.forward(request, response);
+
             } else {
                 System.out.println("Счет уже cуществует");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/errorPage.jsp");

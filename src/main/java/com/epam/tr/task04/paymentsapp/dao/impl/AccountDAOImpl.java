@@ -83,13 +83,15 @@ public class AccountDAOImpl implements AccountDAO {
 
             resultSet = preparedStatement.executeQuery();
 
-            resultSet.next();
-            account.setId(resultSet.getInt(1));
-            account.setAccountNumber(resultSet.getString(2));
-            account.setBalance(resultSet.getDouble(3));
+            if (resultSet.next()) {
+                account.setId(resultSet.getInt(1));
+                account.setAccountNumber(resultSet.getString(2));
+                account.setBalance(resultSet.getDouble(3));
 
-            return account;
-
+                return account;
+            } else {
+                return account;
+            }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DAOException(e);
 

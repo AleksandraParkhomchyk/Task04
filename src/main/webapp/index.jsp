@@ -35,20 +35,5 @@
         <a class="btn btn-primary btn-lg" href="controller?command=GO_TO_REGISTRATION_PAGE" role="button">Register</a>
     </p>
 </div>
-
 </body>
-<footer>
-    <ul class="nav justify-content-center">
-        <li class="nav-item">
-            <form action="controller?command=CHANGE_LANGUAGE" method="post">
-                <input type="hidden" name="locale" value="en"/> <input type="submit" value="${en_button}">
-            </form>
-        </li>
-        <li class="nav-item">
-            <form action="controller?command=CHANGE_LANGUAGE" method="post">
-                <input type="hidden" name="locale" value="ru"/> <input type="submit" value="${ru_button}"><br/>
-            </form>
-        </li>
-    </ul>
-</footer>
 </html>
