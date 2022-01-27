@@ -17,7 +17,7 @@ public class LogOutCommand implements Command {
         HttpSession session = request.getSession(false);
         session.invalidate();
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/logination.jsp");
         dispatcher.forward(request, response);
     }
 }

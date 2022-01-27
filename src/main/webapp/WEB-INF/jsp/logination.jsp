@@ -41,7 +41,7 @@
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">${password}</label>
                     <div class="col-sm-7">
-                        <input type="text" class="form-control" name="password">
+                        <input type="password" class="form-control" name="password">
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">${enter}</button>

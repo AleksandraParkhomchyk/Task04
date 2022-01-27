@@ -42,10 +42,10 @@
 <div class="card">
     <div class="card-body">
         <form action="${pageContext.request.contextPath}/controller" method="post">
-            <input type="hidden" name="command" value="PAYMENT_ACCOUNT">
+            <input type="hidden" name="command" value="CASHOUT_REQUEST">
             <label class="col-sm-2 col-form-label">Amount</label>
             <div class="col-sm-7">
-                <input type="text" class="form-control" name="cash_amount">
+                <input type="text" class="form-control" name="cashout_amount">
             </div>
             <br>
             <button type="submit" class="btn btn-primary">Get cash from account</button>
