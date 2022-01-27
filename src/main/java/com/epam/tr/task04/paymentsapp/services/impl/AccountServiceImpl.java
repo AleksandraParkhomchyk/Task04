@@ -2,12 +2,15 @@ package com.epam.tr.task04.paymentsapp.services.impl;
 
 import com.epam.tr.task04.paymentsapp.dao.AccountDAO;
 import com.epam.tr.task04.paymentsapp.dao.DAOFactory;
+import com.epam.tr.task04.paymentsapp.dao.UserDAO;
 import com.epam.tr.task04.paymentsapp.dao.exception.DAOException;
 import com.epam.tr.task04.paymentsapp.entity.Account;
 import com.epam.tr.task04.paymentsapp.entity.CashoutRequest;
 import com.epam.tr.task04.paymentsapp.entity.User;
 import com.epam.tr.task04.paymentsapp.services.AccountService;
 import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;
+
+import java.util.List;
 
 public class AccountServiceImpl implements AccountService {
 
@@ -61,4 +64,19 @@ public class AccountServiceImpl implements AccountService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public List<CashoutRequest> getAllCashoutRequests() throws ServiceException {
+        DAOFactory factory = DAOFactory.getInstance();
+        AccountDAO accountDAO = factory.getAccountDAO();
+        List<CashoutRequest> list;
+        try {
+            list = accountDAO.getAllCashoutRequests();
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+        return list;
+    }
+
+
 }

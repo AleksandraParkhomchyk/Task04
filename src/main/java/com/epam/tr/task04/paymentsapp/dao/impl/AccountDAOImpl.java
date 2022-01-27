@@ -9,6 +9,8 @@ import com.epam.tr.task04.paymentsapp.entity.CashoutRequest;
 import com.epam.tr.task04.paymentsapp.entity.User;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AccountDAOImpl implements AccountDAO {
 
@@ -17,6 +19,7 @@ public class AccountDAOImpl implements AccountDAO {
     private final String afterPaymentBalance = "UPDATE accounts SET a_balance = ? WHERE (a_id = ?)";
     private final String paymentTransaction = "INSERT INTO transactions(t_date, t_amount, t_from_account, t_before_acc_balance, t_after_acc_balance, t_to_account, users_u_id, transaction_type_tt_id) values (?, ?, ?, ?, ?, ?, ?, ?)";
     private final String createCashoutRequest = "INSERT INTO cash_requests(cr_date, cr_amount, cr_status, accounts_a_id) VALUES(?, ?, ?, ?)";
+    private final String getAllRequestFromDB = "SELECT * FROM cash_requests";
 
 
     Date date = new java.sql.Date(System.currentTimeMillis());
@@ -225,6 +228,56 @@ public class AccountDAOImpl implements AccountDAO {
         } catch (SQLException | ConnectionPoolException e) {
             throw new DAOException(e);
         } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+        }
+    }
+
+    @Override
+    public List<CashoutRequest> getAllCashoutRequests() throws DAOException {
+        List<CashoutRequest> list = new ArrayList<CashoutRequest>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = ConnectionPool.getInstance().takeConnection();
+            preparedStatement = connection.prepareStatement(getAllRequestFromDB);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                CashoutRequest cashoutRequest = new CashoutRequest();
+                cashoutRequest.setId(resultSet.getInt(1));
+                cashoutRequest.setDate(resultSet.getDate(2));
+                cashoutRequest.setAmount(resultSet.getDouble(3));
+                cashoutRequest.setStatus(resultSet.getString(4));
+
+                list.add(cashoutRequest);
+
+            }
+            return list;
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DAOException(e);
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
             try {
                 if (preparedStatement != null) {
                     preparedStatement.close();
