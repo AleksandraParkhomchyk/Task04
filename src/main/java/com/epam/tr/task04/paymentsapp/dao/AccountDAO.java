@@ -19,5 +19,4 @@ public interface AccountDAO {
 
     List<CashoutRequest> getAllCashoutRequests() throws DAOException;
 
-    boolean updateRequestStatusApproved(Integer requestID) throws DAOException;
 }

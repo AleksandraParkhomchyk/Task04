@@ -12,6 +12,44 @@ public class CashRequestDAOImpl implements CashRequestDAO {
     private final String updateRequestStatusDB = "UPDATE cash_requests SET cr_status = ? WHERE (cr_id = ?)";
 
     @Override
+    public boolean updateRequestStatusApproved(Integer requestID) throws DAOException {
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = ConnectionPool.getInstance().takeConnection();
+            preparedStatement = connection.prepareStatement(updateRequestStatusDB);
+
+            preparedStatement.setInt(1, 2);
+            preparedStatement.setInt(2, requestID);
+
+            preparedStatement.executeUpdate();
+
+            return true;
+
+
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+        }
+    }
+
+    @Override
     public boolean updateRequestStatusDeclined(Integer requestID) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;

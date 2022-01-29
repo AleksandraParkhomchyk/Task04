@@ -20,5 +20,4 @@ public interface AccountService {
 
     List<CashoutRequest> getAllCashoutRequests() throws ServiceException;
 
-    public boolean updateRequestStatusApproved(Integer requestID) throws ServiceException;
 }
