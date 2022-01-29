@@ -48,7 +48,7 @@ public final class ConnectionPool {
         return instance;
     }
 
-    public void initPoolData() throws ConnectionPoolException {
+    private void initPoolData() throws ConnectionPoolException {
 
         try {
             Class.forName(driverName);
@@ -73,13 +73,13 @@ public final class ConnectionPool {
 
     }
 
-    public Connection takeConnection() throws ConnectionPoolException {
+    public Connection takeConnection() {
         Connection connection = null;
         try {
             connection = connectionQueue.take();
             givenAwayConQueue.add(connection);
         } catch (InterruptedException e) {
-            throw new ConnectionPoolException("Error connecting data source", e);
+            //todo: написать в лог.еррор и туда этот эксепшн
         }
         return connection;
     }
@@ -89,7 +89,7 @@ public final class ConnectionPool {
             closeConnectionQueue(givenAwayConQueue);
             closeConnectionQueue(connectionQueue);
         } catch (SQLException e) {
-
+// todo log
         }
     }
 

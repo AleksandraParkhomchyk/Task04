@@ -41,7 +41,7 @@ public class TransactionDAOImpl implements TransactionDAO {
                 list.add(transaction);
             }
             return list;
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
             try {

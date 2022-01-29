@@ -5,7 +5,6 @@ import com.epam.tr.task04.paymentsapp.entity.CashoutRequest;
 import com.epam.tr.task04.paymentsapp.entity.User;
 import com.epam.tr.task04.paymentsapp.services.AccountService;
 import com.epam.tr.task04.paymentsapp.services.ServiceFactory;
-import com.epam.tr.task04.paymentsapp.services.UserService;
 import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;
 
 import javax.servlet.RequestDispatcher;
@@ -23,7 +22,7 @@ public class GetAllCashoutRequestsCommand implements Command {
         AccountService accountService = serviceFactory.getAccountService();
         List<CashoutRequest> list;
         try {
-            list = accountService.getAllCashoutRequests();
+             list = accountService.getAllCashoutRequests();
             request.setAttribute("AllRequests", list);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/adminPage.jsp");
             dispatcher.forward(request, response);

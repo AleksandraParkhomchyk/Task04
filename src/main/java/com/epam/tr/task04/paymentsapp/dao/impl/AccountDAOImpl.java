@@ -55,7 +55,7 @@ public class AccountDAOImpl implements AccountDAO {
                 }
             }
 
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (SQLException e) {
             throw new DAOException(e);
 
         } finally {
@@ -100,7 +100,7 @@ public class AccountDAOImpl implements AccountDAO {
             } else {
                 return account;
             }
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (SQLException e) {
             throw new DAOException(e);
 
         } finally {
@@ -136,11 +136,9 @@ public class AccountDAOImpl implements AccountDAO {
 
         boolean result = true;
 
-        try {
-            connection = ConnectionPool.getInstance().takeConnection();
-        } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
-        }
+
+        connection = ConnectionPool.getInstance().takeConnection();
+
 
         try {
             writeNewBalance = connection.prepareStatement(afterPaymentBalance);
@@ -226,7 +224,7 @@ public class AccountDAOImpl implements AccountDAO {
                     return cashoutRequest;
                 }
             }
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
             try {
@@ -269,7 +267,7 @@ public class AccountDAOImpl implements AccountDAO {
 
             }
             return list;
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
             try {
@@ -314,7 +312,7 @@ public class AccountDAOImpl implements AccountDAO {
             return true;
 
 
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
             try {

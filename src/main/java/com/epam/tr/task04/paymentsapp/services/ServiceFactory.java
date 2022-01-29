@@ -1,7 +1,7 @@
 package com.epam.tr.task04.paymentsapp.services;
 
 import com.epam.tr.task04.paymentsapp.services.impl.AccountServiceImpl;
-import com.epam.tr.task04.paymentsapp.services.impl.CardServiceImpl;
+import com.epam.tr.task04.paymentsapp.services.impl.CashRequestServiceImpl;
 import com.epam.tr.task04.paymentsapp.services.impl.TransactionServiceImpl;
 import com.epam.tr.task04.paymentsapp.services.impl.UserServiceImpl;
 
@@ -11,21 +11,24 @@ public final class ServiceFactory {
 
     private final UserService userService = new UserServiceImpl();
     private final AccountService accountService = new AccountServiceImpl();
-    private final CardService cardService = new CardServiceImpl();
     private final TransactionService transactionService = new TransactionServiceImpl();
+    private final CashRequestService cashRequestService = new CashRequestServiceImpl();
 
-    //
-    //
-    //
+    private ServiceFactory() {
+    }
 
-    private ServiceFactory() {}
+    public UserService getUserService() {
+        return userService;
+    }
+    public AccountService getAccountService() {
+        return accountService;
+    }
+    public TransactionService getTransactionService() {
+        return transactionService;
+    }
+    public CashRequestService getCashRequestService() { return cashRequestService; }
 
-    public UserService getUserService() { return userService;  }
-    public AccountService getAccountService() { return accountService;  }
-    public CardService getCardService() { return cardService; }
-    public TransactionService getTransactionService() { return transactionService; }
-
-    public static ServiceFactory getInstance(){
+    public static ServiceFactory getInstance() {
         return instance;
     }
 }

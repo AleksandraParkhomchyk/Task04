@@ -21,11 +21,10 @@ public class ApproveRequestCommand implements Command {
         AccountService accountService = serviceFactory.getAccountService();
         List<CashoutRequest> list;
 
-        String requestIDgot = request.getParameter("edit");
+        String requestIDgot = request.getParameter("approve");
         Integer requestID = Integer.parseInt(requestIDgot);
 
         try {
-
             accountService.updateRequestStatusApproved(requestID);
             list = accountService.getAllCashoutRequests();
             request.setAttribute("AllRequests", list);

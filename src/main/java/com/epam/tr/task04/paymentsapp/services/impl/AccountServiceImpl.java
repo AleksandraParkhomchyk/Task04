@@ -2,7 +2,6 @@ package com.epam.tr.task04.paymentsapp.services.impl;
 
 import com.epam.tr.task04.paymentsapp.dao.AccountDAO;
 import com.epam.tr.task04.paymentsapp.dao.DAOFactory;
-import com.epam.tr.task04.paymentsapp.dao.UserDAO;
 import com.epam.tr.task04.paymentsapp.dao.exception.DAOException;
 import com.epam.tr.task04.paymentsapp.entity.Account;
 import com.epam.tr.task04.paymentsapp.entity.CashoutRequest;

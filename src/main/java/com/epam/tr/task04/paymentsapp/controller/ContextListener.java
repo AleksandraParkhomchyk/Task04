@@ -11,22 +11,18 @@ public class ContextListener implements ServletContextListener {
 
     public static final Logger LOGGER = Logger.getLogger(ContextListener.class);
 
-
     @Override
     public void contextInitialized(ServletContextEvent event) {
-        try {
-            ConnectionPool.getInstance().initPoolData();
-            System.out.println("Server started");
-        } catch (ConnectionPoolException e) {
-            LOGGER.error("Unable to initialize connection pool.", e);
-            throw new RuntimeException("Unable to initialize connection pool.", e);
-        }
+        LOGGER.debug("Server initialized");
 
+        ConnectionPool.getInstance();
+        System.out.println("Server started");
     }
-
 
     @Override
     public void contextDestroyed(ServletContextEvent event) {
+
+        ConnectionPool.getInstance().dispose();
         System.out.println("Server stopped");
     }
 

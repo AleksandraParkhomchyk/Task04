@@ -18,7 +18,6 @@ public final class CommandProvider {
         commands.put("CHANGE_LANGUAGE", new ChangeLanguage());
 
         commands.put("CREATE_ACCOUNT", new CreateAccountCommand());
-        commands.put("CREATE_CARD", new CreateCardCommand());
         commands.put("PAYMENT_ACCOUNT", new PaymentAccountCommand());
         commands.put("GET_ALL_USERS", new GetAllUsersCommand());
         commands.put("GO_TO_USERS_PAGE", new GoToUsersPageCommand());
@@ -27,6 +26,7 @@ public final class CommandProvider {
         commands.put("CASHOUT_REQUEST", new CashoutRequestCommand());
         commands.put("GET_ALL_CASHOUT_REQUESTS", new GetAllCashoutRequestsCommand());
         commands.put("APPROVE_REQUEST", new ApproveRequestCommand());
+        commands.put("DECLINE_REQUEST", new DeclineRequestCommand());
 
     }
 

@@ -4,7 +4,7 @@
 <head>
     <title>Admin Page</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="${pageContext.request.contextPath}/lib/jquery-3.6.0.min.js"></script>
+
 </head>
 <header>
     <ul class="nav justify-content-center">
@@ -16,34 +16,47 @@
         </li>
     </ul>
 </header>
-<br>
-<h1>Hello, admin</h1>
+<body>
 
-<form action="${pageContext.request.contextPath}/controller" method="get">
-    <input type="hidden" name="command" value="GET_ALL_CASHOUT_REQUESTS">
-    <button type="submit" class="btn btn-primary">Show all requests</button>
-    <div class="col-md-6 col-md-offset-3">
-        <table class="table">
-            <c:forEach items="${requestScope.AllRequests}" var="request">
+<h2>Admin page</h2>
+
+<div class="col-md-6 col-md-offset-3">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Request id</th>
+            <th>Request date</th>
+            <th>Amount</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <c:forEach items="${requestScope.AllRequests}" var="request">
             <tr>
-                <td data-th="Requests">
-                    <div class="row">
-                        <div class="col-sm-10">
-                            <h4 class="margin">${request.id}</h4>
-                        </div>
-                    </div>
-                <td data-th="Login">${request.date}</td>
-                <td data-th="Name">${request.amount}</td>
-                <td data-th="Surname">${request.status}</td>
-                <td>
-                    <div class="col-md-6 col-md-offset-3">
-                        <a class="btn btn-secondary btn-sm"
-                           href="${pageContext.request.contextPath}/controller?command=APPROVE_REQUEST=${request.id}"
-                           role="button">Approve</a></div>
+                <td data-th="Id">${request.id}</td>
+                <td data-th="Date">${request.date}</td>
+                <td data-th="Amount">${request.amount}</td>
+                <td data-th="Status">${request.status}</td>
+                <td class="actions" data-th="">
+                    <form action="${pageContext.request.contextPath}/controller?command=APPROVE_REQUEST" method="post">
+                        <button type="submit" class="btn btn-info btn-sm" id="approve"
+                                name="approve" value="${request.id}">
+                            <i class="fa fa-refresh">Approve</i>
+                        </button>
+                    </form>
+                </td>
+                <td class="actions" data-th="">
+                    <form action="${pageContext.request.contextPath}/controller?command=DECLINE_REQUEST" method="post">
+                        <button type="submit" class="btn btn-info btn-sm" id="decline"
+                                name="decline" value="${request.id}">
+                            <i class="fa fa-refresh">Decline</i>
+                        </button>
+                    </form>
+                </td>
             </tr>
-            </c:forEach>
-        </table>
-</form>
+        </c:forEach>
+    </table>
+</div>
+
 <br>
 
 <form action="${pageContext.request.contextPath}/controller" method="get">
