@@ -19,6 +19,11 @@
         <url-pattern>/controller</url-pattern>
     </servlet-mapping>
 
+    <listener>
+        <listener-class>com.epam.tr.task04.paymentsapp.controller.ContextListener</listener-class>
+    </listener>
+
+
     <filter>
         <filter-name>Charset Filter</filter-name>
         <filter-class>com.epam.tr.task04.paymentsapp.controller.filter.CharsetFilter</filter-class>
@@ -32,5 +37,7 @@
         <filter-name>Charset Filter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+
 
 </web-app>

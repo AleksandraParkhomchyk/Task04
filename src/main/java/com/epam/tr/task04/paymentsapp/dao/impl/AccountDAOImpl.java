@@ -20,6 +20,7 @@ public class AccountDAOImpl implements AccountDAO {
     private final String paymentTransaction = "INSERT INTO transactions(t_date, t_amount, t_from_account, t_before_acc_balance, t_after_acc_balance, t_to_account, users_u_id, transaction_type_tt_id) values (?, ?, ?, ?, ?, ?, ?, ?)";
     private final String createCashoutRequest = "INSERT INTO cash_requests(cr_date, cr_amount, cr_status, accounts_a_id) VALUES(?, ?, ?, ?)";
     private final String getAllRequestFromDB = "SELECT * FROM cash_requests";
+    private final String updateRequestStatusDB = "UPDATE cash_requests SET cr_status = ? WHERE (cr_id = ?)";
 
 
     Date date = new java.sql.Date(System.currentTimeMillis());
@@ -278,6 +279,44 @@ public class AccountDAOImpl implements AccountDAO {
             } catch (SQLException e) {
                 throw new DAOException(e);
             }
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+        }
+    }
+
+    @Override
+    public boolean updateRequestStatusApproved(Integer requestID) throws DAOException {
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = ConnectionPool.getInstance().takeConnection();
+            preparedStatement = connection.prepareStatement(updateRequestStatusDB);
+
+            preparedStatement.setInt(1, 2);
+            preparedStatement.setInt(2, requestID);
+
+            preparedStatement.executeUpdate();
+
+            return true;
+
+
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DAOException(e);
+        } finally {
             try {
                 if (preparedStatement != null) {
                     preparedStatement.close();

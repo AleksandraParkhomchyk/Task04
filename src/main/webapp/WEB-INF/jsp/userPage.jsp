@@ -75,21 +75,24 @@
     <button type="submit" class="btn btn-primary">Show all transactions</button>
     <div class="container">
         <table id="users" class="table table-hover table-condensed">
+            <thead>
+            <tr>
+                <th style="width: 50%">ID</th>
+                <th style="width: 10%">Date</th>
+                <th style="width: 8%">Amount</th>
+                <th style="width: 8%">Balance before</th>
+                <th style="width: 8%">Balance after</th>
+                <th style="width: 8%">Payment to account</th>
+            </tr>
+            </thead>
             <tbody>
             <c:forEach items="${requestScope.AllTransactions}" var="transaction">
             <tr>
-                <td data-th="Users">
-                    <div class="row">
-                        <div class="col-sm-10">
-                            <h4 class="margin">${transaction.id}</h4>
-                        </div>
-                    </div>
-                </td>
+                <td data-th="Name">${transaction.id}</td>
                 <td data-th="Name">${transaction.date}</td>
                 <td data-th="Surname">${transaction.amount}</td>
                 <td data-th="Passport">${transaction.startBalance}</td>
                 <td data-th="Passport">${transaction.endBalance}</td>
-                <td data-th="Passport">${transaction.outAccount}</td>
                 <td data-th="Passport">${transaction.inAccount}</td>
             </tr>
             </c:forEach>

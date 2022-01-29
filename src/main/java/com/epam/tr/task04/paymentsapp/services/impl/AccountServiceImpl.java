@@ -78,5 +78,16 @@ public class AccountServiceImpl implements AccountService {
         return list;
     }
 
-
+    @Override
+    public boolean updateRequestStatusApproved(Integer requestID) throws ServiceException {
+        DAOFactory factory = DAOFactory.getInstance();
+        AccountDAO accountDAO = factory.getAccountDAO();
+        boolean result;
+        try {
+            result = accountDAO.updateRequestStatusApproved(requestID);
+            return result;
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

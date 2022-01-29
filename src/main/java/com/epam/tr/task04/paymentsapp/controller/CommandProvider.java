@@ -26,6 +26,7 @@ public final class CommandProvider {
         commands.put("GET_USERS_TRANSACTIONS", new GetUsersTransactionsCommand());
         commands.put("CASHOUT_REQUEST", new CashoutRequestCommand());
         commands.put("GET_ALL_CASHOUT_REQUESTS", new GetAllCashoutRequestsCommand());
+        commands.put("APPROVE_REQUEST", new ApproveRequestCommand());
 
     }
 

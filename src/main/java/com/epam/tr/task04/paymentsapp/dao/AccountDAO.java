@@ -18,4 +18,6 @@ public interface AccountDAO {
     CashoutRequest cashout(Account account, Double amount) throws DAOException;
 
     List<CashoutRequest> getAllCashoutRequests() throws DAOException;
+
+    boolean updateRequestStatusApproved(Integer requestID) throws DAOException;
 }

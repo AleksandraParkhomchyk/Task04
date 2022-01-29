@@ -4,6 +4,7 @@
 <head>
     <title>Admin Page</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="${pageContext.request.contextPath}/lib/jquery-3.6.0.min.js"></script>
 </head>
 <header>
     <ul class="nav justify-content-center">
@@ -15,8 +16,36 @@
         </li>
     </ul>
 </header>
-<body>
+<br>
 <h1>Hello, admin</h1>
+
+<form action="${pageContext.request.contextPath}/controller" method="get">
+    <input type="hidden" name="command" value="GET_ALL_CASHOUT_REQUESTS">
+    <button type="submit" class="btn btn-primary">Show all requests</button>
+    <div class="col-md-6 col-md-offset-3">
+        <table class="table">
+            <c:forEach items="${requestScope.AllRequests}" var="request">
+            <tr>
+                <td data-th="Requests">
+                    <div class="row">
+                        <div class="col-sm-10">
+                            <h4 class="margin">${request.id}</h4>
+                        </div>
+                    </div>
+                <td data-th="Login">${request.date}</td>
+                <td data-th="Name">${request.amount}</td>
+                <td data-th="Surname">${request.status}</td>
+                <td>
+                    <div class="col-md-6 col-md-offset-3">
+                        <a class="btn btn-secondary btn-sm"
+                           href="${pageContext.request.contextPath}/controller?command=APPROVE_REQUEST=${request.id}"
+                           role="button">Approve</a></div>
+            </tr>
+            </c:forEach>
+        </table>
+</form>
+<br>
+
 <form action="${pageContext.request.contextPath}/controller" method="get">
     <input type="hidden" name="command" value="GET_ALL_USERS">
     <button type="submit" class="btn btn-primary">Show all users</button>
@@ -36,28 +65,6 @@
                 <td data-th="Name">${user.name}</td>
                 <td data-th="Surname">${user.surname}</td>
                 <td data-th="Passport">${user.passport}</td>
-            </tr>
-            </c:forEach>
-</form>
-<br/>
-<form action="${pageContext.request.contextPath}/controller" method="post">
-    <input type="hidden" name="command" value="GET_ALL_CASHOUT_REQUESTS">
-    <button type="submit" class="btn btn-primary">Show all requests</button>
-    <div class="container">
-        <table id="requests" class="table table-hover table-condensed">
-            <tbody>
-            <c:forEach items="${requestScope.AllRequests}" var="request">
-            <tr>
-                <td data-th="Requests">
-                    <div class="row">
-                        <div class="col-sm-10">
-                            <h4 class="margin">${request.id}</h4>
-                        </div>
-                    </div>
-                </td>
-                <td data-th="Login">${request.date}</td>
-                <td data-th="Name">${request.amount}</td>
-                <td data-th="Surname">${request.status}</td>
             </tr>
             </c:forEach>
 </form>

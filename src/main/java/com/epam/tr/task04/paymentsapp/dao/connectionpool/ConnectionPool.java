@@ -48,7 +48,7 @@ public final class ConnectionPool {
         return instance;
     }
 
-    private void initPoolData() throws ConnectionPoolException {
+    public void initPoolData() throws ConnectionPoolException {
 
         try {
             Class.forName(driverName);

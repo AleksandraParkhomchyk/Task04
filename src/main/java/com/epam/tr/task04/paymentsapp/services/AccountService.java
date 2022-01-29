@@ -19,4 +19,6 @@ public interface AccountService {
     CashoutRequest cashout(Account account, Double amount) throws ServiceException;
 
     List<CashoutRequest> getAllCashoutRequests() throws ServiceException;
+
+    public boolean updateRequestStatusApproved(Integer requestID) throws ServiceException;
 }
