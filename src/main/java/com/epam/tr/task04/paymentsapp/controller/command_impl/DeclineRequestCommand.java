@@ -7,7 +7,6 @@ import com.epam.tr.task04.paymentsapp.services.CashRequestService;
 import com.epam.tr.task04.paymentsapp.services.ServiceFactory;
 import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;
 
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -25,8 +24,8 @@ public class DeclineRequestCommand implements Command {
 
         List<CashoutRequest> list;
 
-        String requestIDgot = request.getParameter("decline");
-        Integer requestID = Integer.parseInt(requestIDgot);
+        String requestIDGot = request.getParameter("decline");
+        Integer requestID = Integer.parseInt(requestIDGot);
 
         try {
             cashRequestService.updateRequestStatusDeclined(requestID);

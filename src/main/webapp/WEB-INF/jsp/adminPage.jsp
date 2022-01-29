@@ -35,7 +35,11 @@
                 <td data-th="Id">${request.id}</td>
                 <td data-th="Date">${request.date}</td>
                 <td data-th="Amount">${request.amount}</td>
-                <td data-th="Status">${request.status}</td>
+                <td><c:choose>
+                    <c:when test="${request.status == 1}">NEW</c:when>
+                    <c:when test="${request.status == 2}">Approved</c:when>
+                    <c:when test="${request.status == 3}">Declined</c:when>
+                </c:choose></td>
                 <td class="actions" data-th="">
                     <form action="${pageContext.request.contextPath}/controller?command=APPROVE_REQUEST" method="post">
                         <button type="submit" class="btn btn-info btn-sm" id="approve"
