@@ -19,7 +19,6 @@ public class ApproveRequestCommand implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ServiceException {
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         CashRequestService cashRequestService = serviceFactory.getCashRequestService();
-        AccountService accountService = serviceFactory.getAccountService();
 
         List<CashoutRequest> list;
 
@@ -28,7 +27,7 @@ public class ApproveRequestCommand implements Command {
 
         try {
             cashRequestService.updateRequestStatusApproved(requestID);
-            list = accountService.getAllCashoutRequests();
+            list = cashRequestService.getAllCashoutRequests();
             request.setAttribute("AllRequests", list);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/adminPage.jsp");
             dispatcher.forward(request, response);

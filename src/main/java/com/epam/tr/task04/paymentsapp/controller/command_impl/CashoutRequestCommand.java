@@ -4,6 +4,7 @@ import com.epam.tr.task04.paymentsapp.controller.Command;
 import com.epam.tr.task04.paymentsapp.entity.Account;
 import com.epam.tr.task04.paymentsapp.entity.CashoutRequest;
 import com.epam.tr.task04.paymentsapp.services.AccountService;
+import com.epam.tr.task04.paymentsapp.services.CashRequestService;
 import com.epam.tr.task04.paymentsapp.services.ServiceFactory;
 import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;
 
@@ -22,13 +23,14 @@ public class CashoutRequestCommand implements Command {
         cAmount = Double.parseDouble(request.getParameter("cashout_amount"));
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         AccountService accountService = serviceFactory.getAccountService();
+        CashRequestService cashRequestService = serviceFactory.getCashRequestService();
         HttpSession session = request.getSession(true);
 
         Integer userId = (Integer) session.getAttribute("id");
         try {
 
             Account account = accountService.getAccountByUserId(userId);
-            CashoutRequest cashoutRequest = accountService.cashout(account, cAmount);
+            CashoutRequest cashoutRequest = cashRequestService.cashout(account, cAmount);
             Integer requestId = cashoutRequest.getId();
             session.setAttribute("requestId", requestId);
 

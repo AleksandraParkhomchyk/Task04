@@ -5,6 +5,7 @@ import com.epam.tr.task04.paymentsapp.entity.Account;
 import com.epam.tr.task04.paymentsapp.entity.CashoutRequest;
 import com.epam.tr.task04.paymentsapp.entity.User;
 import com.epam.tr.task04.paymentsapp.services.AccountService;
+import com.epam.tr.task04.paymentsapp.services.CashRequestService;
 import com.epam.tr.task04.paymentsapp.services.UserService;
 import com.epam.tr.task04.paymentsapp.services.ServiceFactory;
 import com.epam.tr.task04.paymentsapp.services.exception.NotAuthorizedException;
@@ -32,6 +33,7 @@ public class LoginationCommand implements Command {
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         UserService userService = serviceFactory.getUserService();
         AccountService accountService = serviceFactory.getAccountService();
+        CashRequestService cashRequestService = serviceFactory.getCashRequestService();
         HttpSession session = request.getSession(true);
 
 
@@ -68,7 +70,7 @@ public class LoginationCommand implements Command {
             } else if (role == 2) {
                 session.setAttribute("role", role);
                 List<CashoutRequest> list;
-                list = accountService.getAllCashoutRequests();
+                list = cashRequestService.getAllCashoutRequests();
                 request.setAttribute("AllRequests", list);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/adminPage.jsp");
                 dispatcher.forward(request, response);
