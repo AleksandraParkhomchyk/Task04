@@ -36,15 +36,18 @@
                 <td data-th="Date">${request.date}</td>
                 <td data-th="Amount">${request.amount}</td>
                 <td><c:choose>
-                    <c:when test="${request.status == 1}">NEW</c:when>
-                    <c:when test="${request.status == 2}">Approved</c:when>
+                    <c:when test="${request.status == 1}">Open</c:when>
+                    <c:when test="${request.status == 2}">Completed</c:when>
                     <c:when test="${request.status == 3}">Declined</c:when>
                 </c:choose></td>
+                <td>
+                    <c:choose>
+                    <c:when test="${request.status ==1}">
                 <td class="actions" data-th="">
                     <form action="${pageContext.request.contextPath}/controller?command=APPROVE_REQUEST" method="post">
                         <button type="submit" class="btn btn-info btn-sm" id="approve"
                                 name="approve" value="${request.id}">
-                            <i class="fa fa-refresh">Approve</i>
+                            <i class="fa fa-refresh">Execute</i>
                         </button>
                     </form>
                 </td>
@@ -56,10 +59,13 @@
                         </button>
                     </form>
                 </td>
+                </c:when>
+                </c:choose>
             </tr>
         </c:forEach>
     </table>
 </div>
+
 
 <br>
 

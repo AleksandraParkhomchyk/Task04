@@ -33,7 +33,6 @@ public class CashoutRequestCommand implements Command {
             CashoutRequest cashoutRequest = cashRequestService.cashout(account, cAmount);
             Integer requestId = cashoutRequest.getId();
             session.setAttribute("requestId", requestId);
-
             RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/successPage.jsp");
             dispatcher.forward(request, response);
 

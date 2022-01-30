@@ -1,6 +1,7 @@
 package com.epam.tr.task04.paymentsapp.controller.command_impl;
 
 import com.epam.tr.task04.paymentsapp.controller.Command;
+import com.epam.tr.task04.paymentsapp.entity.Account;
 import com.epam.tr.task04.paymentsapp.entity.CashoutRequest;
 import com.epam.tr.task04.paymentsapp.services.AccountService;
 import com.epam.tr.task04.paymentsapp.services.CashRequestService;
@@ -19,14 +20,21 @@ public class ApproveRequestCommand implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ServiceException {
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         CashRequestService cashRequestService = serviceFactory.getCashRequestService();
+        AccountService accountService = serviceFactory.getAccountService();
+        Double amount;
+
+        Integer id = 1;
+        amount = Double.valueOf(20);
+
+        Account account = accountService.getAccountByUserId(id);
 
         List<CashoutRequest> list;
 
-        String requestIDgot = request.getParameter("approve");
-        Integer requestID = Integer.parseInt(requestIDgot);
+        String requestIDGot = request.getParameter("approve");
+        Integer requestID = Integer.parseInt(requestIDGot);
 
         try {
-            cashRequestService.updateRequestStatusApproved(requestID);
+            cashRequestService.updateRequestStatusApproved(account, requestID, amount);
             list = cashRequestService.getAllCashoutRequests();
             request.setAttribute("AllRequests", list);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/adminPage.jsp");

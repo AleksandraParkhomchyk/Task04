@@ -127,10 +127,7 @@ public class AccountDAOImpl implements AccountDAO {
         PreparedStatement writeTransaction = null;
 
         boolean result = true;
-
-
         connection = ConnectionPool.getInstance().takeConnection();
-
 
         try {
             writeNewBalance = connection.prepareStatement(afterPaymentBalance);

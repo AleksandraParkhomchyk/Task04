@@ -15,6 +15,7 @@ public class CashRequestDAOImpl implements CashRequestDAO {
     private final String getAllRequestFromDB = "SELECT * FROM cash_requests";
     private final String updateRequestStatusDB = "UPDATE cash_requests SET cr_status = ? WHERE (cr_id = ?)";
     private final String createCashoutRequest = "INSERT INTO cash_requests(cr_date, cr_amount, cr_status, accounts_a_id) VALUES(?, ?, ?, ?)";
+    private final String afterCashoutBalance = "UPDATE accounts SET a_balance = ? WHERE (a_id = ?)";
 
     Date date = new java.sql.Date(System.currentTimeMillis());
 
@@ -117,29 +118,48 @@ public class CashRequestDAOImpl implements CashRequestDAO {
 
 
     @Override
-    public boolean updateRequestStatusApproved(Integer requestID) throws DAOException {
+    public boolean updateRequestStatusApproved(Account account, Integer requestID, Double amount) throws DAOException {
 
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
+        Connection connection = ConnectionPool.getInstance().takeConnection();
+
+        PreparedStatement updateStatus = null;
+        PreparedStatement updateBalance = null;
+        boolean result = true;
 
         try {
-            connection = ConnectionPool.getInstance().takeConnection();
-            preparedStatement = connection.prepareStatement(updateRequestStatusDB);
 
-            preparedStatement.setInt(1, 2);
-            preparedStatement.setInt(2, requestID);
+            updateStatus = connection.prepareStatement(updateRequestStatusDB);
+            updateBalance = connection.prepareStatement(afterCashoutBalance);
 
-            preparedStatement.executeUpdate();
+            connection.setAutoCommit(false);
 
-            return true;
+            updateStatus.setInt(1, 2);
+            updateStatus.setInt(2, requestID);
+
+            updateStatus.executeUpdate();
+
+            double finalBalance = account.getBalance() - amount;
+            updateBalance.setDouble(1, finalBalance);
+            updateBalance.setInt(2, account.getId());
+
+            updateBalance.executeUpdate();
+
+            connection.commit();
+
+            result = true;
 
 
         } catch (SQLException e) {
-            throw new DAOException(e);
+            try {
+                connection.rollback();
+                result = false;
+            } catch (SQLException exception) {
+                throw new DAOException(e);
+            }
         } finally {
             try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
+                if (updateStatus != null) {
+                    updateStatus.close();
                 }
             } catch (SQLException e) {
                 throw new DAOException(e);
@@ -151,7 +171,7 @@ public class CashRequestDAOImpl implements CashRequestDAO {
             } catch (SQLException e) {
                 throw new DAOException(e);
             }
-        }
+        } return result;
     }
 
     @Override
