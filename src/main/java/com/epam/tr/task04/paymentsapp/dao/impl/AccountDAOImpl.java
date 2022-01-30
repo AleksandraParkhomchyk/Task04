@@ -14,6 +14,8 @@ public class AccountDAOImpl implements AccountDAO {
     private final String getAccountNumberByUserId = "SELECT a_id, a_number, a_balance FROM accounts WHERE (users_u_id = ?)";
     private final String afterPaymentBalance = "UPDATE accounts SET a_balance = ? WHERE (a_id = ?)";
     private final String paymentTransaction = "INSERT INTO transactions(t_date, t_amount, t_from_account, t_before_acc_balance, t_after_acc_balance, t_to_account, users_u_id, transaction_type_tt_id) values (?, ?, ?, ?, ?, ?, ?, ?)";
+    private final String getAccountByRequestId = "SELECT accounts_a_id FROM cash_requests WHERE cr_id = ?";
+    private final String getAccountById = "SELECT * FROM accounts WHERE a_id = ?";
 
     Date date = new java.sql.Date(System.currentTimeMillis());
     final int max = 1000;
@@ -185,5 +187,103 @@ public class AccountDAOImpl implements AccountDAO {
             }
         }
         return result;
+    }
+
+    @Override
+    public Integer getAccountIdByRequestId(Integer requestId) throws DAOException {
+
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        ResultSet resultSet = null;
+        Integer accountId = null;
+
+        try {
+            connection = ConnectionPool.getInstance().takeConnection();
+            preparedStatement = connection.prepareStatement(getAccountByRequestId);
+            preparedStatement.setInt(1, requestId);
+
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                accountId = resultSet.getInt(1);
+
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+        }
+        return accountId;
+    }
+
+    @Override
+    public Account getAccountById(Integer accountId) throws DAOException {
+
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        ResultSet resultSet = null;
+        Account account = new Account();
+
+
+        try {
+            connection = ConnectionPool.getInstance().takeConnection();
+            preparedStatement = connection.prepareStatement(getAccountById);
+            preparedStatement.setInt(1, accountId);
+
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                account.setId(resultSet.getInt(1));
+                account.setBalance(resultSet.getDouble(3));
+            }
+
+            return account;
+        } catch (
+                SQLException e) {
+            throw new DAOException(e);
+
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+        }
     }
 }

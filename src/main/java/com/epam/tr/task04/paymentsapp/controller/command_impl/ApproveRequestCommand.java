@@ -23,15 +23,14 @@ public class ApproveRequestCommand implements Command {
         AccountService accountService = serviceFactory.getAccountService();
         Double amount;
 
-        Integer id = 1;
-        amount = Double.valueOf(20);
-
-        Account account = accountService.getAccountByUserId(id);
-
         List<CashoutRequest> list;
 
         String requestIDGot = request.getParameter("approve");
         Integer requestID = Integer.parseInt(requestIDGot);
+        amount = cashRequestService.getAmountByRequestId(requestID);
+        Integer accountId = accountService.getAccountIdByRequestId(requestID);
+        Account account = accountService.getAccountById(accountId);
+
 
         try {
             cashRequestService.updateRequestStatusApproved(account, requestID, amount);

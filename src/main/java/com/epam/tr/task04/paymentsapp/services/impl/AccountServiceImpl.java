@@ -48,4 +48,29 @@ public class AccountServiceImpl implements AccountService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public Integer getAccountIdByRequestId(Integer requestId) throws ServiceException {
+        DAOFactory factory = DAOFactory.getInstance();
+        AccountDAO accountDAO = factory.getAccountDAO();
+        try {
+            Integer accountId = accountDAO.getAccountIdByRequestId(requestId);
+            return accountId;
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public Account getAccountById(Integer accountId) throws ServiceException {
+        DAOFactory factory = DAOFactory.getInstance();
+        AccountDAO accountDAO = factory.getAccountDAO();
+
+        try {
+            Account account = accountDAO.getAccountById(accountId);
+            return account;
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

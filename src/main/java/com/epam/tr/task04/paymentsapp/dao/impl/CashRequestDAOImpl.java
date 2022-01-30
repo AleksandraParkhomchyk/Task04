@@ -16,6 +16,7 @@ public class CashRequestDAOImpl implements CashRequestDAO {
     private final String updateRequestStatusDB = "UPDATE cash_requests SET cr_status = ? WHERE (cr_id = ?)";
     private final String createCashoutRequest = "INSERT INTO cash_requests(cr_date, cr_amount, cr_status, accounts_a_id) VALUES(?, ?, ?, ?)";
     private final String afterCashoutBalance = "UPDATE accounts SET a_balance = ? WHERE (a_id = ?)";
+    private final String getAmountById = "SELECT cr_amount FROM cash_requests WHERE (cr_id = ?)";
 
     Date date = new java.sql.Date(System.currentTimeMillis());
 
@@ -171,7 +172,8 @@ public class CashRequestDAOImpl implements CashRequestDAO {
             } catch (SQLException e) {
                 throw new DAOException(e);
             }
-        } return result;
+        }
+        return result;
     }
 
     @Override
@@ -207,6 +209,53 @@ public class CashRequestDAOImpl implements CashRequestDAO {
                 throw new DAOException(e);
             }
         }
+    }
+
+    @Override
+    public Double getAmountByRequestId(Integer requestId) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Double amount = null;
+
+        try {
+            connection = ConnectionPool.getInstance().takeConnection();
+            preparedStatement = connection.prepareStatement(getAmountById);
+            preparedStatement.setInt(1, requestId);
+
+            resultSet = preparedStatement.executeQuery();
+
+
+            while (resultSet.next()) {
+                amount = resultSet.getDouble(1);
+                return amount;
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+        }
+        return amount;
     }
 }
 

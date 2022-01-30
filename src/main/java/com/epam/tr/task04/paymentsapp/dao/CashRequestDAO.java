@@ -9,7 +9,12 @@ import java.util.List;
 public interface CashRequestDAO {
 
     CashoutRequest cashout(Account account, Double amount) throws DAOException;
+
     List<CashoutRequest> getAllCashoutRequests() throws DAOException;
+
     boolean updateRequestStatusApproved(Account account, Integer requestID, Double amount) throws DAOException;
+
     boolean updateRequestStatusDeclined(Integer requestID) throws DAOException;
+
+    Double getAmountByRequestId(Integer requestId) throws DAOException;
 }
