@@ -69,34 +69,14 @@
     </div>
 </div>
 
-<form action="${pageContext.request.contextPath}/controller" method="post">
-    <input type="hidden" name="command" value="GET_USERS_TRANSACTIONS">
-    <br>
-    <button type="submit" class="btn btn-primary">Show all transactions</button>
-    <div class="container">
-        <table id="users" class="table table-hover table-condensed">
-            <thead>
-            <tr>
-                <th style="width: 50%">ID</th>
-                <th style="width: 10%">Date</th>
-                <th style="width: 8%">Amount</th>
-                <th style="width: 8%">Balance before</th>
-                <th style="width: 8%">Balance after</th>
-                <th style="width: 8%">Payment to account</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach items="${requestScope.AllTransactions}" var="transaction">
-            <tr>
-                <td data-th="Name">${transaction.id}</td>
-                <td data-th="Name">${transaction.date}</td>
-                <td data-th="Surname">${transaction.amount}</td>
-                <td data-th="Passport">${transaction.startBalance}</td>
-                <td data-th="Passport">${transaction.endBalance}</td>
-                <td data-th="Passport">${transaction.inAccount}</td>
-            </tr>
-            </c:forEach>
-</form>
-
+<div class="card">
+    <div class="card-body">
+        <form action="${pageContext.request.contextPath}/controller" method="get">
+            <input type="hidden" name="command" value="GET_USERS_TRANSACTIONS">
+            <br>
+            <button type="submit" class="btn btn-primary">Show my history</button>
+        </form>
+    </div>
+</div>
 </body>
 </html>

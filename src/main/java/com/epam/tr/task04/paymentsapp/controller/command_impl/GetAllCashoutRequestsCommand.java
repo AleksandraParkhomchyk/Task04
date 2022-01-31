@@ -2,8 +2,6 @@ package com.epam.tr.task04.paymentsapp.controller.command_impl;
 
 import com.epam.tr.task04.paymentsapp.controller.Command;
 import com.epam.tr.task04.paymentsapp.entity.CashoutRequest;
-import com.epam.tr.task04.paymentsapp.entity.User;
-import com.epam.tr.task04.paymentsapp.services.AccountService;
 import com.epam.tr.task04.paymentsapp.services.CashRequestService;
 import com.epam.tr.task04.paymentsapp.services.ServiceFactory;
 import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;
@@ -22,8 +20,9 @@ public class GetAllCashoutRequestsCommand implements Command {
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         CashRequestService cashRequestService = serviceFactory.getCashRequestService();
         List<CashoutRequest> list;
+
         try {
-             list = cashRequestService.getAllCashoutRequests();
+            list = cashRequestService.getAllCashoutRequests();
             request.setAttribute("AllRequests", list);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/adminPage.jsp");
             dispatcher.forward(request, response);

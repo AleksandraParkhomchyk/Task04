@@ -10,6 +10,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -19,13 +20,13 @@ public class GetUsersTransactionsCommand implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ServiceException {
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         TransactionService transactionService = serviceFactory.getTransactionService();
-
+        HttpSession session = request.getSession(true);
         List<Transaction> list;
 
         try {
             list = transactionService.getAllTransactions();
             request.setAttribute("AllTransactions", list);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/userPage.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/historyPage.jsp");
             dispatcher.forward(request, response);
         } catch (ServiceException e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/errorPage.jsp");
