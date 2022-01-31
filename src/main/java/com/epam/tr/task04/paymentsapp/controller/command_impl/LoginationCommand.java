@@ -53,6 +53,8 @@ public class LoginationCommand implements Command {
                 session.setAttribute("login", login);
 
                 Account account = accountService.getAccountByUserId(id);
+                Integer account_id = account.getId();
+                session.setAttribute("account_id", account_id);
 
                 if (account.getId() == null) {
                     request.setAttribute("message", "Hello! " + "Please, create an account.");

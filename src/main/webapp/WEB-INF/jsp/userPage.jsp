@@ -52,6 +52,15 @@
         </form>
     </div>
 </div>
+<div class="card">
+    <div class="card-body">
+        <form action="${pageContext.request.contextPath}/controller" method="get">
+            <input type="hidden" name="command" value="GET_USERS_REQUESTS">
+            <br>
+            <button type="submit" class="btn btn-primary">Show my requests</button>
+        </form>
+    </div>
+</div>
 
 
 <div class="card">

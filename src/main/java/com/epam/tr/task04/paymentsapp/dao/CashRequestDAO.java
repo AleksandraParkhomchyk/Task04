@@ -17,4 +17,6 @@ public interface CashRequestDAO {
     boolean updateRequestStatusDeclined(Integer requestID) throws DAOException;
 
     Double getAmountByRequestId(Integer requestId) throws DAOException;
+
+    List<CashoutRequest> getUsersRequests(Integer accountId) throws DAOException;
 }

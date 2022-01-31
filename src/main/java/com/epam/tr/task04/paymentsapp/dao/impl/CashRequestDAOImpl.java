@@ -17,6 +17,8 @@ public class CashRequestDAOImpl implements CashRequestDAO {
     private final String createCashoutRequest = "INSERT INTO cash_requests(cr_date, cr_amount, cr_status, accounts_a_id) VALUES(?, ?, ?, ?)";
     private final String afterCashoutBalance = "UPDATE accounts SET a_balance = ? WHERE (a_id = ?)";
     private final String getAmountById = "SELECT cr_amount FROM cash_requests WHERE (cr_id = ?)";
+    private final String getAllRequestByAccountId = "SELECT * FROM cash_requests WHERE accounts_a_id = ?";
+
 
     Date date = new java.sql.Date(System.currentTimeMillis());
 
@@ -256,6 +258,58 @@ public class CashRequestDAOImpl implements CashRequestDAO {
             }
         }
         return amount;
+    }
+
+    @Override
+    public List<CashoutRequest> getUsersRequests(Integer accountId) throws DAOException {
+        List<CashoutRequest> list = new ArrayList<CashoutRequest>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = ConnectionPool.getInstance().takeConnection();
+            preparedStatement = connection.prepareStatement(getAllRequestByAccountId);
+            preparedStatement.setInt(1, accountId);
+
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                CashoutRequest cashoutRequest = new CashoutRequest();
+                cashoutRequest.setId(resultSet.getInt(1));
+                cashoutRequest.setDate(resultSet.getDate(2));
+                cashoutRequest.setAmount(resultSet.getDouble(3));
+                cashoutRequest.setStatus(resultSet.getString(4));
+
+                list.add(cashoutRequest);
+
+            }
+            return list;
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+        }
     }
 }
 

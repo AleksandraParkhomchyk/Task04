@@ -1,6 +1,5 @@
 package com.epam.tr.task04.paymentsapp.services;
 
-import com.epam.tr.task04.paymentsapp.dao.exception.DAOException;
 import com.epam.tr.task04.paymentsapp.entity.Account;
 import com.epam.tr.task04.paymentsapp.entity.CashoutRequest;
 import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;
@@ -17,5 +16,7 @@ public interface CashRequestService {
     boolean updateRequestStatusDeclined(Integer requestID) throws ServiceException;
 
     Double getAmountByRequestId(Integer requestId) throws ServiceException;
+
+    List<CashoutRequest> getUsersRequests(Integer accountId) throws ServiceException;
 
 }

@@ -12,7 +12,6 @@ import java.util.List;
 
 public class CashRequestServiceImpl implements CashRequestService {
 
-
     @Override
     public CashoutRequest cashout(Account account, Double amount) throws ServiceException {
         DAOFactory factory = DAOFactory.getInstance();
@@ -76,5 +75,18 @@ public class CashRequestServiceImpl implements CashRequestService {
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
+    }
+
+    @Override
+    public List<CashoutRequest> getUsersRequests(Integer accountId) throws ServiceException {
+        DAOFactory factory = DAOFactory.getInstance();
+        CashRequestDAO cashRequestDAO = factory.getCashRequestDAO();
+        List<CashoutRequest> list;
+        try {
+            list = cashRequestDAO.getUsersRequests(accountId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+        return list;
     }
 }
