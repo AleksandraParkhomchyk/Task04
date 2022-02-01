@@ -29,16 +29,21 @@ public class Controller extends HttpServlet {
 
         process(request, response);
     }
+
     private void process(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
-
+        HttpSession session = request.getSession();
+        if (session.getAttribute("locale") == null) {
+            session.setAttribute("locale", "en");
+        }
 
         String commandName = request.getParameter("command");
         Command command = provider.getCommand(commandName);
+
         try {
             command.execute(request, response);
         } catch (ServiceException e) {
-            e.printStackTrace();
+            e.printStackTrace();/////todo why serviceexception???
         }
+
     }
 }
