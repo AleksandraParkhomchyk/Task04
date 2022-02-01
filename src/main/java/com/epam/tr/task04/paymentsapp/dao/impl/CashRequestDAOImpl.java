@@ -18,6 +18,7 @@ public class CashRequestDAOImpl implements CashRequestDAO {
     private final String afterCashoutBalance = "UPDATE accounts SET a_balance = ? WHERE (a_id = ?)";
     private final String getAmountById = "SELECT cr_amount FROM cash_requests WHERE (cr_id = ?)";
     private final String getAllRequestByAccountId = "SELECT * FROM cash_requests WHERE accounts_a_id = ?";
+    private final String cashoutTransaction = "INSERT INTO transactions(t_date, t_amount, t_from_account, t_before_acc_balance, t_after_acc_balance, t_to_account, users_u_id, transaction_type_tt_id) values (?, ?, ?, ?, ?, ?, ?, ?)";
 
 
     Date date = new java.sql.Date(System.currentTimeMillis());
@@ -122,17 +123,19 @@ public class CashRequestDAOImpl implements CashRequestDAO {
 
     @Override
     public boolean updateRequestStatusApproved(Account account, Integer requestID, Double amount) throws DAOException {
-
+// todo передавать Id user
         Connection connection = ConnectionPool.getInstance().takeConnection();
 
         PreparedStatement updateStatus = null;
         PreparedStatement updateBalance = null;
+        PreparedStatement writeTransaction = null;
         boolean result = true;
 
         try {
 
             updateStatus = connection.prepareStatement(updateRequestStatusDB);
             updateBalance = connection.prepareStatement(afterCashoutBalance);
+            writeTransaction = connection.prepareStatement(cashoutTransaction);
 
             connection.setAutoCommit(false);
 
@@ -147,6 +150,16 @@ public class CashRequestDAOImpl implements CashRequestDAO {
 
             updateBalance.executeUpdate();
 
+            writeTransaction.setDate(1, date);
+            writeTransaction.setDouble(2, amount);
+            writeTransaction.setString(3, account.getAccountNumber());
+            writeTransaction.setDouble(4, account.getBalance());
+            writeTransaction.setDouble(5, finalBalance);
+            writeTransaction.setString(6, "cashout");
+            writeTransaction.setInt(7, 1);
+            writeTransaction.setInt(8, 2);
+
+            writeTransaction.executeUpdate();
             connection.commit();
 
             result = true;
@@ -162,7 +175,7 @@ public class CashRequestDAOImpl implements CashRequestDAO {
         } finally {
             try {
                 if (updateStatus != null) {
-                    updateStatus.close();
+                    updateStatus.close(); // todo: close all statements
                 }
             } catch (SQLException e) {
                 throw new DAOException(e);
