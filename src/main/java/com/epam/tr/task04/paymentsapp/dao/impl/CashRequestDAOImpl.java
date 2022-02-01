@@ -122,8 +122,7 @@ public class CashRequestDAOImpl implements CashRequestDAO {
 
 
     @Override
-    public boolean updateRequestStatusApproved(Account account, Integer requestID, Double amount) throws DAOException {
-// todo передавать Id user
+    public boolean updateRequestStatusApproved(Account account, Integer requestID, Double amount, Integer userId) throws DAOException {
         Connection connection = ConnectionPool.getInstance().takeConnection();
 
         PreparedStatement updateStatus = null;
@@ -156,7 +155,7 @@ public class CashRequestDAOImpl implements CashRequestDAO {
             writeTransaction.setDouble(4, account.getBalance());
             writeTransaction.setDouble(5, finalBalance);
             writeTransaction.setString(6, "cashout");
-            writeTransaction.setInt(7, 1);
+            writeTransaction.setInt(7, userId);
             writeTransaction.setInt(8, 2);
 
             writeTransaction.executeUpdate();

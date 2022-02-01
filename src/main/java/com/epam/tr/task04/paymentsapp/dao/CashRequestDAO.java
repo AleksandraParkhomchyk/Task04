@@ -12,7 +12,7 @@ public interface CashRequestDAO {
 
     List<CashoutRequest> getAllCashoutRequests() throws DAOException;
 
-    boolean updateRequestStatusApproved(Account account, Integer requestID, Double amount) throws DAOException;
+    boolean updateRequestStatusApproved(Account account, Integer requestID, Double amount, Integer userId) throws DAOException;
 
     boolean updateRequestStatusDeclined(Integer requestID) throws DAOException;
 

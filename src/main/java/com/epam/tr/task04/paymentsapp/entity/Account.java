@@ -8,6 +8,7 @@ public class Account implements Serializable {
     private String accountNumber;
     private double balance;
     private Date accountOpeningDate;
+    private Integer ownerId;
 
     public Account() {
     }
@@ -52,6 +53,14 @@ public class Account implements Serializable {
 
     public void setAccountOpeningDate(Date accountOpeningDate) {
         this.accountOpeningDate = accountOpeningDate;
+    }
+
+    public Integer getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Integer ownerId) {
+        this.ownerId = ownerId;
     }
 
     @Override

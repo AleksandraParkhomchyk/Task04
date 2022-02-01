@@ -39,12 +39,12 @@ public class CashRequestServiceImpl implements CashRequestService {
     }
 
     @Override
-    public boolean updateRequestStatusApproved(Account account, Integer requestID, Double amount) throws ServiceException {
+    public boolean updateRequestStatusApproved(Account account, Integer requestID, Double amount, Integer userId) throws ServiceException {
         DAOFactory factory = DAOFactory.getInstance();
         CashRequestDAO cashRequestDAO = factory.getCashRequestDAO();
         boolean result;
         try {
-            result = cashRequestDAO.updateRequestStatusApproved(account, requestID, amount);
+            result = cashRequestDAO.updateRequestStatusApproved(account, requestID, amount, userId);
             return result;
         } catch (DAOException e) {
             throw new ServiceException(e);

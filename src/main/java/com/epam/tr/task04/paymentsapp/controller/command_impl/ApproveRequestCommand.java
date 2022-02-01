@@ -30,10 +30,10 @@ public class ApproveRequestCommand implements Command {
         amount = cashRequestService.getAmountByRequestId(requestID);
         Integer accountId = accountService.getAccountIdByRequestId(requestID);
         Account account = accountService.getAccountById(accountId);
-
+        Integer userId = account.getOwnerId();
 
         try {
-            cashRequestService.updateRequestStatusApproved(account, requestID, amount);
+            cashRequestService.updateRequestStatusApproved(account, requestID, amount, userId);
             list = cashRequestService.getAllCashoutRequests();
             request.setAttribute("AllRequests", list);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/adminPage.jsp");

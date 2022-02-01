@@ -11,7 +11,7 @@ public interface AccountService {
 
     Account getAccountByUserId(Integer userId) throws ServiceException;
 
-    boolean accountPayment(Account account, String accountNumber, Double amount) throws ServiceException;
+    boolean accountPayment(Account account, String accountNumber, Double amount, Integer userId) throws ServiceException;
 
     Integer getAccountIdByRequestId(Integer requestId) throws ServiceException;
 

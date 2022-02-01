@@ -11,7 +11,7 @@ public interface CashRequestService {
 
     List<CashoutRequest> getAllCashoutRequests() throws ServiceException;
 
-    boolean updateRequestStatusApproved(Account account, Integer requestID, Double amount) throws ServiceException;
+    boolean updateRequestStatusApproved(Account account, Integer requestID, Double amount, Integer userId) throws ServiceException;
 
     boolean updateRequestStatusDeclined(Integer requestID) throws ServiceException;
 

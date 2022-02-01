@@ -37,12 +37,12 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public boolean accountPayment(Account account, String accountNumber, Double amount) throws ServiceException {
+    public boolean accountPayment(Account account, String accountNumber, Double amount, Integer userId) throws ServiceException {
         DAOFactory factory = DAOFactory.getInstance();
         AccountDAO accountDAO = factory.getAccountDAO();
 
         try {
-            boolean result = accountDAO.accountPayment(account, accountNumber, amount);
+            boolean result = accountDAO.accountPayment(account, accountNumber, amount, userId);
             return result;
         } catch (DAOException e) {
             throw new ServiceException(e);

@@ -123,8 +123,7 @@ public class AccountDAOImpl implements AccountDAO {
     }
 
     @Override
-    public boolean accountPayment(Account account, String accountNumber, Double amount) throws DAOException {
-        //todo передавать id user
+    public boolean accountPayment(Account account, String accountNumber, Double amount, Integer userId) throws DAOException {
         Connection connection;
         PreparedStatement writeNewBalance = null;
         PreparedStatement writeTransaction = null;
@@ -150,7 +149,7 @@ public class AccountDAOImpl implements AccountDAO {
             writeTransaction.setDouble(4, account.getBalance());
             writeTransaction.setDouble(5, finalBalance);
             writeTransaction.setString(6, accountNumber);
-            writeTransaction.setInt(7, 1);
+            writeTransaction.setInt(7, userId);
             writeTransaction.setInt(8, 1);
 
             writeTransaction.executeUpdate();
@@ -257,6 +256,7 @@ public class AccountDAOImpl implements AccountDAO {
                 account.setId(resultSet.getInt(1));
                 account.setAccountNumber(resultSet.getString(2));
                 account.setBalance(resultSet.getDouble(3));
+                account.setOwnerId(resultSet.getInt(6));
             }
 
             return account;

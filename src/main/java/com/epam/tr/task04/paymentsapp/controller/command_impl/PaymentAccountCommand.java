@@ -31,10 +31,10 @@ public class PaymentAccountCommand implements Command {
 
         try {
             Account account = accountService.getAccountByUserId(userId);
-            boolean result = accountService.accountPayment(account, accountNumber, amount);
-            Account account1 = accountService.getAccountByUserId(userId);
+            boolean result = accountService.accountPayment(account, accountNumber, amount, userId);
+            Account accountUPD = accountService.getAccountByUserId(userId);
             if (result) {
-                session.setAttribute("message1", "Hello! " + "Your account number is " + account1.getAccountNumber() + ". Balance " + account1.getBalance());
+                session.setAttribute("message1", "Hello! " + "Your account number is " + accountUPD.getAccountNumber() + ". Balance " + accountUPD.getBalance());
                 session.setAttribute("success", "Payment made successful");
                 response.sendRedirect("/payments_app_war_exploded/controller?command=GO_TO_USERS_PAGE");
 

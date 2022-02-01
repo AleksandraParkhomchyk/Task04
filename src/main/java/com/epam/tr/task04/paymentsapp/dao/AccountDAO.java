@@ -10,7 +10,7 @@ public interface AccountDAO {
 
     Account getAccountByUserId(Integer userId) throws DAOException;
 
-    boolean accountPayment(Account account, String accountNumber, Double amount) throws DAOException;
+    boolean accountPayment(Account account, String accountNumber, Double amount, Integer userId) throws DAOException;
 
     Integer getAccountIdByRequestId(Integer requestId) throws DAOException;
 
