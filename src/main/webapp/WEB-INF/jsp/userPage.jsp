@@ -62,19 +62,12 @@
     </div>
 </div>
 
-
 <div class="card">
     <div class="card-body">
         <form action="${pageContext.request.contextPath}/controller" method="post">
             <input type="hidden" name="command" value="CREATE_ACCOUNT">
             <button type="submit" class="btn btn-primary">Create an account</button>
         </form>
-    </div>
-</div>
-
-<div class="card">
-    <div class="card-body">
-        <a href="#!" class="btn btn-primary">Close account</a>
     </div>
 </div>
 

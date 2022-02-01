@@ -6,5 +6,5 @@ import com.epam.tr.task04.paymentsapp.entity.Transaction;
 import java.util.List;
 
 public interface TransactionDAO {
-    List<Transaction> getAllTransactions() throws DAOException;
+    List<Transaction> getAllTransactions(Integer userId) throws DAOException;
 }

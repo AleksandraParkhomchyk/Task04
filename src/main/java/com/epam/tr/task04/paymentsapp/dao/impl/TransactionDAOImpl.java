@@ -2,10 +2,8 @@ package com.epam.tr.task04.paymentsapp.dao.impl;
 
 import com.epam.tr.task04.paymentsapp.dao.TransactionDAO;
 import com.epam.tr.task04.paymentsapp.dao.connectionpool.ConnectionPool;
-import com.epam.tr.task04.paymentsapp.dao.connectionpool.ConnectionPoolException;
 import com.epam.tr.task04.paymentsapp.dao.exception.DAOException;
 import com.epam.tr.task04.paymentsapp.entity.Transaction;
-import com.epam.tr.task04.paymentsapp.entity.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,10 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionDAOImpl implements TransactionDAO {
-    private final String getAllUsersFromDB = "SELECT * FROM transactions";
+    private final String getAllUsersFromDB = "SELECT * FROM transactions WHERE users_u_id = ?";
 
     @Override
-    public List<Transaction> getAllTransactions() throws DAOException {
+    public List<Transaction> getAllTransactions(Integer userId) throws DAOException {
         List<Transaction> list = new ArrayList<>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -27,6 +25,7 @@ public class TransactionDAOImpl implements TransactionDAO {
         try {
             connection = ConnectionPool.getInstance().takeConnection();
             preparedStatement = connection.prepareStatement(getAllUsersFromDB);
+            preparedStatement.setInt(1, userId);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {

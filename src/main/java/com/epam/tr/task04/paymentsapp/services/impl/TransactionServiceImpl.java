@@ -12,12 +12,12 @@ import java.util.List;
 public class TransactionServiceImpl implements TransactionService {
 
     @Override
-    public List<Transaction> getAllTransactions() throws ServiceException {
+    public List<Transaction> getAllTransactions(Integer userId) throws ServiceException {
         DAOFactory factory = DAOFactory.getInstance();
         TransactionDAO transactionDAO = factory.getTransactionDAO();
         List<Transaction> list;
         try {
-            list = transactionDAO.getAllTransactions();
+            list = transactionDAO.getAllTransactions(userId);
 
         } catch (DAOException e) {
             throw new ServiceException(e);

@@ -22,9 +22,10 @@ public class GetUsersTransactionsCommand implements Command {
         TransactionService transactionService = serviceFactory.getTransactionService();
         HttpSession session = request.getSession(true);
         List<Transaction> list;
+        Integer userId = (Integer) session.getAttribute("id");
 
         try {
-            list = transactionService.getAllTransactions();
+            list = transactionService.getAllTransactions(userId);
             request.setAttribute("AllTransactions", list);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/historyPage.jsp");
             dispatcher.forward(request, response);
