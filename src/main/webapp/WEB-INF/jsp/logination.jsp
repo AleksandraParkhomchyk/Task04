@@ -4,7 +4,6 @@
 
 <!DOCTYPE html>
 <html>
-
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="local" var="loc"/>
 

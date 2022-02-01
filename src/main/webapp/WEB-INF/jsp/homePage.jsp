@@ -2,17 +2,19 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
-<header>
-</header>
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="local" var="loc"/>
+
+<fmt:message bundle="${loc}" key="home.page.name" var="page_name"/>
+<fmt:message bundle="${loc}" key="home.page.title" var="home_title"/>
+<fmt:message bundle="${loc}" key="home.page.login" var="enter"/>
+<fmt:message bundle="${loc}" key="home.page.register" var="register"/>
+
+<fmt:message bundle="${loc}" key="local.localbutton.name.ru" var="ru_button"/>
+<fmt:message bundle="${loc}" key="local.localbutton.name.en" var="en_button"/>
+
 <head>
-    <title>Payment Service</title>
-
-    <fmt:setLocale value="${sessionScope.locale}"/>
-    <fmt:setBundle basename="local" var="loc"/>
-
-    <fmt:message bundle="${loc}" key="local.localbutton.name.ru" var="ru_button"/>
-    <fmt:message bundle="${loc}" key="local.localbutton.name.en" var="en_button"/>
-
+    <title>${page_name}</title>
 </head>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -27,12 +29,13 @@
 
 <body>
 <div class="jumbotron">
-    <h1 class="display-3">Welcome to payment service!</h1>
+    <h1 class="display-3">${home_title}</h1>
     <p class="lead">
-        <a class="btn btn-primary btn-lg" href="controller?command=GO_TO_LOGINATION_PAGE" role="button">Login</a>
+        <a class="btn btn-primary btn-lg" href="controller?command=GO_TO_LOGINATION_PAGE" role="button">${enter}</a>
     </p>
     <p class="lead">
-        <a class="btn btn-primary btn-lg" href="controller?command=GO_TO_REGISTRATION_PAGE" role="button">Register</a>
+        <a class="btn btn-primary btn-lg" href="controller?command=GO_TO_REGISTRATION_PAGE"
+           role="button">${register}</a>
     </p>
 </div>
 </body>
