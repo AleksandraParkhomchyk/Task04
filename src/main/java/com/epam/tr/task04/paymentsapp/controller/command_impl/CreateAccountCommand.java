@@ -1,6 +1,7 @@
 package com.epam.tr.task04.paymentsapp.controller.command_impl;
 
 import com.epam.tr.task04.paymentsapp.controller.Command;
+import com.epam.tr.task04.paymentsapp.entity.Account;
 import com.epam.tr.task04.paymentsapp.entity.User;
 import com.epam.tr.task04.paymentsapp.services.AccountService;
 import com.epam.tr.task04.paymentsapp.services.ServiceFactory;
@@ -27,8 +28,11 @@ public class CreateAccountCommand implements Command {
         if (session.getAttribute("accountNumber")== null) {
             try {
                 accountService.createAccount(user);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/successPage.jsp");
-                dispatcher.forward(request, response);
+
+                Account account = accountService.getAccountByUserId(id);
+                session.setAttribute("message1", "Your account number is " + account.getAccountNumber() + ". Balance " + account.getBalance());
+                session.setAttribute("success", "Your account created");
+                response.sendRedirect("/payments_app_war_exploded/controller?command=GO_TO_USERS_PAGE");
 
             } catch (ServiceException e) {
                 e.printStackTrace(); //todo: exception

@@ -27,17 +27,20 @@ public class CashoutRequestCommand implements Command {
         HttpSession session = request.getSession(true);
 
         Integer userId = (Integer) session.getAttribute("id");
-        try {
 
+        try {
             Account account = accountService.getAccountByUserId(userId);
             CashoutRequest cashoutRequest = cashRequestService.cashout(account, cAmount);
             Integer requestId = cashoutRequest.getId();
             session.setAttribute("requestId", requestId);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/successPage.jsp");
-            dispatcher.forward(request, response);
+            Account accountUPD = accountService.getAccountByUserId(userId);
+            session.setAttribute("message1", "Your account number is " + accountUPD.getAccountNumber() + ". Balance " + accountUPD.getBalance());
+            session.setAttribute("success", "Cashout request was made successful");
+            response.sendRedirect("/payments_app_war_exploded/controller?command=GO_TO_USERS_PAGE");
 
         } catch (ServiceException e) {
-            System.out.println("очень очень плохо");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/errorPage.jsp");
+            dispatcher.forward(request, response);
         }
     }
 }
