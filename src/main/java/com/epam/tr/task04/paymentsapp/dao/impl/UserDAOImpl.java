@@ -4,6 +4,7 @@ import com.epam.tr.task04.paymentsapp.dao.connectionpool.ConnectionPool;
 import com.epam.tr.task04.paymentsapp.dao.UserDAO;
 import com.epam.tr.task04.paymentsapp.dao.exception.DAOException;
 import com.epam.tr.task04.paymentsapp.entity.User;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,6 +17,8 @@ public class UserDAOImpl implements UserDAO {
     private final String getLoginPasswordRole = "SELECT u_id, u_login, u_password, roles_r_id  FROM users";
     private final String getAllUsersFromDB = "SELECT * FROM users";
 
+    private static final String PASSWORD_SALT = "$2a$10$7Xtwz2dUaNW2055I9dhhv.";
+
 
     @Override
     public void saveUser(User user) throws DAOException {
@@ -26,10 +29,13 @@ public class UserDAOImpl implements UserDAO {
             connection = ConnectionPool.getInstance().takeConnection();
             preparedStatement = connection.prepareStatement(creatingUser);
 
+            String salt = PASSWORD_SALT;
+            String password_hash = BCrypt.hashpw(user.getPassword(), salt);
+
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getSurname());
             preparedStatement.setString(3, user.getLogin());
-            preparedStatement.setString(4, user.getPassword());
+            preparedStatement.setString(4, password_hash);
             preparedStatement.setString(5, user.getPassport());
             preparedStatement.setInt(6, 1);
 
@@ -73,7 +79,7 @@ public class UserDAOImpl implements UserDAO {
                 try {
                     String loginFromDB = resultSet.getString(2);
                     String passwordFromDB = resultSet.getString(3);
-                    if ((login.equals(loginFromDB)) && (password.equals(passwordFromDB))) {
+                    if ((login.equals(loginFromDB)) && (BCrypt.checkpw(password, passwordFromDB))) {
                         System.out.println("authorisation is OK");
                         user = new User();
                         user.setId(resultSet.getInt(1));
