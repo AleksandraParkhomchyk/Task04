@@ -7,6 +7,10 @@ import com.epam.tr.task04.paymentsapp.entity.Account;
 import com.epam.tr.task04.paymentsapp.entity.User;
 import com.epam.tr.task04.paymentsapp.services.AccountService;
 import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;
+import com.epam.tr.task04.paymentsapp.services.validator.PaymentValidator;
+import com.epam.tr.task04.paymentsapp.services.validator.UserValidator;
+import com.epam.tr.task04.paymentsapp.services.validator.ValidatorException;
+import com.epam.tr.task04.paymentsapp.services.validator.ValidatorFactory;
 
 
 public class AccountServiceImpl implements AccountService {
@@ -40,6 +44,14 @@ public class AccountServiceImpl implements AccountService {
     public boolean accountPayment(Account account, String accountNumber, Double amount, Integer userId) throws ServiceException {
         DAOFactory factory = DAOFactory.getInstance();
         AccountDAO accountDAO = factory.getAccountDAO();
+
+        PaymentValidator paymentValidator = ValidatorFactory.getInstance().getPaymentValidator();
+
+        try {
+            paymentValidator.validate(accountNumber, amount);
+        } catch (ValidatorException e) {
+            throw new ServiceException(e);
+        }
 
         try {
             boolean result = accountDAO.accountPayment(account, accountNumber, amount, userId);
