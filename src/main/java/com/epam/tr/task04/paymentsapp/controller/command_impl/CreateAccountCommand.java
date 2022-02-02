@@ -30,6 +30,8 @@ public class CreateAccountCommand implements Command {
                 accountService.createAccount(user);
 
                 Account account = accountService.getAccountByUserId(id);
+                Integer account_id = account.getId();
+                session.setAttribute("account_id", account_id);
                 session.setAttribute("message1", "Your account number is " + account.getAccountNumber() + ". Balance " + account.getBalance());
                 session.setAttribute("success", "Your account created");
                 response.sendRedirect("/payments_app_war_exploded/controller?command=GO_TO_USERS_PAGE");
