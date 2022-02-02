@@ -25,15 +25,16 @@ public class CreateAccountCommand implements Command {
         Integer id = (Integer) session.getAttribute("id");
         user.setId(id);
 
-        if (session.getAttribute("accountNumber")== null) {
+        if (session.getAttribute("accountNumber") == null) {
             try {
                 accountService.createAccount(user);
 
                 Account account = accountService.getAccountByUserId(id);
                 Integer account_id = account.getId();
                 session.setAttribute("account_id", account_id);
-                session.setAttribute("message1", "Your account number is " + account.getAccountNumber() + ". Balance " + account.getBalance());
                 session.setAttribute("success", "Your account created");
+                session.setAttribute("accountN", account.getAccountNumber());
+                session.setAttribute("balance", account.getBalance());
                 response.sendRedirect("/payments_app_war_exploded/controller?command=GO_TO_USERS_PAGE");
 
             } catch (ServiceException e) {

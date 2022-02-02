@@ -34,8 +34,8 @@ public class PaymentAccountCommand implements Command {
             boolean result = accountService.accountPayment(account, accountNumber, amount, userId);
             Account accountUPD = accountService.getAccountByUserId(userId);
             if (result) {
-                session.setAttribute("message1", "Hello! " + "Your account number is " + accountUPD.getAccountNumber() + ". Balance " + accountUPD.getBalance());
                 session.setAttribute("success", "Payment made successful");
+                session.setAttribute("balance", accountUPD.getBalance());
                 response.sendRedirect("/payments_app_war_exploded/controller?command=GO_TO_USERS_PAGE");
 
             } else {

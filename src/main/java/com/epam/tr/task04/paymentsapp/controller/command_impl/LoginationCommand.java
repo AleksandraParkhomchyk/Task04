@@ -54,8 +54,9 @@ public class LoginationCommand implements Command {
                     request.setAttribute("message", "Please, create an account.");
 
                 } else {
-                    request.setAttribute("message", "Hello! " + "Your account number is " + account.getAccountNumber() + ". Balance " + account.getBalance());
                     session.setAttribute("accountNumber", account);
+                    session.setAttribute("accountN", account.getAccountNumber());
+                    session.setAttribute("balance", account.getBalance());
                 }
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/userPage.jsp");
                 dispatcher.forward(request, response);

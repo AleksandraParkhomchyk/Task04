@@ -18,9 +18,17 @@
 </header>
 <body>
 
-<p><c:out value="${requestScope.message}"/></p>
-<p><c:out value="${sessionScope.message1}"/></p>
 <p><c:out value="${sessionScope.success}"/></p>
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">${sessionScope.accountN}</h4>
+        <h6 class="card-subtitle mb-2 text-muted">Your account number</h6>
+        <h4 class="card-title">${sessionScope.balance}</h4>
+        <h6 class="card-subtitle mb-2 text-muted">Your balance</h6>
+    </div>
+</div>
+
 
 <div class="card">
     <div class="card-body">
