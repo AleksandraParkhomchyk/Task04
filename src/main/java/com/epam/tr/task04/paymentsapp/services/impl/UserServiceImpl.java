@@ -7,6 +7,10 @@ import com.epam.tr.task04.paymentsapp.entity.User;
 import com.epam.tr.task04.paymentsapp.services.UserService;
 import com.epam.tr.task04.paymentsapp.services.exception.NotAuthorizedException;
 import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;
+import com.epam.tr.task04.paymentsapp.services.validator.UserValidator;
+import com.epam.tr.task04.paymentsapp.services.validator.ValidatorException;
+import com.epam.tr.task04.paymentsapp.services.validator.ValidatorFactory;
+import com.epam.tr.task04.paymentsapp.services.validator.impl.UserValidatorImpl;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,10 +43,12 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public boolean registration(String name, String surname, String login, String password, String passport) {
+    public boolean registration(String name, String surname, String login, String password, String passport) throws ServiceException{
 
         DAOFactory factory = DAOFactory.getInstance();
         UserDAO userDAO = factory.getUserDAO();
+
+        UserValidator userValidator = ValidatorFactory.getInstance().getUserValidator();
 
         User newUser = new User();
         newUser.setName(name);
@@ -51,6 +57,12 @@ public class UserServiceImpl implements UserService {
         newUser.setPassword(password);
         newUser.setPassport(passport);
 
+
+        try {
+            userValidator.validate(newUser);
+        } catch (ValidatorException e){
+            throw new ServiceException(e);
+        }
 
         try {
             userDAO.saveUser(newUser);

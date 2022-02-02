@@ -80,7 +80,7 @@ public class UserDAOImpl implements UserDAO {
                     String loginFromDB = resultSet.getString(2);
                     String passwordFromDB = resultSet.getString(3);
                     if ((login.equals(loginFromDB)) && (BCrypt.checkpw(password, passwordFromDB))) {
-                        System.out.println("authorisation is OK");
+
                         user = new User();
                         user.setId(resultSet.getInt(1));
                         user.setLogin(loginFromDB);
