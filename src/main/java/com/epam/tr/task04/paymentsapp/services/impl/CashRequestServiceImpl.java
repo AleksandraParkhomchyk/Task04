@@ -7,6 +7,10 @@ import com.epam.tr.task04.paymentsapp.entity.Account;
 import com.epam.tr.task04.paymentsapp.entity.CashoutRequest;
 import com.epam.tr.task04.paymentsapp.services.CashRequestService;
 import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;
+import com.epam.tr.task04.paymentsapp.services.validator.CashoutValidator;
+import com.epam.tr.task04.paymentsapp.services.validator.PaymentValidator;
+import com.epam.tr.task04.paymentsapp.services.validator.ValidatorException;
+import com.epam.tr.task04.paymentsapp.services.validator.ValidatorFactory;
 
 import java.util.List;
 
@@ -16,6 +20,14 @@ public class CashRequestServiceImpl implements CashRequestService {
     public CashoutRequest cashout(Account account, Double amount) throws ServiceException {
         DAOFactory factory = DAOFactory.getInstance();
         CashRequestDAO cashRequestDAO = factory.getCashRequestDAO();
+
+        CashoutValidator cashoutValidator = ValidatorFactory.getInstance().getCashoutValidator();
+
+        try {
+            cashoutValidator.validate(amount);
+        } catch (ValidatorException e) {
+            throw new ServiceException(e);
+        }
 
         try {
             CashoutRequest cashoutRequest = cashRequestDAO.cashout(account, amount);
