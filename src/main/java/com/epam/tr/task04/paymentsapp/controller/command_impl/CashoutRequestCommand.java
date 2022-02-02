@@ -17,7 +17,7 @@ import java.io.IOException;
 
 public class CashoutRequestCommand implements Command {
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ServiceException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         Double cAmount;
 
         cAmount = Double.parseDouble(request.getParameter("cashout_amount"));

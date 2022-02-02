@@ -16,7 +16,7 @@ import java.util.List;
 
 public class GetUsersRequestsCommand implements Command {
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ServiceException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         CashRequestService cashRequestService = serviceFactory.getCashRequestService();

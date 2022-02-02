@@ -16,7 +16,7 @@ import java.io.IOException;
 public class PaymentAccountCommand implements Command {
 
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ServiceException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String accountNumber;
         Double amount;
 

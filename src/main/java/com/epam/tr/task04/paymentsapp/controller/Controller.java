@@ -28,10 +28,6 @@ public class Controller extends HttpServlet {
     private void process(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         HttpSession session = request.getSession();
-        if (session.getAttribute("locale") == null) {
-            session.setAttribute("locale", "en");
-        }
-
         String commandName = request.getParameter("command");
         Command command = provider.getCommand(commandName);
         command.execute(request, response);

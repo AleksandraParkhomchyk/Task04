@@ -17,7 +17,7 @@ import java.util.List;
 
 public class ApproveRequestCommand implements Command {
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ServiceException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         CashRequestService cashRequestService = serviceFactory.getCashRequestService();
         AccountService accountService = serviceFactory.getAccountService();
@@ -25,14 +25,15 @@ public class ApproveRequestCommand implements Command {
 
         List<CashoutRequest> list;
 
-        String requestIDGot = request.getParameter("approve");
-        Integer requestID = Integer.parseInt(requestIDGot);
-        amount = cashRequestService.getAmountByRequestId(requestID);
-        Integer accountId = accountService.getAccountIdByRequestId(requestID);
-        Account account = accountService.getAccountById(accountId);
-        Integer userId = account.getOwnerId();
-
         try {
+            String requestIDGot = request.getParameter("approve");
+            Integer requestID = Integer.parseInt(requestIDGot);
+            amount = cashRequestService.getAmountByRequestId(requestID);
+            Integer accountId = accountService.getAccountIdByRequestId(requestID);
+            Account account = accountService.getAccountById(accountId);
+            Integer userId = account.getOwnerId();
+
+
             cashRequestService.updateRequestStatusApproved(account, requestID, amount, userId);
             list = cashRequestService.getAllCashoutRequests();
             request.setAttribute("AllRequests", list);

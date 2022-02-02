@@ -41,5 +41,6 @@
         </c:forEach>
     </table>
 </div>
+<a href="${pageContext.request.contextPath}/controller?command=GO_TO_USERS_PAGE">Back</a>
 </body>
 </html>

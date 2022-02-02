@@ -17,7 +17,7 @@ import java.util.List;
 public class GetUsersTransactionsCommand implements Command {
 
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ServiceException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         TransactionService transactionService = serviceFactory.getTransactionService();
         HttpSession session = request.getSession(true);

@@ -1,7 +1,9 @@
 package com.epam.tr.task04.paymentsapp.dao.connectionpool;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.*;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -9,6 +11,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
 
 public final class ConnectionPool {
+    private final static Logger LOG = LogManager.getLogger(ConnectionPool.class);
 
     private static ConnectionPool instance;
 
@@ -42,7 +45,7 @@ public final class ConnectionPool {
             try {
                 instance.initPoolData();
             } catch (ConnectionPoolException e) {
-                e.printStackTrace();
+                LOG.error("Failing to init pool", e);
             }
         }
         return instance;
@@ -79,7 +82,7 @@ public final class ConnectionPool {
             connection = connectionQueue.take();
             givenAwayConQueue.add(connection);
         } catch (InterruptedException e) {
-            //todo: написать в лог.еррор и туда этот эксепшн
+            LOG.error("Failing to take connection", e);
         }
         return connection;
     }
@@ -89,7 +92,7 @@ public final class ConnectionPool {
             closeConnectionQueue(givenAwayConQueue);
             closeConnectionQueue(connectionQueue);
         } catch (SQLException e) {
-// todo log
+            LOG.error("Failing to clear ConnectionQueue", e);
         }
     }
 
