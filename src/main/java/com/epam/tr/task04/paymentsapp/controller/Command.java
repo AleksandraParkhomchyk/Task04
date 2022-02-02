@@ -1,12 +1,10 @@
 package com.epam.tr.task04.paymentsapp.controller;
 
-import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public interface Command {
-    void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ServiceException;
+    void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException;
 }

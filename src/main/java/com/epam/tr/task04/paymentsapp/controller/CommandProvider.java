@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class CommandProvider {
-    private final Map<String, Command> commands = new HashMap<String, Command>();
+    private final Map<String, Command> commands = new HashMap<>();
 
     public CommandProvider() {
         commands.put("LOGINATION", new LoginationCommand());
@@ -31,7 +31,7 @@ public final class CommandProvider {
 
     }
 
-    public final Command getCommand(String commandName) {
+    public Command getCommand(String commandName) {
         Command command = commands.get(commandName);
         return command;
     }
