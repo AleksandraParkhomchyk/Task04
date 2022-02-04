@@ -4,6 +4,7 @@ import com.epam.tr.task04.paymentsapp.controller.Command;
 import com.epam.tr.task04.paymentsapp.entity.Account;
 import com.epam.tr.task04.paymentsapp.services.AccountService;
 import com.epam.tr.task04.paymentsapp.services.ServiceFactory;
+import com.epam.tr.task04.paymentsapp.services.exception.InsufficientFundsException;
 import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;
 
 import javax.servlet.RequestDispatcher;
@@ -31,7 +32,9 @@ public class PaymentAccountCommand implements Command {
 
         try {
             Account account = accountService.getAccountByUserId(userId);
+
             boolean result = accountService.accountPayment(account, accountNumber, amount, userId);
+
             Account accountUPD = accountService.getAccountByUserId(userId);
             if (result) {
                 session.setAttribute("success", "Payment made successful");
@@ -42,10 +45,13 @@ public class PaymentAccountCommand implements Command {
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/errorPage.jsp");
                 dispatcher.forward(request, response);
             }
-        } catch (ServiceException e) {
+        } catch (InsufficientFundsException e) {
+            session.setAttribute("wrong", "  You have insufficient funds");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/userPage.jsp");
+            dispatcher.forward(request, response);
+        } catch (ServiceException e){
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/errorPage.jsp");
             dispatcher.forward(request, response);
         }
-
     }
 }

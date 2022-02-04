@@ -1,7 +1,6 @@
 package com.epam.tr.task04.paymentsapp.services.exception;
 
 public class ServiceException extends Exception {
-    private static final long serialVersionUID = 1L;
 
     public ServiceException() {
         super();

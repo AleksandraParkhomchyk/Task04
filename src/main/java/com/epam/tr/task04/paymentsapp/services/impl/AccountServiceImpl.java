@@ -6,6 +6,7 @@ import com.epam.tr.task04.paymentsapp.dao.exception.DAOException;
 import com.epam.tr.task04.paymentsapp.entity.Account;
 import com.epam.tr.task04.paymentsapp.entity.User;
 import com.epam.tr.task04.paymentsapp.services.AccountService;
+import com.epam.tr.task04.paymentsapp.services.exception.InsufficientFundsException;
 import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;
 import com.epam.tr.task04.paymentsapp.services.validator.PaymentValidator;
 import com.epam.tr.task04.paymentsapp.services.validator.UserValidator;
@@ -41,7 +42,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public boolean accountPayment(Account account, String accountNumber, Double amount, Integer userId) throws ServiceException {
+    public boolean accountPayment(Account account, String accountNumber, Double amount, Integer userId) throws ServiceException, InsufficientFundsException {
         DAOFactory factory = DAOFactory.getInstance();
         AccountDAO accountDAO = factory.getAccountDAO();
 
@@ -51,6 +52,9 @@ public class AccountServiceImpl implements AccountService {
             paymentValidator.validate(accountNumber, amount);
         } catch (ValidatorException e) {
             throw new ServiceException(e);
+        }
+        if (account.getBalance() < amount) {
+            throw new InsufficientFundsException("insufficient funds.");
         }
 
         try {

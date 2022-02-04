@@ -6,6 +6,7 @@ import com.epam.tr.task04.paymentsapp.dao.exception.DAOException;
 import com.epam.tr.task04.paymentsapp.entity.Account;
 import com.epam.tr.task04.paymentsapp.entity.CashoutRequest;
 import com.epam.tr.task04.paymentsapp.services.CashRequestService;
+import com.epam.tr.task04.paymentsapp.services.exception.InsufficientFundsException;
 import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;
 import com.epam.tr.task04.paymentsapp.services.validator.CashoutValidator;
 import com.epam.tr.task04.paymentsapp.services.validator.PaymentValidator;
@@ -17,7 +18,7 @@ import java.util.List;
 public class CashRequestServiceImpl implements CashRequestService {
 
     @Override
-    public CashoutRequest cashout(Account account, Double amount) throws ServiceException {
+    public CashoutRequest cashout(Account account, Double amount) throws ServiceException, InsufficientFundsException {
         DAOFactory factory = DAOFactory.getInstance();
         CashRequestDAO cashRequestDAO = factory.getCashRequestDAO();
 
@@ -27,6 +28,9 @@ public class CashRequestServiceImpl implements CashRequestService {
             cashoutValidator.validate(amount);
         } catch (ValidatorException e) {
             throw new ServiceException(e);
+        }
+        if (account.getBalance() < amount) {
+            throw new InsufficientFundsException("insufficient funds.");
         }
 
         try {

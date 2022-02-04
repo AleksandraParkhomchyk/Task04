@@ -6,6 +6,7 @@ import com.epam.tr.task04.paymentsapp.entity.CashoutRequest;
 import com.epam.tr.task04.paymentsapp.services.AccountService;
 import com.epam.tr.task04.paymentsapp.services.CashRequestService;
 import com.epam.tr.task04.paymentsapp.services.ServiceFactory;
+import com.epam.tr.task04.paymentsapp.services.exception.InsufficientFundsException;
 import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;
 
 import javax.servlet.RequestDispatcher;
@@ -37,6 +38,12 @@ public class CashoutRequestCommand implements Command {
             session.setAttribute("message1", "Your account number is " + accountUPD.getAccountNumber() + ". Balance " + accountUPD.getBalance());
             session.setAttribute("success", "Cashout request was made successful");
             response.sendRedirect("/payments_app_war_exploded/controller?command=GO_TO_USERS_PAGE");
+
+        } catch (InsufficientFundsException e) {
+            session.setAttribute("wrong", "  You have insufficient funds");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/userPage.jsp");
+            dispatcher.forward(request, response);
+
 
         } catch (ServiceException e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/errorPage.jsp");
