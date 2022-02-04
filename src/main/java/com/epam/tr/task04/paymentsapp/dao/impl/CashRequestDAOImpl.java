@@ -20,7 +20,7 @@ public class CashRequestDAOImpl implements CashRequestDAO {
     private final String getAmountById = "SELECT cr_amount FROM cash_requests WHERE (cr_id = ?)";
     private final String getAllRequestByAccountId = "SELECT * FROM cash_requests WHERE accounts_a_id = ?";
     private final String cashoutTransaction = "INSERT INTO transactions(t_date, t_amount, t_from_account, t_before_acc_balance, t_after_acc_balance, t_to_account, users_u_id, transaction_type_tt_id) values (?, ?, ?, ?, ?, ?, ?, ?)";
-
+    private final String cancelRequest = "DELETE FROM cash_requests WHERE (cr_id = ?)";
 
     Date date = new java.sql.Date(System.currentTimeMillis());
 
@@ -329,5 +329,20 @@ public class CashRequestDAOImpl implements CashRequestDAO {
             }
         }
     }
+
+    @Override
+    public void cancelCashRequest(Integer requestId) throws DAOException {
+
+        try (Connection connection = ConnectionPool.getInstance().takeConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(cancelRequest)) {
+
+            preparedStatement.setInt(1, requestId);
+            preparedStatement.executeUpdate();
+
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DAOException(e);
+        }
+    }
 }
+
 

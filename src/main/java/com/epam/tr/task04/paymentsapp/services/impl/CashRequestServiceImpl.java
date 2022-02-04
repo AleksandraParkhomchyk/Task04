@@ -101,4 +101,16 @@ public class CashRequestServiceImpl implements CashRequestService {
         }
         return list;
     }
+
+    @Override
+    public void cancelCashRequest(Integer requestId) throws ServiceException {
+        DAOFactory factory = DAOFactory.getInstance();
+        CashRequestDAO cashRequestDAO = factory.getCashRequestDAO();
+
+        try {
+            cashRequestDAO.cancelCashRequest(requestId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

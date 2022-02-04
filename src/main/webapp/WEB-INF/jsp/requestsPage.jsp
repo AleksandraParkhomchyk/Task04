@@ -33,6 +33,24 @@
                 <td data-th="Name">${request.date}</td>
                 <td data-th="Surname">${request.amount}</td>
                 <td data-th="Passport">${request.status}</td>
+                <td><c:choose>
+                    <c:when test="${request.status == 1}">Open</c:when>
+                    <c:when test="${request.status == 2}">Completed</c:when>
+                    <c:when test="${request.status == 3}">Declined</c:when>
+                </c:choose></td>
+                <td>
+                        <c:choose>
+                        <c:when test="${request.status ==1}">
+                <td class="actions" data-th="">
+                    <form action="${pageContext.request.contextPath}/controller?command=CANCEL_REQUEST" method="post">
+                        <button type="submit" class="btn btn-info btn-sm" id="cancel"
+                                name="cancel" value="${request.id}">
+                            <i class="fa fa-refresh">Cancel</i>
+                        </button>
+                    </form>
+                </td>
+                </c:when>
+                </c:choose>
             </tr>
         </c:forEach>
     </table>

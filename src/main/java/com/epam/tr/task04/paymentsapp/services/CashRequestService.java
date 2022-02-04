@@ -19,4 +19,5 @@ public interface CashRequestService {
 
     List<CashoutRequest> getUsersRequests(Integer accountId) throws ServiceException;
 
+    void cancelCashRequest(Integer requestId) throws ServiceException;
 }

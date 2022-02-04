@@ -19,4 +19,6 @@ public interface CashRequestDAO {
     Double getAmountByRequestId(Integer requestId) throws DAOException;
 
     List<CashoutRequest> getUsersRequests(Integer accountId) throws DAOException;
+
+    void cancelCashRequest(Integer requestId) throws DAOException;
 }
