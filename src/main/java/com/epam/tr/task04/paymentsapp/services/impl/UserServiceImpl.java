@@ -10,7 +10,6 @@ import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;
 import com.epam.tr.task04.paymentsapp.services.validator.UserValidator;
 import com.epam.tr.task04.paymentsapp.services.validator.ValidatorException;
 import com.epam.tr.task04.paymentsapp.services.validator.ValidatorFactory;
-import com.epam.tr.task04.paymentsapp.services.validator.impl.UserValidatorImpl;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +18,6 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     @Override
     public User authorisation(String login, String password) throws ServiceException {
-        //1. validation
 
         DAOFactory factory = DAOFactory.getInstance();
         UserDAO userDAO = factory.getUserDAO();
@@ -29,9 +27,8 @@ public class UserServiceImpl implements UserService {
             Optional<User> userOptional = userDAO.authorisation(login, password);
 
             if (!userOptional.isPresent()) {
-                //logger
+                //todo: logger
                 throw new NotAuthorizedException();
-                // построить строку с сообщением и логгером
 
             } else {
                 return userOptional.get();

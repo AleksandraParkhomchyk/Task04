@@ -25,6 +25,8 @@ public class LoginationCommand implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         HttpSession session = request.getSession(true);
+        session.setAttribute("url", "/payments_app_war_exploded/controller?command=GO_TO_USERS_PAGE");
+
         String login = request.getParameter("login");
         String password = request.getParameter("password");
         List<CashoutRequest> list;

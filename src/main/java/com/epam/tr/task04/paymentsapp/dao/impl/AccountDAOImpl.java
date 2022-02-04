@@ -24,9 +24,10 @@ public class AccountDAOImpl implements AccountDAO {
 
     @Override
     public Account createAccount(User user) throws DAOException {
-        Account account = null;
-        PreparedStatement preparedStatement = null;
+
         Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        Account account = null;
 
         try {
             connection = ConnectionPool.getInstance().takeConnection();
@@ -52,21 +53,20 @@ public class AccountDAOImpl implements AccountDAO {
 
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
-
         } finally {
-            try {
-                if (preparedStatement != null) {
+            if (preparedStatement != null) {
+                try {
                     preparedStatement.close();
+                } catch (SQLException e) {
+                    throw new DAOException(e);
                 }
-            } catch (SQLException e) {
-                throw new DAOException(e);
             }
-            try {
-                if (connection != null) {
+            if (connection != null) {
+                try {
                     connection.close();
+                } catch (SQLException e) {
+                    throw new DAOException(e);
                 }
-            } catch (SQLException e) {
-                throw new DAOException(e);
             }
         }
     }
@@ -74,8 +74,8 @@ public class AccountDAOImpl implements AccountDAO {
     @Override
     public Account getAccountByUserId(Integer userId) throws DAOException {
 
-        PreparedStatement preparedStatement = null;
         Connection connection = null;
+        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         Account account = new Account();
 
@@ -99,33 +99,35 @@ public class AccountDAOImpl implements AccountDAO {
             throw new DAOException(e);
 
         } finally {
-            try {
-                if (resultSet != null) {
+            if (resultSet != null) {
+                try {
                     resultSet.close();
+                } catch (SQLException e) {
+                    throw new DAOException(e);
                 }
-            } catch (SQLException e) {
-                throw new DAOException(e);
             }
-            try {
-                if (preparedStatement != null) {
+            if (preparedStatement != null) {
+                try {
                     preparedStatement.close();
+                } catch (SQLException e) {
+                    throw new DAOException(e);
                 }
-            } catch (SQLException e) {
-                throw new DAOException(e);
             }
-            try {
-                if (connection != null) {
+            if (connection != null) {
+                try {
                     connection.close();
+                } catch (SQLException e) {
+                    throw new DAOException(e);
                 }
-            } catch (SQLException e) {
-                throw new DAOException(e);
             }
         }
     }
 
     @Override
-    public boolean accountPayment(Account account, String accountNumber, Double amount, Integer userId) throws DAOException {
-        Connection connection;
+    public boolean accountPayment(Account account, String accountNumber, Double amount, Integer userId) throws
+            DAOException {
+
+        Connection connection = null;
         PreparedStatement writeNewBalance = null;
         PreparedStatement writeTransaction = null;
 

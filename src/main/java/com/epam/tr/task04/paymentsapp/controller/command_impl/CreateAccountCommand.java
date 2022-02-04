@@ -21,7 +21,7 @@ public class CreateAccountCommand implements Command {
         AccountService accountService = serviceFactory.getAccountService();
 
         User user = new User();
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(true);
         Integer id = (Integer) session.getAttribute("id");
         user.setId(id);
 

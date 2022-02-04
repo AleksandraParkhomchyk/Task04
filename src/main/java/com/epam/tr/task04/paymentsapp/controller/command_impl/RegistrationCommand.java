@@ -17,17 +17,11 @@ public class RegistrationCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String name;
-        String surname;
-        String login;
-        String password;
-        String passport;
-
-        name = request.getParameter("name");
-        surname = request.getParameter("surname");
-        login = request.getParameter("login");
-        password = request.getParameter("password");
-        passport = request.getParameter("passport");
+        String name = request.getParameter("name");
+        String surname = request.getParameter("surname");
+        String login = request.getParameter("login");
+        String password = request.getParameter("password");
+        String passport = request.getParameter("passport");
 
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         UserService userService = serviceFactory.getUserService();

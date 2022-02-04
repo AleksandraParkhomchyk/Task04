@@ -13,7 +13,7 @@ public class GoToLoginationPageCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(true);
         session.setAttribute("url", "/payments_app_war_exploded/controller?command=GO_TO_LOGINATION_PAGE");
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/logination.jsp");
