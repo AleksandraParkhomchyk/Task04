@@ -2,6 +2,7 @@ package com.epam.tr.task04.paymentsapp.dao.impl;
 
 import com.epam.tr.task04.paymentsapp.dao.connectionpool.ConnectionPool;
 import com.epam.tr.task04.paymentsapp.dao.UserDAO;
+import com.epam.tr.task04.paymentsapp.dao.connectionpool.ConnectionPoolException;
 import com.epam.tr.task04.paymentsapp.dao.exception.DAOException;
 import com.epam.tr.task04.paymentsapp.entity.User;
 import org.mindrot.jbcrypt.BCrypt;
@@ -41,7 +42,7 @@ public class UserDAOImpl implements UserDAO {
 
             preparedStatement.executeUpdate();
 
-        } catch (SQLException e) {
+        } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
         } finally {
             try {
@@ -90,7 +91,7 @@ public class UserDAOImpl implements UserDAO {
                     throw new DAOException(exp);
                 }
             }
-        } catch (SQLException e) {
+        } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
         } finally {
             try {
@@ -136,7 +137,7 @@ public class UserDAOImpl implements UserDAO {
 
             }
             return list;
-        } catch (SQLException e) {
+        } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
         } finally {
             try {

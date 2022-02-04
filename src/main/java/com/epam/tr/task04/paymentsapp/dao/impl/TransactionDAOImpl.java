@@ -2,6 +2,7 @@ package com.epam.tr.task04.paymentsapp.dao.impl;
 
 import com.epam.tr.task04.paymentsapp.dao.TransactionDAO;
 import com.epam.tr.task04.paymentsapp.dao.connectionpool.ConnectionPool;
+import com.epam.tr.task04.paymentsapp.dao.connectionpool.ConnectionPoolException;
 import com.epam.tr.task04.paymentsapp.dao.exception.DAOException;
 import com.epam.tr.task04.paymentsapp.entity.Transaction;
 
@@ -40,7 +41,7 @@ public class TransactionDAOImpl implements TransactionDAO {
                 list.add(transaction);
             }
             return list;
-        } catch (SQLException e) {
+        } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
         } finally {
             try {

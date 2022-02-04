@@ -2,6 +2,7 @@ package com.epam.tr.task04.paymentsapp.dao.impl;
 
 import com.epam.tr.task04.paymentsapp.dao.AccountDAO;
 import com.epam.tr.task04.paymentsapp.dao.connectionpool.ConnectionPool;
+import com.epam.tr.task04.paymentsapp.dao.connectionpool.ConnectionPoolException;
 import com.epam.tr.task04.paymentsapp.dao.exception.DAOException;
 import com.epam.tr.task04.paymentsapp.entity.Account;
 import com.epam.tr.task04.paymentsapp.entity.User;
@@ -49,7 +50,7 @@ public class AccountDAOImpl implements AccountDAO {
                 }
             }
 
-        } catch (SQLException e) {
+        } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
 
         } finally {
@@ -94,7 +95,7 @@ public class AccountDAOImpl implements AccountDAO {
             } else {
                 return account;
             }
-        } catch (SQLException e) {
+        } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
 
         } finally {
@@ -129,9 +130,15 @@ public class AccountDAOImpl implements AccountDAO {
         PreparedStatement writeTransaction = null;
 
         boolean result = true;
-        connection = ConnectionPool.getInstance().takeConnection();
 
         try {
+            connection = ConnectionPool.getInstance().takeConnection();
+        } catch (ConnectionPoolException e) {
+            throw new DAOException(e);
+        }
+
+        try {
+
             writeNewBalance = connection.prepareStatement(afterPaymentBalance);
             writeTransaction = connection.prepareStatement(paymentTransaction);
 
@@ -208,7 +215,7 @@ public class AccountDAOImpl implements AccountDAO {
                 accountId = resultSet.getInt(1);
 
             }
-        } catch (SQLException e) {
+        } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
 
         } finally {
@@ -260,8 +267,7 @@ public class AccountDAOImpl implements AccountDAO {
             }
 
             return account;
-        } catch (
-                SQLException e) {
+        } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
 
         } finally {

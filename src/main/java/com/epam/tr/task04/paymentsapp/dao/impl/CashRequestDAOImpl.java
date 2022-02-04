@@ -2,6 +2,7 @@ package com.epam.tr.task04.paymentsapp.dao.impl;
 
 import com.epam.tr.task04.paymentsapp.dao.CashRequestDAO;
 import com.epam.tr.task04.paymentsapp.dao.connectionpool.ConnectionPool;
+import com.epam.tr.task04.paymentsapp.dao.connectionpool.ConnectionPoolException;
 import com.epam.tr.task04.paymentsapp.dao.exception.DAOException;
 import com.epam.tr.task04.paymentsapp.entity.Account;
 import com.epam.tr.task04.paymentsapp.entity.CashoutRequest;
@@ -49,7 +50,7 @@ public class CashRequestDAOImpl implements CashRequestDAO {
                     return cashoutRequest;
                 }
             }
-        } catch (SQLException e) {
+        } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
         } finally {
             try {
@@ -93,7 +94,7 @@ public class CashRequestDAOImpl implements CashRequestDAO {
 
             }
             return list;
-        } catch (SQLException e) {
+        } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
         } finally {
             try {
@@ -123,15 +124,20 @@ public class CashRequestDAOImpl implements CashRequestDAO {
 
     @Override
     public boolean updateRequestStatusApproved(Account account, Integer requestID, Double amount, Integer userId) throws DAOException {
-        Connection connection = ConnectionPool.getInstance().takeConnection();
 
+        Connection connection = null;
         PreparedStatement updateStatus = null;
         PreparedStatement updateBalance = null;
         PreparedStatement writeTransaction = null;
         boolean result = true;
 
         try {
+            connection = ConnectionPool.getInstance().takeConnection();
+        } catch (ConnectionPoolException e) {
+            throw new DAOException(e);
+        }
 
+        try {
             updateStatus = connection.prepareStatement(updateRequestStatusDB);
             updateBalance = connection.prepareStatement(afterCashoutBalance);
             writeTransaction = connection.prepareStatement(cashoutTransaction);
@@ -205,7 +211,7 @@ public class CashRequestDAOImpl implements CashRequestDAO {
             preparedStatement.executeUpdate();
 
             return true;
-        } catch (SQLException e) {
+        } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
         } finally {
             try {
@@ -244,7 +250,7 @@ public class CashRequestDAOImpl implements CashRequestDAO {
                 amount = resultSet.getDouble(1);
                 return amount;
             }
-        } catch (SQLException e) {
+        } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
         } finally {
             try {
@@ -297,7 +303,7 @@ public class CashRequestDAOImpl implements CashRequestDAO {
 
             }
             return list;
-        } catch (SQLException e) {
+        } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
         } finally {
             try {

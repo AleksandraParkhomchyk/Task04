@@ -18,10 +18,10 @@ public final class ConnectionPool {
     private BlockingQueue<Connection> connectionQueue;
     private BlockingQueue<Connection> givenAwayConQueue;
 
-    private String driverName;
-    private String url;
-    private String user;
-    private String password;
+    private final String driverName;
+    private final String url;
+    private final String user;
+    private final String password;
     private int poolSize;
 
     private ConnectionPool() {
@@ -34,6 +34,7 @@ public final class ConnectionPool {
         try {
             this.poolSize = Integer.parseInt(dbResourceManager.getValue(DBParameter.DB_POOL_SIZE));
         } catch (NumberFormatException e) {
+            LOG.error("Unable to get pool size");
             poolSize = 5;
         }
     }
@@ -76,13 +77,14 @@ public final class ConnectionPool {
 
     }
 
-    public Connection takeConnection() {
+    public Connection takeConnection() throws ConnectionPoolException {
         Connection connection = null;
         try {
             connection = connectionQueue.take();
             givenAwayConQueue.add(connection);
         } catch (InterruptedException e) {
             LOG.error("Failing to take connection", e);
+            throw new ConnectionPoolException("Failing to take connection", e);
         }
         return connection;
     }
@@ -101,17 +103,17 @@ public final class ConnectionPool {
         try {
             con.close();
         } catch (SQLException e) {
-
+            LOG.error("Connection isn't close");
         }
         try {
             rs.close();
         } catch (SQLException e) {
-
+            LOG.error("Resultset isn't close");
         }
         try {
             st.close();
         } catch (SQLException e) {
-
+            LOG.error("Statement isn't close");
         }
     }
 
@@ -119,12 +121,12 @@ public final class ConnectionPool {
         try {
             con.close();
         } catch (SQLException e) {
-
+            LOG.error("Connection isn't close");
         }
         try {
             st.close();
         } catch (SQLException e) {
-
+            LOG.error("Statement isn't close");
         }
     }
 
