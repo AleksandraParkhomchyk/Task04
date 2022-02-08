@@ -65,7 +65,7 @@
     </dependencies>
 
     <build>
-        <finalName>payments_app_war_exploded</finalName>
+        <finalName>payments</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
