@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.epam.tr.task04</groupId>
-    <artifactId>PaymentsApp</artifactId>
+    <artifactId>payments</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>PaymentsApp</name>
     <packaging>war</packaging>
@@ -65,7 +65,7 @@
     </dependencies>
 
     <build>
-        <finalName>payments-app</finalName>
+        <finalName>payments_app_war_exploded</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

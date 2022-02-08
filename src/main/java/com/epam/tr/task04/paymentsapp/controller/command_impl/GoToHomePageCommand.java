@@ -15,7 +15,7 @@ public class GoToHomePageCommand implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         HttpSession session = request.getSession(true);
-        session.setAttribute("url", "/payments_app_war_exploded/controller?command=GO_TO_HOME_PAGE");
+        session.setAttribute("url", "/payments/controller?command=GO_TO_HOME_PAGE");
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/homePage.jsp");
         dispatcher.forward(request, response);

@@ -14,7 +14,7 @@ public class GoToLoginationPageCommand implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         HttpSession session = request.getSession(true);
-        session.setAttribute("url", "/payments_app_war_exploded/controller?command=GO_TO_LOGINATION_PAGE");
+        session.setAttribute("url", "/payments/controller?command=GO_TO_LOGINATION_PAGE");
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/logination.jsp");
         dispatcher.forward(request, response);

@@ -39,7 +39,7 @@ public class PaymentAccountCommand implements Command {
             if (result) {
                 session.setAttribute("success", "Payment made successful");
                 session.setAttribute("balance", accountUPD.getBalance());
-                response.sendRedirect("/payments_app_war_exploded/controller?command=GO_TO_USERS_PAGE");
+                response.sendRedirect("/payments/controller?command=GO_TO_USERS_PAGE");
 
             } else {
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/errorPage.jsp");

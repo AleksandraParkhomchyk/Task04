@@ -18,7 +18,7 @@
 <fmt:message bundle="${loc}" key="local.localbutton.name.en" var="en_button"/>
 
 <head>
-    <title>${page_name}</title>
+       <title>${page_name}</title>
 </head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <body>

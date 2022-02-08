@@ -37,7 +37,7 @@ public class CashoutRequestCommand implements Command {
             Account accountUPD = accountService.getAccountByUserId(userId);
             session.setAttribute("message1", "Your account number is " + accountUPD.getAccountNumber() + ". Balance " + accountUPD.getBalance());
             session.setAttribute("success", "Cashout request was made successful");
-            response.sendRedirect("/payments_app_war_exploded/controller?command=GO_TO_USERS_PAGE");
+            response.sendRedirect("/payments/controller?command=GO_TO_USERS_PAGE");
 
         } catch (InsufficientFundsException e) {
             session.setAttribute("wrong", "  You have insufficient funds");

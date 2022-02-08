@@ -35,10 +35,10 @@ public class CreateAccountCommand implements Command {
                 session.setAttribute("success", "Your account created");
                 session.setAttribute("accountN", account.getAccountNumber());
                 session.setAttribute("balance", account.getBalance());
-                response.sendRedirect("/payments_app_war_exploded/controller?command=GO_TO_USERS_PAGE");
+                response.sendRedirect("/payments/controller?command=GO_TO_USERS_PAGE");
 
             } catch (ServiceException e) {
-                e.printStackTrace(); //todo: exception
+                 //todo: exception
             }
         } else {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/errorPage.jsp");
