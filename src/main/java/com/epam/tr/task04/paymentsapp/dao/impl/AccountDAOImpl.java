@@ -200,100 +200,47 @@ public class AccountDAOImpl implements AccountDAO {
 
     @Override
     public Integer getAccountIdByRequestId(Integer requestId) throws DAOException {
-
-        PreparedStatement preparedStatement = null;
-        Connection connection = null;
-        ResultSet resultSet = null;
         Integer accountId = null;
 
-        try {
-            connection = ConnectionPool.getInstance().takeConnection();
-            preparedStatement = connection.prepareStatement(getAccountByRequestId);
+        try (Connection connection = ConnectionPool.getInstance().takeConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(getAccountByRequestId)) {
+
             preparedStatement.setInt(1, requestId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
 
-            resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                accountId = resultSet.getInt(1);
-
+                if (resultSet.next()) {
+                    accountId = resultSet.getInt(1);
+                }
+            } catch (SQLException e) {
+                throw new DAOException(e);
             }
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
-
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-            } catch (SQLException e) {
-                throw new DAOException(e);
-            }
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } catch (SQLException e) {
-                throw new DAOException(e);
-            }
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                throw new DAOException(e);
-            }
         }
         return accountId;
     }
 
     @Override
     public Account getAccountById(Integer accountId) throws DAOException {
-
-        PreparedStatement preparedStatement = null;
-        Connection connection = null;
-        ResultSet resultSet = null;
         Account account = new Account();
 
+        try (Connection connection = ConnectionPool.getInstance().takeConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(getAccountById)) {
 
-        try {
-            connection = ConnectionPool.getInstance().takeConnection();
-            preparedStatement = connection.prepareStatement(getAccountById);
             preparedStatement.setInt(1, accountId);
-
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                account.setId(resultSet.getInt(1));
-                account.setAccountNumber(resultSet.getString(2));
-                account.setBalance(resultSet.getDouble(3));
-                account.setOwnerId(resultSet.getInt(6));
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    account.setId(resultSet.getInt(1));
+                    account.setAccountNumber(resultSet.getString(2));
+                    account.setBalance(resultSet.getDouble(3));
+                    account.setOwnerId(resultSet.getInt(6));
+                }
+            } catch (SQLException e) {
+                throw new DAOException(e);
             }
-
-            return account;
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
-
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-            } catch (SQLException e) {
-                throw new DAOException(e);
-            }
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } catch (SQLException e) {
-                throw new DAOException(e);
-            }
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                throw new DAOException(e);
-            }
         }
+        return account;
     }
 }
