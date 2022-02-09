@@ -29,7 +29,7 @@
             <th>Status</th>
         </tr>
         </thead>
-        <c:forEach items="${requestScope.AllRequests}" var="request">
+        <c:forEach items="${requestScope.allRequests}" var="request">
             <tr>
                 <td data-th="Id">${request.id}</td>
                 <td data-th="Date">${request.date}</td>
@@ -74,7 +74,7 @@
     <div class="container">
         <table id="users" class="table table-hover table-condensed">
             <tbody>
-            <c:forEach items="${requestScope.AllUsers}" var="user">
+            <c:forEach items="${requestScope.allUsers}" var="user">
             <tr>
                 <td data-th="Users">
                     <div class="row">

@@ -29,7 +29,7 @@
             <th>Target account</th>
         </tr>
         </thead>
-        <c:forEach items="${requestScope.AllTransactions}" var="transaction">
+        <c:forEach items="${requestScope.allTransactions}" var="transaction">
             <tr>
                 <td data-th="Name">${transaction.id}</td>
                 <td data-th="Name">${transaction.date}</td>

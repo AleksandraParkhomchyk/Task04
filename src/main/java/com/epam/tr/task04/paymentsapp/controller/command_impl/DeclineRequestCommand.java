@@ -2,6 +2,7 @@ package com.epam.tr.task04.paymentsapp.controller.command_impl;
 
 import com.epam.tr.task04.paymentsapp.controller.Command;
 import com.epam.tr.task04.paymentsapp.controller.constant.PagePath;
+import com.epam.tr.task04.paymentsapp.controller.constant.Utils;
 import com.epam.tr.task04.paymentsapp.entity.CashoutRequest;
 import com.epam.tr.task04.paymentsapp.services.AccountService;
 import com.epam.tr.task04.paymentsapp.services.CashRequestService;
@@ -24,13 +25,13 @@ public class DeclineRequestCommand implements Command {
 
         List<CashoutRequest> list;
 
-        String requestIDGot = request.getParameter("decline");
+        String requestIDGot = request.getParameter(Utils.DECLINE);
         Integer requestID = Integer.parseInt(requestIDGot);
 
         try {
             cashRequestService.updateRequestStatusDeclined(requestID);
             list = cashRequestService.getAllCashoutRequests();
-            request.setAttribute("AllRequests", list);
+            request.setAttribute(Utils.ALL_REQUESTS, list);
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ADMIN_PAGE);
             dispatcher.forward(request, response);
         } catch (ServiceException e) {

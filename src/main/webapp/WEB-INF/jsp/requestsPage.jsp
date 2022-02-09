@@ -27,7 +27,7 @@
             <th>Status</th>
         </tr>
         </thead>
-        <c:forEach items="${requestScope.UserRequests}" var="request">
+        <c:forEach items="${requestScope.userRequests}" var="request">
             <tr>
                 <td data-th="Name">${request.id}</td>
                 <td data-th="Name">${request.date}</td>

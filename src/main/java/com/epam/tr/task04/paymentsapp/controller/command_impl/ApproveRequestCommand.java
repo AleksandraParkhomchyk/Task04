@@ -2,6 +2,7 @@ package com.epam.tr.task04.paymentsapp.controller.command_impl;
 
 import com.epam.tr.task04.paymentsapp.controller.Command;
 import com.epam.tr.task04.paymentsapp.controller.constant.PagePath;
+import com.epam.tr.task04.paymentsapp.controller.constant.Utils;
 import com.epam.tr.task04.paymentsapp.entity.Account;
 import com.epam.tr.task04.paymentsapp.entity.CashoutRequest;
 import com.epam.tr.task04.paymentsapp.services.AccountService;
@@ -27,7 +28,7 @@ public class ApproveRequestCommand implements Command {
         List<CashoutRequest> list;
 
         try {
-            String requestIDGot = request.getParameter("approve");
+            String requestIDGot = request.getParameter(Utils.APPROVE);
             Integer requestID = Integer.parseInt(requestIDGot);
             amount = cashRequestService.getAmountByRequestId(requestID);
             Integer accountId = accountService.getAccountIdByRequestId(requestID);
@@ -37,7 +38,7 @@ public class ApproveRequestCommand implements Command {
 
             cashRequestService.updateRequestStatusApproved(account, requestID, amount, userId);
             list = cashRequestService.getAllCashoutRequests();
-            request.setAttribute("AllRequests", list);
+            request.setAttribute(Utils.ALL_REQUESTS, list);
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ADMIN_PAGE);
             dispatcher.forward(request, response);
         } catch (ServiceException e) {

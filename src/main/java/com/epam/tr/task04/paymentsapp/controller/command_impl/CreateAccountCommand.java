@@ -1,6 +1,8 @@
 package com.epam.tr.task04.paymentsapp.controller.command_impl;
 
 import com.epam.tr.task04.paymentsapp.controller.Command;
+import com.epam.tr.task04.paymentsapp.controller.constant.PagePath;
+import com.epam.tr.task04.paymentsapp.controller.constant.Utils;
 import com.epam.tr.task04.paymentsapp.entity.Account;
 import com.epam.tr.task04.paymentsapp.entity.User;
 import com.epam.tr.task04.paymentsapp.services.AccountService;
@@ -15,6 +17,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class CreateAccountCommand implements Command {
+    private final String URL_REDIRECT = "/payments/controller?command=GO_TO_USERS_PAGE";
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
@@ -22,26 +26,26 @@ public class CreateAccountCommand implements Command {
 
         User user = new User();
         HttpSession session = request.getSession(true);
-        Integer id = (Integer) session.getAttribute("id");
+        Integer id = (Integer) session.getAttribute(Utils.ID);
         user.setId(id);
 
-        if (session.getAttribute("account_id") == null) {
+        if (session.getAttribute(Utils.ACCOUNT_ID) == null) {
             try {
                 accountService.createAccount(user);
-
                 Account account = accountService.getAccountByUserId(id);
                 Integer account_id = account.getId();
-                session.setAttribute("account_id", account_id);
-                session.setAttribute("success", "Your account created");
-                session.setAttribute("accountN", account.getAccountNumber());
-                session.setAttribute("balance", account.getBalance());
-                response.sendRedirect("/payments/controller?command=GO_TO_USERS_PAGE");
+                session.setAttribute(Utils.ACCOUNT_ID, account_id);
+                session.setAttribute(Utils.ACCOUNT_NUMBER, account.getAccountNumber());
+                session.setAttribute(Utils.BALANCE, account.getBalance());
+                response.sendRedirect(URL_REDIRECT);
+                //todo messages no account
 
             } catch (ServiceException e) {
-                 //todo: exception
+                RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ERROR_PAGE);
+                dispatcher.forward(request, response);
             }
         } else {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/errorPage.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ERROR_PAGE);
             dispatcher.forward(request, response);
         }
     }

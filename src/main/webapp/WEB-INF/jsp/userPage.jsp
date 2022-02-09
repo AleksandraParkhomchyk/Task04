@@ -12,7 +12,7 @@
 <fmt:message bundle="${loc}" key="user.logout" var="logout"/>
 <fmt:message bundle="${loc}" key="user.account.number" var="account_number"/>
 <fmt:message bundle="${loc}" key="user.balance" var="balance"/>
-<fmt:message bundle="${loc}" key="user.payment.account" var="payment_account"/>
+<fmt:message bundle="${loc}" key="user.payment.account" var="target_account"/>
 <fmt:message bundle="${loc}" key="user.payment.amount" var="payment_amount"/>
 <fmt:message bundle="${loc}" key="user.pay" var="pay"/>
 <fmt:message bundle="${loc}" key="user.request.amount" var="request_amount"/>
@@ -45,7 +45,7 @@
 
 <div class="card">
     <div class="card-body">
-        <h4 class="card-title">${sessionScope.accountN}</h4>
+        <h4 class="card-title">${sessionScope.accountNumber}</h4>
         <h6 class="card-subtitle mb-2 text-muted">${account_number}</h6>
         <h4 class="card-title">${sessionScope.balance}</h4>
         <h6 class="card-subtitle mb-2 text-muted">${balance}</h6>
@@ -56,9 +56,9 @@
     <div class="card-body">
         <form action="${pageContext.request.contextPath}/controller" method="post">
             <input type="hidden" name="command" value="PAYMENT_ACCOUNT">
-            <label class="col-sm-2 col-form-label">${payment_account}</label>
+            <label class="col-sm-2 col-form-label">${target_account}</label>
             <div class="col-sm-7">
-                <input type="text" class="form-control" name="account">
+                <input type="text" class="form-control" name="targetAccount">
             </div>
             <label class="col-sm-2 col-form-label">${payment_amount}</label>
             <div class="col-sm-7">
@@ -75,7 +75,7 @@
             <input type="hidden" name="command" value="CASHOUT_REQUEST">
             <label class="col-sm-2 col-form-label">${request_amount}</label>
             <div class="col-sm-7">
-                <input type="text" class="form-control" name="cashout_amount">
+                <input type="text" class="form-control" name="amount">
             </div>
             <br>
             <button type="submit" class="btn btn-primary">${request}</button>

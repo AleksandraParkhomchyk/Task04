@@ -2,6 +2,7 @@ package com.epam.tr.task04.paymentsapp.controller.command_impl;
 
 import com.epam.tr.task04.paymentsapp.controller.Command;
 import com.epam.tr.task04.paymentsapp.controller.constant.PagePath;
+import com.epam.tr.task04.paymentsapp.controller.constant.Utils;
 import com.epam.tr.task04.paymentsapp.entity.User;
 import com.epam.tr.task04.paymentsapp.services.ServiceFactory;
 import com.epam.tr.task04.paymentsapp.services.UserService;
@@ -22,7 +23,7 @@ public class GetAllUsersCommand implements Command {
         List<User> list;
         try {
             list = userService.getAllUsers();
-            request.setAttribute("AllUsers", list);
+            request.setAttribute(Utils.ALL_USERS, list);
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ADMIN_PAGE);
             dispatcher.forward(request, response);
         } catch (ServiceException e) {

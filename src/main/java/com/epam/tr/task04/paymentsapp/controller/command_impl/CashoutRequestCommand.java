@@ -2,6 +2,7 @@ package com.epam.tr.task04.paymentsapp.controller.command_impl;
 
 import com.epam.tr.task04.paymentsapp.controller.Command;
 import com.epam.tr.task04.paymentsapp.controller.constant.PagePath;
+import com.epam.tr.task04.paymentsapp.controller.constant.Utils;
 import com.epam.tr.task04.paymentsapp.entity.Account;
 import com.epam.tr.task04.paymentsapp.entity.CashoutRequest;
 import com.epam.tr.task04.paymentsapp.services.AccountService;
@@ -18,30 +19,27 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class CashoutRequestCommand implements Command {
+    private final String URL_REDIRECT = "/payments/controller?command=GO_TO_USERS_PAGE";
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        Double cAmount;
 
-        cAmount = Double.parseDouble(request.getParameter("cashout_amount"));
+        Double amount = Double.parseDouble(request.getParameter(Utils.CASHOUT_AMOUNT));
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         AccountService accountService = serviceFactory.getAccountService();
         CashRequestService cashRequestService = serviceFactory.getCashRequestService();
         HttpSession session = request.getSession(true);
 
-        Integer userId = (Integer) session.getAttribute("id");
+        Integer userId = (Integer) session.getAttribute(Utils.ID);
 
         try {
             Account account = accountService.getAccountByUserId(userId);
-            CashoutRequest cashoutRequest = cashRequestService.cashout(account, cAmount);
-            Integer requestId = cashoutRequest.getId();
-            session.setAttribute("requestId", requestId);
-            Account accountUPD = accountService.getAccountByUserId(userId);
-            session.setAttribute("message1", "Your account number is " + accountUPD.getAccountNumber() + ". Balance " + accountUPD.getBalance());
-            session.setAttribute("success", "Cashout request was made successful");
-            response.sendRedirect("/payments/controller?command=GO_TO_USERS_PAGE");// todo url
+            CashoutRequest cashoutRequest = cashRequestService.cashout(account, amount);
+            session.setAttribute("success", "Cashout request was made successful");// todo messages
+            response.sendRedirect(URL_REDIRECT);
 
         } catch (InsufficientFundsException e) {
-            session.setAttribute("wrong", "  You have insufficient funds");
+            session.setAttribute("wrong", "  You have insufficient funds");// todo messages
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.USER_PAGE);
             dispatcher.forward(request, response);
 

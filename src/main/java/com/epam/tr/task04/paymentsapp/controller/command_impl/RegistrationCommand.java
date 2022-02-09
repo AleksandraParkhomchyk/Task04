@@ -2,6 +2,7 @@ package com.epam.tr.task04.paymentsapp.controller.command_impl;
 
 import com.epam.tr.task04.paymentsapp.controller.Command;
 import com.epam.tr.task04.paymentsapp.controller.constant.PagePath;
+import com.epam.tr.task04.paymentsapp.controller.constant.Utils;
 import com.epam.tr.task04.paymentsapp.services.ServiceFactory;
 import com.epam.tr.task04.paymentsapp.services.UserService;
 import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;
@@ -18,11 +19,11 @@ public class RegistrationCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String name = request.getParameter("name");
-        String surname = request.getParameter("surname");
-        String login = request.getParameter("login");
-        String password = request.getParameter("password");
-        String passport = request.getParameter("passport");
+        String name = request.getParameter(Utils.NAME);
+        String surname = request.getParameter(Utils.SURNAME);
+        String login = request.getParameter(Utils.LOGIN);
+        String password = request.getParameter(Utils.PASSWORD);
+        String passport = request.getParameter(Utils.PASSPORT);
 
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         UserService userService = serviceFactory.getUserService();
@@ -32,7 +33,6 @@ public class RegistrationCommand implements Command {
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.LOGINATION_PAGE);
             dispatcher.forward(request, response);
         } catch (ServiceException e) {
-            //todo log
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ERROR_PAGE);
             dispatcher.forward(request, response);
         }

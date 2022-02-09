@@ -2,6 +2,7 @@ package com.epam.tr.task04.paymentsapp.controller.command_impl;
 
 import com.epam.tr.task04.paymentsapp.controller.Command;
 import com.epam.tr.task04.paymentsapp.controller.constant.PagePath;
+import com.epam.tr.task04.paymentsapp.controller.constant.Utils;
 import com.epam.tr.task04.paymentsapp.entity.CashoutRequest;
 import com.epam.tr.task04.paymentsapp.services.CashRequestService;
 import com.epam.tr.task04.paymentsapp.services.ServiceFactory;
@@ -23,11 +24,11 @@ public class GetUsersRequestsCommand implements Command {
         CashRequestService cashRequestService = serviceFactory.getCashRequestService();
         List<CashoutRequest> list;
         HttpSession session = request.getSession(true);
-        Integer accountId = (Integer) session.getAttribute("account_id");
+        Integer accountId = (Integer) session.getAttribute(Utils.ACCOUNT_ID);
 
         try {
             list = cashRequestService.getUsersRequests(accountId);
-            request.setAttribute("UserRequests", list);
+            request.setAttribute(Utils.USER_REQUESTS, list);
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.REQUESTS_PAGE);
             dispatcher.forward(request, response);
 
