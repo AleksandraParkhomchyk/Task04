@@ -98,38 +98,6 @@ public final class ConnectionPool {
         }
     }
 
-
-    public void closeConnection(Connection con, Statement st, ResultSet rs) {
-        try {
-            con.close();
-        } catch (SQLException e) {
-            LOG.error("Connection isn't close");
-        }
-        try {
-            rs.close();
-        } catch (SQLException e) {
-            LOG.error("Resultset isn't close");
-        }
-        try {
-            st.close();
-        } catch (SQLException e) {
-            LOG.error("Statement isn't close");
-        }
-    }
-
-    public void closeConnection(Connection con, Statement st) {
-        try {
-            con.close();
-        } catch (SQLException e) {
-            LOG.error("Connection isn't close");
-        }
-        try {
-            st.close();
-        } catch (SQLException e) {
-            LOG.error("Statement isn't close");
-        }
-    }
-
     private void closeConnectionQueue(BlockingQueue<Connection> queue) throws SQLException {
         Connection connection;
         while ((connection = queue.poll()) != null) {
