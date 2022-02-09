@@ -280,7 +280,7 @@ public class CashRequestDAOImpl implements CashRequestDAO {
 
     @Override
     public List<CashoutRequest> getUsersRequests(Integer accountId) throws DAOException {
-        List<CashoutRequest> list = new ArrayList<CashoutRequest>();
+        List<CashoutRequest> list = new ArrayList<>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -344,5 +344,3 @@ public class CashRequestDAOImpl implements CashRequestDAO {
         }
     }
 }
-
-

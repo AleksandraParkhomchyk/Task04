@@ -20,7 +20,6 @@ public class UserDAOImpl implements UserDAO {
 
     private static final String PASSWORD_SALT = "$2a$10$7Xtwz2dUaNW2055I9dhhv.";
 
-
     @Override
     public void saveUser(User user) throws DAOException {
 
@@ -42,7 +41,6 @@ public class UserDAOImpl implements UserDAO {
             throw new DAOException(e);
         }
     }
-
 
     @Override
     public Optional<User> authorisation(String login, String password) throws DAOException {
@@ -99,12 +97,3 @@ public class UserDAOImpl implements UserDAO {
         return list;
     }
 }
-
-
-
-
-
-
-
-
-
