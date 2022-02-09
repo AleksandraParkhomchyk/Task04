@@ -41,7 +41,9 @@
 <body>
 
 <p><c:out value="${sessionScope.success}"/></p>
-<p><c:out value="${sessionScope.wrong}"/></p>
+<p><c:out value="${sessionScope.failure}"/></p>
+<p><c:out value="${requestScope.create}"/></p>
+<p><c:out value="${sessionScope.createdAccount}"/></p>
 
 <div class="card">
     <div class="card-body">

@@ -1,6 +1,7 @@
 package com.epam.tr.task04.paymentsapp.controller.command_impl;
 
 import com.epam.tr.task04.paymentsapp.controller.Command;
+import com.epam.tr.task04.paymentsapp.controller.constant.Message;
 import com.epam.tr.task04.paymentsapp.controller.constant.PagePath;
 import com.epam.tr.task04.paymentsapp.controller.constant.Utils;
 import com.epam.tr.task04.paymentsapp.entity.Account;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.lang.reflect.Member;
 import java.util.List;
 
 public class LoginationCommand implements Command {
@@ -57,7 +59,7 @@ public class LoginationCommand implements Command {
                 Account account = accountService.getAccountByUserId(id);
 
                 if (account.getId() == null) {
-                    request.setAttribute("message", "Please, create an account.");// todo messages
+                   request.setAttribute(Message.CREATE, Message.CREATE_ACCOUNT);
 
                 } else {
                     session.setAttribute(Utils.ACCOUNT_ID, account.getId());

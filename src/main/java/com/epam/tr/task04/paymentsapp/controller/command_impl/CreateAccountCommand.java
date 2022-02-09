@@ -1,6 +1,7 @@
 package com.epam.tr.task04.paymentsapp.controller.command_impl;
 
 import com.epam.tr.task04.paymentsapp.controller.Command;
+import com.epam.tr.task04.paymentsapp.controller.constant.Message;
 import com.epam.tr.task04.paymentsapp.controller.constant.PagePath;
 import com.epam.tr.task04.paymentsapp.controller.constant.Utils;
 import com.epam.tr.task04.paymentsapp.entity.Account;
@@ -37,8 +38,9 @@ public class CreateAccountCommand implements Command {
                 session.setAttribute(Utils.ACCOUNT_ID, account_id);
                 session.setAttribute(Utils.ACCOUNT_NUMBER, account.getAccountNumber());
                 session.setAttribute(Utils.BALANCE, account.getBalance());
+                session.setAttribute(Message.CREATED_ACCOUNT, Message.CREATED_ACCOUNT_SUCCESS);
                 response.sendRedirect(URL_REDIRECT);
-                //todo messages no account
+
 
             } catch (ServiceException e) {
                 RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ERROR_PAGE);

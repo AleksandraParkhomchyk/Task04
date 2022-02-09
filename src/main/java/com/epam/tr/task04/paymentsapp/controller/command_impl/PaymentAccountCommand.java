@@ -1,6 +1,7 @@
 package com.epam.tr.task04.paymentsapp.controller.command_impl;
 
 import com.epam.tr.task04.paymentsapp.controller.Command;
+import com.epam.tr.task04.paymentsapp.controller.constant.Message;
 import com.epam.tr.task04.paymentsapp.controller.constant.PagePath;
 import com.epam.tr.task04.paymentsapp.controller.constant.Utils;
 import com.epam.tr.task04.paymentsapp.entity.Account;
@@ -33,24 +34,18 @@ public class PaymentAccountCommand implements Command {
 
         try {
             Account account = accountService.getAccountByUserId(userId);
-
             boolean result = accountService.accountPayment(account, targetAccount, amount, userId);
-
             Account accountUPD = accountService.getAccountByUserId(userId);
             if (result) {
-                session.setAttribute("success", "Payment made successful");//todo messages
+                session.setAttribute(Message.SUCCESS, Message.SUCCESS_PAYMENT);
                 session.setAttribute(Utils.BALANCE, accountUPD.getBalance());
                 response.sendRedirect(URL_REDIRECT);
-
-            } else {
-                RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ERROR_PAGE);
-                dispatcher.forward(request, response);
             }
         } catch (InsufficientFundsException e) {
-            session.setAttribute("wrong", "  You have insufficient funds");//todo messages
+            session.setAttribute(Message.FAILURE, Message.FAILURE_PAYMENT);
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.USER_PAGE);
             dispatcher.forward(request, response);
-        } catch (ServiceException e){
+        } catch (ServiceException e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ERROR_PAGE);
             dispatcher.forward(request, response);
         }
