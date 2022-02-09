@@ -1,6 +1,7 @@
 package com.epam.tr.task04.paymentsapp.controller.command_impl;
 
 import com.epam.tr.task04.paymentsapp.controller.Command;
+import com.epam.tr.task04.paymentsapp.controller.constant.PagePath;
 import com.epam.tr.task04.paymentsapp.entity.Account;
 import com.epam.tr.task04.paymentsapp.services.AccountService;
 import com.epam.tr.task04.paymentsapp.services.ServiceFactory;
@@ -24,9 +25,9 @@ public class GoToUsersPageCommand implements Command {
         try {
             Account account = accountService.getAccountByUserId(id);
         } catch (ServiceException e) {
-//todo log
+                        //todo log
         }
-        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/userPage.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.USER_PAGE);
         dispatcher.forward(request, response);
     }
 }

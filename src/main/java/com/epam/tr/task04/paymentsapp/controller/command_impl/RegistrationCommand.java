@@ -1,6 +1,7 @@
 package com.epam.tr.task04.paymentsapp.controller.command_impl;
 
 import com.epam.tr.task04.paymentsapp.controller.Command;
+import com.epam.tr.task04.paymentsapp.controller.constant.PagePath;
 import com.epam.tr.task04.paymentsapp.services.ServiceFactory;
 import com.epam.tr.task04.paymentsapp.services.UserService;
 import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;
@@ -28,11 +29,11 @@ public class RegistrationCommand implements Command {
 
         try {
             userService.registration(name, surname, login, password, passport);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/logination.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.LOGINATION_PAGE);
             dispatcher.forward(request, response);
         } catch (ServiceException e) {
             //todo log
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/errorPage.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ERROR_PAGE);
             dispatcher.forward(request, response);
         }
     }

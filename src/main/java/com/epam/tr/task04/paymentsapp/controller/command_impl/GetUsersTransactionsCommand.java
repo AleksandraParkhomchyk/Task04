@@ -1,6 +1,7 @@
 package com.epam.tr.task04.paymentsapp.controller.command_impl;
 
 import com.epam.tr.task04.paymentsapp.controller.Command;
+import com.epam.tr.task04.paymentsapp.controller.constant.PagePath;
 import com.epam.tr.task04.paymentsapp.entity.Transaction;
 import com.epam.tr.task04.paymentsapp.services.ServiceFactory;
 import com.epam.tr.task04.paymentsapp.services.TransactionService;
@@ -27,10 +28,10 @@ public class GetUsersTransactionsCommand implements Command {
         try {
             list = transactionService.getAllTransactions(userId);
             request.setAttribute("AllTransactions", list);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/historyPage.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.HISTORY_PAGE);
             dispatcher.forward(request, response);
         } catch (ServiceException e) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/errorPage.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ERROR_PAGE);
             dispatcher.forward(request, response);
         }
     }

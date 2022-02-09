@@ -1,6 +1,7 @@
 package com.epam.tr.task04.paymentsapp.controller.command_impl;
 
 import com.epam.tr.task04.paymentsapp.controller.Command;
+import com.epam.tr.task04.paymentsapp.controller.constant.PagePath;
 import com.epam.tr.task04.paymentsapp.entity.CashoutRequest;
 import com.epam.tr.task04.paymentsapp.services.CashRequestService;
 import com.epam.tr.task04.paymentsapp.services.ServiceFactory;
@@ -27,11 +28,11 @@ public class GetUsersRequestsCommand implements Command {
         try {
             list = cashRequestService.getUsersRequests(accountId);
             request.setAttribute("UserRequests", list);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/requestsPage.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.REQUESTS_PAGE);
             dispatcher.forward(request, response);
 
         } catch (ServiceException e) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/errorPage.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ERROR_PAGE);
             dispatcher.forward(request, response);
         }
     }

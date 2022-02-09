@@ -1,6 +1,8 @@
 package com.epam.tr.task04.paymentsapp.controller.command_impl;
 
 import com.epam.tr.task04.paymentsapp.controller.Command;
+import com.epam.tr.task04.paymentsapp.controller.constant.Message;
+import com.epam.tr.task04.paymentsapp.controller.constant.PagePath;
 import com.epam.tr.task04.paymentsapp.entity.Account;
 import com.epam.tr.task04.paymentsapp.entity.CashoutRequest;
 import com.epam.tr.task04.paymentsapp.entity.User;
@@ -21,14 +23,17 @@ import java.util.List;
 
 public class LoginationCommand implements Command {
 
+    private final String URL_NAME = "/payments/controller?command=GO_TO_USERS_PAGE";
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         HttpSession session = request.getSession(true);
-        session.setAttribute("url", "/payments/controller?command=GO_TO_USERS_PAGE");
+        session.setAttribute("url", URL_NAME);
 
         String login = request.getParameter("login");
         String password = request.getParameter("password");
+
         List<CashoutRequest> list;
 
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
@@ -39,40 +44,40 @@ public class LoginationCommand implements Command {
         try {
             User user = userService.authorisation(login, password);
             Integer role = user.getRole();
-            Integer id = user.getId();
 
             if (user.getRole() == null) {
-                throw new ServiceException();
+                throw new ServiceException(); //todo check
             }
 
+            Integer id = user.getId();
             session.setAttribute("id", id);
 
             if (role == 1) {
                 Account account = accountService.getAccountByUserId(id);
-                Integer account_id = account.getId();
-                session.setAttribute("account_id", account_id);
 
                 if (account.getId() == null) {
                     request.setAttribute("message", "Please, create an account.");
 
                 } else {
-                    session.setAttribute("accountNumber", account);
+                    session.setAttribute("account_id", account.getId());
                     session.setAttribute("accountN", account.getAccountNumber());
                     session.setAttribute("balance", account.getBalance());
                 }
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/userPage.jsp");
+
+                RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.USER_PAGE);
                 dispatcher.forward(request, response);
+
             } else if (role == 2) {
                 list = cashRequestService.getAllCashoutRequests();
                 request.setAttribute("AllRequests", list);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/adminPage.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ADMIN_PAGE);
                 dispatcher.forward(request, response);
             }
         } catch (NotAuthorizedException e) {
             session.setAttribute("wrong", "Wrong login or password");
-            response.sendRedirect("/payments/controller?command=GO_TO_LOGINATION_PAGE");
+            response.sendRedirect("/payments/controller?command=GO_TO_LOGINATION_PAGE"); // todo url
         } catch (ServiceException e) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/errorPage.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ERROR_PAGE);
             dispatcher.forward(request, response);
         }
     }

@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
         try {
             userDAO.saveUser(newUser);
         } catch (DAOException e) {
-            e.printStackTrace();
+            throw new ServiceException(e);
         }
 
         return true;

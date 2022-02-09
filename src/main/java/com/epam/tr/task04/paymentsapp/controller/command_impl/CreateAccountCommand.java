@@ -25,7 +25,7 @@ public class CreateAccountCommand implements Command {
         Integer id = (Integer) session.getAttribute("id");
         user.setId(id);
 
-        if (session.getAttribute("accountNumber") == null) {
+        if (session.getAttribute("account_id") == null) {
             try {
                 accountService.createAccount(user);
 
