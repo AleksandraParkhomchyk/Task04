@@ -12,7 +12,7 @@ public interface AccountService {
 
     Account getAccountByUserId(Integer userId) throws ServiceException;
 
-    boolean accountPayment(Account account, String accountNumber, Double amount, Integer userId) throws ServiceException, InsufficientFundsException;
+    boolean accountPayment(Account account, String accountNumber, String amount, Integer userId) throws ServiceException, InsufficientFundsException;
 
     Integer getAccountIdByRequestId(Integer requestId) throws ServiceException;
 

@@ -18,7 +18,7 @@ import java.util.List;
 public class CashRequestServiceImpl implements CashRequestService {
 
     @Override
-    public CashoutRequest cashout(Account account, Double amount) throws ServiceException, InsufficientFundsException {
+    public CashoutRequest cashout(Account account, String amount) throws ServiceException, InsufficientFundsException {
         DAOFactory factory = DAOFactory.getInstance();
         CashRequestDAO cashRequestDAO = factory.getCashRequestDAO();
 
@@ -29,12 +29,13 @@ public class CashRequestServiceImpl implements CashRequestService {
         } catch (ValidatorException e) {
             throw new ServiceException(e);
         }
-        if (account.getBalance() < amount) {
+        Double amount1 = Double.parseDouble(amount);
+        if (account.getBalance() < amount1) {
             throw new InsufficientFundsException("insufficient funds.");
         }
 
         try {
-            CashoutRequest cashoutRequest = cashRequestDAO.cashout(account, amount);
+            CashoutRequest cashoutRequest = cashRequestDAO.cashout(account, amount1);
             return cashoutRequest;
         } catch (DAOException e) {
             throw new ServiceException(e);

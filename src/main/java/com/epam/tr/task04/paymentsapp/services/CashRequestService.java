@@ -8,7 +8,7 @@ import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;
 import java.util.List;
 
 public interface CashRequestService {
-    CashoutRequest cashout(Account account, Double amount) throws ServiceException, InsufficientFundsException;
+    CashoutRequest cashout(Account account, String amount) throws ServiceException, InsufficientFundsException;
 
     List<CashoutRequest> getAllCashoutRequests() throws ServiceException;
 

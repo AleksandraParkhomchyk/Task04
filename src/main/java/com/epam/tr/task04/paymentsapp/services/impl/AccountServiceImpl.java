@@ -42,7 +42,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public boolean accountPayment(Account account, String accountNumber, Double amount, Integer userId) throws ServiceException, InsufficientFundsException {
+    public boolean accountPayment(Account account, String accountNumber, String amount, Integer userId) throws ServiceException, InsufficientFundsException {
         DAOFactory factory = DAOFactory.getInstance();
         AccountDAO accountDAO = factory.getAccountDAO();
 
@@ -53,12 +53,16 @@ public class AccountServiceImpl implements AccountService {
         } catch (ValidatorException e) {
             throw new ServiceException(e);
         }
-        if (account.getBalance() < amount) {
+        Double amount1 = Double.parseDouble(amount);
+
+        if (account.getBalance() < amount1) {
             throw new InsufficientFundsException("insufficient funds.");
         }
 
+
+
         try {
-            boolean result = accountDAO.accountPayment(account, accountNumber, amount, userId);
+            boolean result = accountDAO.accountPayment(account, accountNumber, amount1, userId);
             return result;
         } catch (DAOException e) {
             throw new ServiceException(e);

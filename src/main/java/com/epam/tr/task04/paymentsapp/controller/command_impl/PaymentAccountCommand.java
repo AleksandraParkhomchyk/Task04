@@ -24,7 +24,7 @@ public class PaymentAccountCommand implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         String targetAccount = request.getParameter(Utils.TARGET_ACCOUNT);
-        Double amount = Double.parseDouble(request.getParameter(Utils.PAYMENT_AMOUNT));
+        String amount = request.getParameter(Utils.PAYMENT_AMOUNT);
 
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         AccountService accountService = serviceFactory.getAccountService();

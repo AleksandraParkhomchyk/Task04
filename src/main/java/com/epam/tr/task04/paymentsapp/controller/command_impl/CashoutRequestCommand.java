@@ -24,7 +24,7 @@ public class CashoutRequestCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-        Double amount = Double.parseDouble(request.getParameter(Utils.CASHOUT_AMOUNT));
+        String amount = request.getParameter(Utils.CASHOUT_AMOUNT);
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         AccountService accountService = serviceFactory.getAccountService();
         CashRequestService cashRequestService = serviceFactory.getCashRequestService();
