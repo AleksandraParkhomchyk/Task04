@@ -21,7 +21,6 @@ public class Controller extends HttpServlet {
 
     private void process(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-        //HttpSession session = request.getSession(true);
         String commandName = request.getParameter("command");
         Command command = provider.getCommand(commandName);
         command.execute(request, response);

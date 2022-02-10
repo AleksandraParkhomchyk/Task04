@@ -26,13 +26,10 @@ public class CashRequestDAOImpl implements CashRequestDAO {
 
     @Override
     public CashoutRequest cashout(Account account, Double amount) throws DAOException {
-        CashoutRequest cashoutRequest;
-        PreparedStatement preparedStatement = null;
-        Connection connection = null;
+        CashoutRequest cashoutRequest = new CashoutRequest();
 
-        try {
-            connection = ConnectionPool.getInstance().takeConnection();
-            preparedStatement = connection.prepareStatement(createCashoutRequest, Statement.RETURN_GENERATED_KEYS);
+        try (Connection connection = ConnectionPool.getInstance().takeConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(createCashoutRequest, Statement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setDate(1, date);
             preparedStatement.setDouble(2, amount);
@@ -41,47 +38,26 @@ public class CashRequestDAOImpl implements CashRequestDAO {
 
             preparedStatement.executeUpdate();
 
-            cashoutRequest = new CashoutRequest();
             try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     cashoutRequest.setId(generatedKeys.getInt(1));
-                    return cashoutRequest;
-                } else {
-                    return cashoutRequest;
                 }
+            } catch (SQLException e) {
+                throw new DAOException(e);
             }
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
-        } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } catch (SQLException e) {
-                throw new DAOException(e);
-            }
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                throw new DAOException(e);
-            }
         }
+        return cashoutRequest;
     }
-
 
     @Override
     public List<CashoutRequest> getAllCashoutRequests() throws DAOException {
-        List<CashoutRequest> list = new ArrayList<CashoutRequest>();
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
+        List<CashoutRequest> list = new ArrayList<>();
 
-        try {
-            connection = ConnectionPool.getInstance().takeConnection();
-            preparedStatement = connection.prepareStatement(getAllRequestFromDB);
-            resultSet = preparedStatement.executeQuery();
+        try (Connection connection = ConnectionPool.getInstance().takeConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(getAllRequestFromDB);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
                 CashoutRequest cashoutRequest = new CashoutRequest();
@@ -89,191 +65,93 @@ public class CashRequestDAOImpl implements CashRequestDAO {
                 cashoutRequest.setDate(resultSet.getDate(2));
                 cashoutRequest.setAmount(resultSet.getDouble(3));
                 cashoutRequest.setStatus(resultSet.getString(4));
-
                 list.add(cashoutRequest);
-
             }
-            return list;
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-            } catch (SQLException e) {
-                throw new DAOException(e);
-            }
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } catch (SQLException e) {
-                throw new DAOException(e);
-            }
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                throw new DAOException(e);
-            }
         }
+        return list;
     }
-
 
     @Override
     public boolean updateRequestStatusApproved(Account account, Integer requestID, Double amount, Integer userId) throws DAOException {
 
-        Connection connection = null;
-        PreparedStatement updateStatus = null;
-        PreparedStatement updateBalance = null;
-        PreparedStatement writeTransaction = null;
-        boolean result = true;
-
-        try {
-            connection = ConnectionPool.getInstance().takeConnection();
-        } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
-        }
-
-        try {
-            updateStatus = connection.prepareStatement(updateRequestStatusDB);
-            updateBalance = connection.prepareStatement(afterCashoutBalance);
-            writeTransaction = connection.prepareStatement(cashoutTransaction);
-
+        try (Connection connection = ConnectionPool.getInstance().takeConnection()) {
             connection.setAutoCommit(false);
 
-            updateStatus.setInt(1, 2);
-            updateStatus.setInt(2, requestID);
+            try (PreparedStatement updateStatus = connection.prepareStatement(updateRequestStatusDB);
+                 PreparedStatement updateBalance = connection.prepareStatement(afterCashoutBalance);
+                 PreparedStatement writeTransaction = connection.prepareStatement(cashoutTransaction)) {
 
-            updateStatus.executeUpdate();
+                updateStatus.setInt(1, 2);
+                updateStatus.setInt(2, requestID);
 
-            double finalBalance = account.getBalance() - amount;
-            updateBalance.setDouble(1, finalBalance);
-            updateBalance.setInt(2, account.getId());
+                updateStatus.executeUpdate();
 
-            updateBalance.executeUpdate();
+                double finalBalance = account.getBalance() - amount;
+                updateBalance.setDouble(1, finalBalance);
+                updateBalance.setInt(2, account.getId());
 
-            writeTransaction.setDate(1, date);
-            writeTransaction.setDouble(2, amount);
-            writeTransaction.setString(3, account.getAccountNumber());
-            writeTransaction.setDouble(4, account.getBalance());
-            writeTransaction.setDouble(5, finalBalance);
-            writeTransaction.setString(6, "cashout");
-            writeTransaction.setInt(7, userId);
-            writeTransaction.setInt(8, 2);
+                updateBalance.executeUpdate();
 
-            writeTransaction.executeUpdate();
-            connection.commit();
+                writeTransaction.setDate(1, date);
+                writeTransaction.setDouble(2, amount);
+                writeTransaction.setString(3, account.getAccountNumber());
+                writeTransaction.setDouble(4, account.getBalance());
+                writeTransaction.setDouble(5, finalBalance);
+                writeTransaction.setString(6, "cashout");
+                writeTransaction.setInt(7, userId);
+                writeTransaction.setInt(8, 2);
 
-            result = true;
+                writeTransaction.executeUpdate();
 
+                connection.commit();
 
-        } catch (SQLException e) {
-            try {
+            } catch (SQLException e) {
                 connection.rollback();
-                result = false;
-            } catch (SQLException exception) {
                 throw new DAOException(e);
             }
-        } finally {
-            try {
-                if (updateStatus != null) {
-                    updateStatus.close(); // todo: close all statements
-                }
-            } catch (SQLException e) {
-                throw new DAOException(e);
-            }
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                throw new DAOException(e);
-            }
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DAOException(e);
         }
-        return result;
+        return true;
     }
 
     @Override
     public boolean updateRequestStatusDeclined(Integer requestID) throws DAOException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
 
-        try {
-            connection = ConnectionPool.getInstance().takeConnection();
-            preparedStatement = connection.prepareStatement(updateRequestStatusDB);
+        try (Connection connection = ConnectionPool.getInstance().takeConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(updateRequestStatusDB)) {
 
             preparedStatement.setInt(1, 3);
             preparedStatement.setInt(2, requestID);
 
             preparedStatement.executeUpdate();
 
-            return true;
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
-        } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } catch (SQLException e) {
-                throw new DAOException(e);
-            }
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                throw new DAOException(e);
-            }
         }
+        return true;
     }
 
     @Override
     public Double getAmountByRequestId(Integer requestId) throws DAOException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
         Double amount = null;
 
-        try {
-            connection = ConnectionPool.getInstance().takeConnection();
-            preparedStatement = connection.prepareStatement(getAmountById);
+        try (Connection connection = ConnectionPool.getInstance().takeConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(getAmountById)) {
+
             preparedStatement.setInt(1, requestId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
 
-            resultSet = preparedStatement.executeQuery();
-
-
-            while (resultSet.next()) {
-                amount = resultSet.getDouble(1);
-                return amount;
+                if (resultSet.next()) {
+                    amount = resultSet.getDouble(1);
+                }
+            } catch (SQLException e) {
+                throw new DAOException(e);
             }
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-            } catch (SQLException e) {
-                throw new DAOException(e);
-            }
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } catch (SQLException e) {
-                throw new DAOException(e);
-            }
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                throw new DAOException(e);
-            }
         }
         return amount;
     }
@@ -281,53 +159,30 @@ public class CashRequestDAOImpl implements CashRequestDAO {
     @Override
     public List<CashoutRequest> getUsersRequests(Integer accountId) throws DAOException {
         List<CashoutRequest> list = new ArrayList<>();
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
 
-        try {
-            connection = ConnectionPool.getInstance().takeConnection();
-            preparedStatement = connection.prepareStatement(getAllRequestByAccountId);
+        try (Connection connection = ConnectionPool.getInstance().takeConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(getAllRequestByAccountId)) {
+
             preparedStatement.setInt(1, accountId);
 
-            resultSet = preparedStatement.executeQuery();
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
 
-            while (resultSet.next()) {
-                CashoutRequest cashoutRequest = new CashoutRequest();
-                cashoutRequest.setId(resultSet.getInt(1));
-                cashoutRequest.setDate(resultSet.getDate(2));
-                cashoutRequest.setAmount(resultSet.getDouble(3));
-                cashoutRequest.setStatus(resultSet.getString(4));
+                while (resultSet.next()) {
+                    CashoutRequest cashoutRequest = new CashoutRequest();
+                    cashoutRequest.setId(resultSet.getInt(1));
+                    cashoutRequest.setDate(resultSet.getDate(2));
+                    cashoutRequest.setAmount(resultSet.getDouble(3));
+                    cashoutRequest.setStatus(resultSet.getString(4));
 
-                list.add(cashoutRequest);
-
+                    list.add(cashoutRequest);
+                }
+            } catch (SQLException e) {
+                throw new DAOException(e);
             }
-            return list;
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-            } catch (SQLException e) {
-                throw new DAOException(e);
-            }
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } catch (SQLException e) {
-                throw new DAOException(e);
-            }
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                throw new DAOException(e);
-            }
         }
+        return list;
     }
 
     @Override
