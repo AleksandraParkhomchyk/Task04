@@ -24,14 +24,10 @@ public class AccountDAOImpl implements AccountDAO {
 
     @Override
     public Account createAccount(User user) throws DAOException {
+        Account account = new Account();
 
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        Account account = null;
-
-        try {
-            connection = ConnectionPool.getInstance().takeConnection();
-            preparedStatement = connection.prepareStatement(createAccount, Statement.RETURN_GENERATED_KEYS);
+        try (Connection connection = ConnectionPool.getInstance().takeConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(createAccount, Statement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setString(1, String.valueOf(random_number));
             preparedStatement.setDouble(2, 0.00);
@@ -41,162 +37,83 @@ public class AccountDAOImpl implements AccountDAO {
 
             preparedStatement.executeUpdate();
 
-            account = new Account();
             try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     account.setId(generatedKeys.getInt(1));
-                    return account;
-                } else {
-                    return account;
                 }
+            } catch (SQLException e){
+                throw new DAOException(e);
             }
-
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
-        } finally {
-            if (preparedStatement != null) {
-                try {
-                    preparedStatement.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
-            }
         }
+        return account;
     }
 
     @Override
     public Account getAccountByUserId(Integer userId) throws DAOException {
-
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
         Account account = new Account();
 
-        try {
-            connection = ConnectionPool.getInstance().takeConnection();
-            preparedStatement = connection.prepareStatement(getAccountNumberByUserId);
+        try (Connection connection = ConnectionPool.getInstance().takeConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(getAccountNumberByUserId)) {
+
             preparedStatement.setInt(1, userId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
 
-            resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                account.setId(resultSet.getInt(1));
-                account.setAccountNumber(resultSet.getString(2));
-                account.setBalance(resultSet.getDouble(3));
-
-                return account;
-            } else {
-                return account;
+                if (resultSet.next()) {
+                    account.setId(resultSet.getInt(1));
+                    account.setAccountNumber(resultSet.getString(2));
+                    account.setBalance(resultSet.getDouble(3));
+                }
+            } catch (SQLException e) {
+                throw new DAOException(e);
             }
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
-
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
-            }
-            if (preparedStatement != null) {
-                try {
-                    preparedStatement.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
-            }
         }
+        return account;
     }
+
 
     @Override
     public boolean accountPayment(Account account, String accountNumber, Double amount, Integer userId) throws
             DAOException {
 
-        Connection connection = null;
-        PreparedStatement writeNewBalance = null;
-        PreparedStatement writeTransaction = null;
-
-        boolean result = true;
-
-        try {
-            connection = ConnectionPool.getInstance().takeConnection();
-        } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
-        }
-
-        try {
-
-            writeNewBalance = connection.prepareStatement(afterPaymentBalance);
-            writeTransaction = connection.prepareStatement(paymentTransaction);
-
+        try (Connection connection = ConnectionPool.getInstance().takeConnection()) {
             connection.setAutoCommit(false);
 
-            double finalBalance = account.getBalance() - amount;
-            writeNewBalance.setDouble(1, finalBalance);
-            writeNewBalance.setInt(2, account.getId());
+            try (PreparedStatement writeNewBalance = connection.prepareStatement(afterPaymentBalance);
+                 PreparedStatement writeTransaction = connection.prepareStatement(paymentTransaction)) {
 
-            writeNewBalance.executeUpdate();
+                double finalBalance = account.getBalance() - amount;
+                writeNewBalance.setDouble(1, finalBalance);
+                writeNewBalance.setInt(2, account.getId());
 
-            writeTransaction.setDate(1, date);
-            writeTransaction.setDouble(2, amount);
-            writeTransaction.setString(3, account.getAccountNumber());
-            writeTransaction.setDouble(4, account.getBalance());
-            writeTransaction.setDouble(5, finalBalance);
-            writeTransaction.setString(6, accountNumber);
-            writeTransaction.setInt(7, userId);
-            writeTransaction.setInt(8, 1);
+                writeNewBalance.executeUpdate();
 
-            writeTransaction.executeUpdate();
+                writeTransaction.setDate(1, date);
+                writeTransaction.setDouble(2, amount);
+                writeTransaction.setString(3, account.getAccountNumber());
+                writeTransaction.setDouble(4, account.getBalance());
+                writeTransaction.setDouble(5, finalBalance);
+                writeTransaction.setString(6, accountNumber);
+                writeTransaction.setInt(7, userId);
+                writeTransaction.setInt(8, 1);
 
-            connection.commit();
+                writeTransaction.executeUpdate();
 
-        } catch (SQLException e) {
-            try {
+                connection.commit();
+
+            } catch (SQLException e) {
                 connection.rollback();
-                result = false;
-            } catch (SQLException exception) {
                 throw new DAOException(e);
             }
-        } finally {
-            try {
-                if (writeNewBalance != null) {
-                    writeNewBalance.close();
-                }
-            } catch (SQLException e) {
-                throw new DAOException(e);
-            }
-            try {
-                if (writeTransaction != null) {
-                    writeTransaction.close();
-                }
-            } catch (SQLException e) {
-                throw new DAOException(e);
-            }
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                throw new DAOException(e);
-            }
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DAOException(e);
         }
-        return result;
+        return true;
     }
+
 
     @Override
     public Integer getAccountIdByRequestId(Integer requestId) throws DAOException {
