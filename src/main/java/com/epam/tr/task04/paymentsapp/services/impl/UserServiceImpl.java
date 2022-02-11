@@ -1,5 +1,6 @@
 package com.epam.tr.task04.paymentsapp.services.impl;
 
+import com.epam.tr.task04.paymentsapp.controller.ContextListener;
 import com.epam.tr.task04.paymentsapp.dao.DAOFactory;
 import com.epam.tr.task04.paymentsapp.dao.UserDAO;
 import com.epam.tr.task04.paymentsapp.dao.exception.DAOException;
@@ -10,12 +11,17 @@ import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;
 import com.epam.tr.task04.paymentsapp.services.validator.UserValidator;
 import com.epam.tr.task04.paymentsapp.services.validator.ValidatorException;
 import com.epam.tr.task04.paymentsapp.services.validator.ValidatorFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.Optional;
 
 
 public class UserServiceImpl implements UserService {
+
+    private final static Logger LOG = LogManager.getLogger(UserServiceImpl.class);
+
     @Override
     public User authorisation(String login, String password) throws ServiceException {
 
@@ -23,24 +29,24 @@ public class UserServiceImpl implements UserService {
         UserDAO userDAO = factory.getUserDAO();
 
         try {
-
             Optional<User> userOptional = userDAO.authorisation(login, password);
 
             if (!userOptional.isPresent()) {
-                //todo: logger
                 throw new NotAuthorizedException();
 
             } else {
                 return userOptional.get();
             }
         } catch (DAOException e) {
+            LOG.error("Exception while authorization", e);
+
             throw new ServiceException(e);
         }
     }
 
 
     @Override
-    public boolean registration(String name, String surname, String login, String password, String passport) throws ServiceException{
+    public boolean registration(String name, String surname, String login, String password, String passport) throws ServiceException {
 
         DAOFactory factory = DAOFactory.getInstance();
         UserDAO userDAO = factory.getUserDAO();
@@ -57,13 +63,17 @@ public class UserServiceImpl implements UserService {
 
         try {
             userValidator.validate(newUser);
-        } catch (ValidatorException e){
+        } catch (ValidatorException e) {
+            LOG.error("Unable to validate user registration data", e);
+
             throw new ServiceException(e);
         }
 
         try {
             userDAO.saveUser(newUser);
         } catch (DAOException e) {
+            LOG.error("Exception while saving new user", e);
+
             throw new ServiceException(e);
         }
 
@@ -78,6 +88,8 @@ public class UserServiceImpl implements UserService {
         try {
             list = userDAO.getAllUsers();
         } catch (DAOException e) {
+            LOG.error("Exception while getting all user list", e);
+
             throw new ServiceException(e);
         }
         return list;

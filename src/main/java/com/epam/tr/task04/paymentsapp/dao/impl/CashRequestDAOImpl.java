@@ -22,6 +22,8 @@ public class CashRequestDAOImpl implements CashRequestDAO {
     private final String cashoutTransaction = "INSERT INTO transactions(t_date, t_amount, t_from_account, t_before_acc_balance, t_after_acc_balance, t_to_account, users_u_id, transaction_type_tt_id) values (?, ?, ?, ?, ?, ?, ?, ?)";
     private final String cancelRequest = "DELETE FROM cash_requests WHERE (cr_id = ?)";
 
+    private final String CASHOUT = "cashout";
+
     Date date = new java.sql.Date(System.currentTimeMillis());
 
     @Override
@@ -99,7 +101,7 @@ public class CashRequestDAOImpl implements CashRequestDAO {
                 writeTransaction.setString(3, account.getAccountNumber());
                 writeTransaction.setDouble(4, account.getBalance());
                 writeTransaction.setDouble(5, finalBalance);
-                writeTransaction.setString(6, "cashout");
+                writeTransaction.setString(6, CASHOUT);
                 writeTransaction.setInt(7, userId);
                 writeTransaction.setInt(8, 2);
 
