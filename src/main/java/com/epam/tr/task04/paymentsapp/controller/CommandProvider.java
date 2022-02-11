@@ -29,6 +29,7 @@ public final class CommandProvider {
         commands.put("DECLINE_REQUEST", new DeclineRequestCommand());
         commands.put("GET_USERS_REQUESTS", new GetUsersRequestsCommand());
         commands.put("CANCEL_REQUEST", new CancelRequestCommand());
+        commands.put("BLOCK_ACCOUNT", new BlockAccountCommand());
 
     }
 

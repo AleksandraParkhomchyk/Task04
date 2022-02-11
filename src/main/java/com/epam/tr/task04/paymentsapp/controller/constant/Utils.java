@@ -13,6 +13,7 @@ public final class Utils {
     public final static String ACCOUNT_ID = "accountId";
     public final static String ACCOUNT_NUMBER = "accountNumber";
     public final static String BALANCE = "balance";
+    public final static String STATUS = "status";
 
     public final static String ALL_REQUESTS = "allRequests";
     public final static String USER_REQUESTS = "userRequests";

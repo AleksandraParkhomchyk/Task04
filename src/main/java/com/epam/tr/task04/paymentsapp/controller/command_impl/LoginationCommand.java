@@ -59,12 +59,24 @@ public class LoginationCommand implements Command {
                 Account account = accountService.getAccountByUserId(id);
 
                 if (account.getId() == null) {
-                   session.setAttribute(Message.ACCOUNT, Message.CREATE_ACCOUNT);
+                    session.setAttribute(Message.ACCOUNT, Message.CREATE_ACCOUNT);
 
                 } else {
-                    session.setAttribute(Utils.ACCOUNT_ID, account.getId());
-                    session.setAttribute(Utils.ACCOUNT_NUMBER, account.getAccountNumber());
-                    session.setAttribute(Utils.BALANCE, account.getBalance());
+                    if (account.getStatus() == 1) {
+
+                        session.setAttribute(Utils.ACCOUNT_ID, account.getId());
+                        session.setAttribute(Utils.ACCOUNT_NUMBER, account.getAccountNumber());
+                        session.setAttribute(Utils.BALANCE, account.getBalance());
+                        session.setAttribute(Utils.STATUS, account.getStatus());
+
+                    } else if (account.getStatus() == 2) {
+                        session.setAttribute(Utils.ACCOUNT_ID, account.getId());
+                        session.setAttribute(Utils.ACCOUNT_NUMBER, account.getAccountNumber());
+                        session.setAttribute(Utils.BALANCE, account.getBalance());
+                        session.setAttribute(Utils.STATUS, account.getStatus());
+                        session.setAttribute(Message.ACCOUNT, Message.ACCOUNT_BLOCKED);
+
+                    }
                 }
 
                 RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.USER_PAGE);

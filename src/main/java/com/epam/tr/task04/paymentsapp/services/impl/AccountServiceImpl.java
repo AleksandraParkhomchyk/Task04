@@ -108,4 +108,19 @@ public class AccountServiceImpl implements AccountService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public void blockAccount(Integer userId) throws ServiceException {
+        DAOFactory factory = DAOFactory.getInstance();
+        AccountDAO accountDAO = factory.getAccountDAO();
+
+        try {
+            accountDAO.blockAccount(userId);
+
+        } catch (DAOException e) {
+            LOG.error("Exception while blocking account", e);
+
+            throw new ServiceException(e);
+        }
+    }
 }

@@ -19,6 +19,7 @@
 <fmt:message bundle="${loc}" key="user.request" var="request"/>
 <fmt:message bundle="${loc}" key="user.show.requests" var="show_requests"/>
 <fmt:message bundle="${loc}" key="user.create.account" var="create_account"/>
+<fmt:message bundle="${loc}" key="user.block.account" var="block_account"/>
 <fmt:message bundle="${loc}" key="user.history" var="history"/>
 
 <fmt:message bundle="${loc}" key="local.localbutton.name.ru" var="ru_button"/>
@@ -31,10 +32,12 @@
 <header>
     <ul class="nav justify-content-center">
         <li class="nav-item">
-            <a class="nav-link active" href="${pageContext.request.contextPath}/controller?command=GO_TO_HOME_PAGE">${home}</a>
+            <a class="nav-link active"
+               href="${pageContext.request.contextPath}/controller?command=GO_TO_HOME_PAGE">${home}</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link active" href="${pageContext.request.contextPath}/controller?command=LOG_OUT_COMMAND">${logout}</a>
+            <a class="nav-link active"
+               href="${pageContext.request.contextPath}/controller?command=LOG_OUT_COMMAND">${logout}</a>
         </li>
     </ul>
 </header>
@@ -45,6 +48,21 @@
 <p><c:out value="${sessionScope.payment}"/></p>
 <p><c:out value="${sessionScope.cashout}"/></p>
 
+
+<c:if test="${sessionScope.accountId == null}">
+<p>
+<div class="card">
+    <div class="card-body">
+        <form action="${pageContext.request.contextPath}/controller" method="post">
+            <input type="hidden" name="command" value="CREATE_ACCOUNT">
+            <button type="submit" class="btn btn-primary">${create_account}</button>
+        </form>
+    </div>
+</div>
+<p>
+    </c:if>
+    <c:if test="${sessionScope.status == 1}">
+<p>
 <div class="card">
     <div class="card-body">
         <h4 class="card-title">${sessionScope.accountNumber}</h4>
@@ -92,14 +110,7 @@
         </form>
     </div>
 </div>
-<div class="card">
-    <div class="card-body">
-        <form action="${pageContext.request.contextPath}/controller" method="post">
-            <input type="hidden" name="command" value="CREATE_ACCOUNT">
-            <button type="submit" class="btn btn-primary">${create_account}</button>
-        </form>
-    </div>
-</div>
+
 <div class="card">
     <div class="card-body">
         <form action="${pageContext.request.contextPath}/controller" method="get">
@@ -108,6 +119,20 @@
         </form>
     </div>
 </div>
+<div class="card">
+    <div class="card-body">
+        <form action="${pageContext.request.contextPath}/controller" method="post">
+            <input type="hidden" name="command" value="BLOCK_ACCOUNT">
+            <button type="submit" class="btn btn-primary">${block_account}</button>
+        </form>
+    </div>
+</div>
+<p>
+    </c:if>
+    <c:if test="${sessionScope.status == 2}">
+<p></p>
+</c:if>
+
 </body>
 <footer>
     <ul class="nav justify-content-center">

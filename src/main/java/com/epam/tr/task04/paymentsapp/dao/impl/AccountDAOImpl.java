@@ -12,11 +12,12 @@ import java.sql.*;
 public class AccountDAOImpl implements AccountDAO {
 
     private final String createAccount = "INSERT INTO accounts(a_number, a_balance, a_openning_date, a_status, users_u_id) VALUES(?, ?, ?, ?, ?)";
-    private final String getAccountNumberByUserId = "SELECT a_id, a_number, a_balance FROM accounts WHERE (users_u_id = ?)";
+    private final String getAccountNumberByUserId = "SELECT a_id, a_number, a_balance, a_status FROM accounts WHERE (users_u_id = ?)";
     private final String afterPaymentBalance = "UPDATE accounts SET a_balance = ? WHERE (a_id = ?)";
     private final String paymentTransaction = "INSERT INTO transactions(t_date, t_amount, t_from_account, t_before_acc_balance, t_after_acc_balance, t_to_account, users_u_id, transaction_type_tt_id) values (?, ?, ?, ?, ?, ?, ?, ?)";
     private final String getAccountByRequestId = "SELECT accounts_a_id FROM cash_requests WHERE cr_id = ?";
     private final String getAccountById = "SELECT * FROM accounts WHERE a_id = ?";
+    private final String blockAccount = "UPDATE accounts SET a_status = ? WHERE (users_u_id = ?)";
 
     Date date = new java.sql.Date(System.currentTimeMillis());
     final int max = 1000;
@@ -30,7 +31,7 @@ public class AccountDAOImpl implements AccountDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(createAccount, Statement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setString(1, String.valueOf(random_number));
-            preparedStatement.setDouble(2, 0.00);
+            preparedStatement.setDouble(2, 1000.00);
             preparedStatement.setDate(3, date);
             preparedStatement.setInt(4, 1);
             preparedStatement.setInt(5, user.getId());
@@ -41,7 +42,7 @@ public class AccountDAOImpl implements AccountDAO {
                 if (generatedKeys.next()) {
                     account.setId(generatedKeys.getInt(1));
                 }
-            } catch (SQLException e){
+            } catch (SQLException e) {
                 throw new DAOException(e);
             }
         } catch (ConnectionPoolException | SQLException e) {
@@ -64,6 +65,7 @@ public class AccountDAOImpl implements AccountDAO {
                     account.setId(resultSet.getInt(1));
                     account.setAccountNumber(resultSet.getString(2));
                     account.setBalance(resultSet.getDouble(3));
+                    account.setStatus(resultSet.getInt(4));
                 }
             } catch (SQLException e) {
                 throw new DAOException(e);
@@ -159,5 +161,21 @@ public class AccountDAOImpl implements AccountDAO {
             throw new DAOException(e);
         }
         return account;
+    }
+
+    @Override
+    public void blockAccount(Integer userId) throws DAOException {
+
+        try (Connection connection = ConnectionPool.getInstance().takeConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(blockAccount)) {
+
+            preparedStatement.setInt(1, 2);
+            preparedStatement.setInt(2, userId);
+
+            preparedStatement.executeUpdate();
+
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DAOException(e);
+        }
     }
 }

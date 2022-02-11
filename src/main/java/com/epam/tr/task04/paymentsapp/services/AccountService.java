@@ -17,4 +17,6 @@ public interface AccountService {
     Integer getAccountIdByRequestId(Integer requestId) throws ServiceException;
 
     Account getAccountById(Integer accountId) throws ServiceException;
+
+    void blockAccount(Integer userId) throws ServiceException;
 }

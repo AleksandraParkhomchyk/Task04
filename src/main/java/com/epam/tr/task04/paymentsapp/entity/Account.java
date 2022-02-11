@@ -8,6 +8,7 @@ public class Account implements Serializable {
     private String accountNumber;
     private double balance;
     private Date accountOpeningDate;
+    private Integer status;
     private Integer ownerId;
 
     public Account() {
@@ -54,6 +55,10 @@ public class Account implements Serializable {
     public void setAccountOpeningDate(Date accountOpeningDate) {
         this.accountOpeningDate = accountOpeningDate;
     }
+
+    public Integer getStatus() { return status; }
+
+    public void setStatus(Integer status) { this.status = status; }
 
     public Integer getOwnerId() {
         return ownerId;

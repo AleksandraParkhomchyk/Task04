@@ -15,4 +15,6 @@ public interface AccountDAO {
     Integer getAccountIdByRequestId(Integer requestId) throws DAOException;
 
     Account getAccountById(Integer accountId) throws DAOException;
+
+    void blockAccount(Integer userId) throws DAOException;
 }

@@ -16,5 +16,6 @@ public class Message {
     public final static String CREATE_ACCOUNT = "Please, create an account.";
     public final static String ACCOUNT_CREATED = "Your account created successful";
     public final static String ACCOUNT_EXIST = "You have an account already";
+    public final static String ACCOUNT_BLOCKED = "Your account is blocked";
 
 }
