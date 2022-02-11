@@ -22,7 +22,7 @@ public class CashRequestServiceImpl implements CashRequestService {
     private final static Logger LOG = LogManager.getLogger(CashRequestServiceImpl.class);
 
     @Override
-    public CashoutRequest cashout(Account account, String amount) throws ServiceException, InsufficientFundsException {
+    public CashoutRequest cashout(Account account, String amount) throws ServiceException, InsufficientFundsException, ValidatorException {
         DAOFactory factory = DAOFactory.getInstance();
         CashRequestDAO cashRequestDAO = factory.getCashRequestDAO();
 
@@ -33,7 +33,7 @@ public class CashRequestServiceImpl implements CashRequestService {
         } catch (ValidatorException e) {
             LOG.error("Unable to validate cashout details", e);
 
-            throw new ServiceException(e);
+            throw new ValidatorException(e);
         }
         Double amount1 = Double.parseDouble(amount);
         if (account.getBalance() < amount1) {

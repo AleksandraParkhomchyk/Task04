@@ -4,11 +4,12 @@ import com.epam.tr.task04.paymentsapp.entity.Account;
 import com.epam.tr.task04.paymentsapp.entity.CashoutRequest;
 import com.epam.tr.task04.paymentsapp.services.exception.InsufficientFundsException;
 import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;
+import com.epam.tr.task04.paymentsapp.services.validator.ValidatorException;
 
 import java.util.List;
 
 public interface CashRequestService {
-    CashoutRequest cashout(Account account, String amount) throws ServiceException, InsufficientFundsException;
+    CashoutRequest cashout(Account account, String amount) throws ServiceException, InsufficientFundsException, ValidatorException;
 
     List<CashoutRequest> getAllCashoutRequests() throws ServiceException;
 

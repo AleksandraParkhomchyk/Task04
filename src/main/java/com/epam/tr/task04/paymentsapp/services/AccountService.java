@@ -5,6 +5,7 @@ import com.epam.tr.task04.paymentsapp.entity.Account;
 import com.epam.tr.task04.paymentsapp.entity.User;
 import com.epam.tr.task04.paymentsapp.services.exception.InsufficientFundsException;
 import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;
+import com.epam.tr.task04.paymentsapp.services.validator.ValidatorException;
 
 public interface AccountService {
 
@@ -12,7 +13,7 @@ public interface AccountService {
 
     Account getAccountByUserId(Integer userId) throws ServiceException;
 
-    boolean accountPayment(Account account, String accountNumber, String amount, Integer userId) throws ServiceException, InsufficientFundsException;
+    boolean accountPayment(Account account, String accountNumber, String amount, Integer userId) throws ServiceException, InsufficientFundsException, ValidatorException;
 
     Integer getAccountIdByRequestId(Integer requestId) throws ServiceException;
 

@@ -11,6 +11,7 @@ import com.epam.tr.task04.paymentsapp.services.CashRequestService;
 import com.epam.tr.task04.paymentsapp.services.ServiceFactory;
 import com.epam.tr.task04.paymentsapp.services.exception.InsufficientFundsException;
 import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;
+import com.epam.tr.task04.paymentsapp.services.validator.ValidatorException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -43,8 +44,10 @@ public class CashoutRequestCommand implements Command {
             session.setAttribute(Message.MESSAGE, Message.FAILURE_CASHOUT);
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.USER_PAGE);
             dispatcher.forward(request, response);
-
-
+        } catch (ValidatorException e){
+            session.setAttribute(Message.MESSAGE, Message.INVALID_AMOUNT);
+            RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.USER_PAGE);
+            dispatcher.forward(request, response);
         } catch (ServiceException e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ERROR_PAGE);
             dispatcher.forward(request, response);

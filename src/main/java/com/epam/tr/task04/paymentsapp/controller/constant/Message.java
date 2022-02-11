@@ -12,5 +12,6 @@ public class Message {
     public final static String ACCOUNT_CREATED = "Your account created successful";
     public final static String ACCOUNT_EXIST = "You have an account already";
     public final static String ACCOUNT_BLOCKED = "Your account is blocked";
-
+    public final static String INVALID_ACCOUNT_OR_AMOUNT = "Invalid target account number or amount";
+    public final static String INVALID_AMOUNT = "Invalid amount";
 }

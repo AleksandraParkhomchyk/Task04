@@ -50,7 +50,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public boolean accountPayment(Account account, String accountNumber, String amount, Integer userId) throws ServiceException, InsufficientFundsException {
+    public boolean accountPayment(Account account, String accountNumber, String amount, Integer userId) throws ServiceException, InsufficientFundsException, ValidatorException {
         DAOFactory factory = DAOFactory.getInstance();
         AccountDAO accountDAO = factory.getAccountDAO();
 
@@ -61,8 +61,9 @@ public class AccountServiceImpl implements AccountService {
         } catch (ValidatorException e) {
             LOG.error("Unable to validate payment details", e);
 
-            throw new ServiceException(e);
+            throw new ValidatorException(e);
         }
+
         Double amountD = Double.parseDouble(amount);
 
         if (account.getBalance() < amountD) {
