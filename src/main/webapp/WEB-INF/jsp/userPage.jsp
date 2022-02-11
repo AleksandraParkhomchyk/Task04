@@ -40,10 +40,10 @@
 </header>
 <body>
 
-<p><c:out value="${sessionScope.success}"/></p>
-<p><c:out value="${sessionScope.failure}"/></p>
-<p><c:out value="${requestScope.create}"/></p>
-<p><c:out value="${sessionScope.createdAccount}"/></p>
+<p><c:out value="${sessionScope.account}"/></p>
+
+<p><c:out value="${sessionScope.payment}"/></p>
+<p><c:out value="${sessionScope.cashout}"/></p>
 
 <div class="card">
     <div class="card-body">

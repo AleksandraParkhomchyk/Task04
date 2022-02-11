@@ -38,7 +38,7 @@ public class CreateAccountCommand implements Command {
                 session.setAttribute(Utils.ACCOUNT_ID, account_id);
                 session.setAttribute(Utils.ACCOUNT_NUMBER, account.getAccountNumber());
                 session.setAttribute(Utils.BALANCE, account.getBalance());
-                session.setAttribute(Message.CREATED_ACCOUNT, Message.CREATED_ACCOUNT_SUCCESS);
+                session.setAttribute(Message.ACCOUNT, Message.ACCOUNT_CREATED);
                 response.sendRedirect(URL_REDIRECT);
 
 
@@ -47,8 +47,8 @@ public class CreateAccountCommand implements Command {
                 dispatcher.forward(request, response);
             }
         } else {
-            RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ERROR_PAGE);
-            dispatcher.forward(request, response);
+            session.setAttribute(Message.ACCOUNT, Message.ACCOUNT_EXIST);
+            response.sendRedirect(URL_REDIRECT);
         }
     }
 }

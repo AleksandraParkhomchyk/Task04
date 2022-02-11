@@ -1,6 +1,7 @@
 package com.epam.tr.task04.paymentsapp.controller.command_impl;
 
 import com.epam.tr.task04.paymentsapp.controller.Command;
+import com.epam.tr.task04.paymentsapp.controller.constant.Message;
 import com.epam.tr.task04.paymentsapp.controller.constant.PagePath;
 import com.epam.tr.task04.paymentsapp.controller.constant.Utils;
 import com.epam.tr.task04.paymentsapp.entity.Account;
@@ -35,11 +36,11 @@ public class CashoutRequestCommand implements Command {
         try {
             Account account = accountService.getAccountByUserId(userId);
             CashoutRequest cashoutRequest = cashRequestService.cashout(account, amount);
-            session.setAttribute("success", "Cashout request was made successful");// todo messages
+            session.setAttribute(Message.CASHOUT, Message.SUCCESS_CASHOUT);
             response.sendRedirect(URL_REDIRECT);
 
         } catch (InsufficientFundsException e) {
-            session.setAttribute("wrong", "  You have insufficient funds");// todo messages
+            session.setAttribute(Message.CASHOUT, Message.FAILURE_CASHOUT);
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.USER_PAGE);
             dispatcher.forward(request, response);
 

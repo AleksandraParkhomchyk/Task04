@@ -59,7 +59,7 @@ public class LoginationCommand implements Command {
                 Account account = accountService.getAccountByUserId(id);
 
                 if (account.getId() == null) {
-                   request.setAttribute(Message.CREATE, Message.CREATE_ACCOUNT);
+                   session.setAttribute(Message.ACCOUNT, Message.CREATE_ACCOUNT);
 
                 } else {
                     session.setAttribute(Utils.ACCOUNT_ID, account.getId());
@@ -77,7 +77,7 @@ public class LoginationCommand implements Command {
                 dispatcher.forward(request, response);
             }
         } catch (NotAuthorizedException e) {
-            session.setAttribute("wrong", "Wrong login or password");//todo messages
+            session.setAttribute(Message.WRONG, Message.WRONG_LOGIN_PASSWORD);
             response.sendRedirect(URL_REDIRECT);
         } catch (ServiceException e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ERROR_PAGE);
