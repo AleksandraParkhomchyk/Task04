@@ -36,11 +36,11 @@ public class CashoutRequestCommand implements Command {
         try {
             Account account = accountService.getAccountByUserId(userId);
             CashoutRequest cashoutRequest = cashRequestService.cashout(account, amount);
-            session.setAttribute(Message.CASHOUT, Message.SUCCESS_CASHOUT);
+            session.setAttribute(Message.MESSAGE, Message.SUCCESS_CASHOUT);
             response.sendRedirect(URL_REDIRECT);
 
         } catch (InsufficientFundsException e) {
-            session.setAttribute(Message.CASHOUT, Message.FAILURE_CASHOUT);
+            session.setAttribute(Message.MESSAGE, Message.FAILURE_CASHOUT);
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.USER_PAGE);
             dispatcher.forward(request, response);
 

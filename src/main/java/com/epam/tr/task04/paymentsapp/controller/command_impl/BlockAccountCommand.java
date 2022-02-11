@@ -32,7 +32,7 @@ public class BlockAccountCommand implements Command {
             accountService.blockAccount(id);
             Account account = accountService.getAccountByUserId(id);
             session.setAttribute(Utils.STATUS, account.getStatus());
-            session.setAttribute(Message.ACCOUNT, Message.ACCOUNT_BLOCKED);
+            session.setAttribute(Message.MESSAGE, Message.ACCOUNT_BLOCKED);
             response.sendRedirect(URL_REDIRECT);
 
         } catch (ServiceException e) {

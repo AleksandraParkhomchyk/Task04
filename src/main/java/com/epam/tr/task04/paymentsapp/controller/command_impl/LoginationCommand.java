@@ -59,7 +59,7 @@ public class LoginationCommand implements Command {
                 Account account = accountService.getAccountByUserId(id);
 
                 if (account.getId() == null) {
-                    session.setAttribute(Message.ACCOUNT, Message.CREATE_ACCOUNT);
+                    session.setAttribute(Message.MESSAGE, Message.CREATE_ACCOUNT);
 
                 } else {
                     if (account.getStatus() == 1) {
@@ -74,7 +74,7 @@ public class LoginationCommand implements Command {
                         session.setAttribute(Utils.ACCOUNT_NUMBER, account.getAccountNumber());
                         session.setAttribute(Utils.BALANCE, account.getBalance());
                         session.setAttribute(Utils.STATUS, account.getStatus());
-                        session.setAttribute(Message.ACCOUNT, Message.ACCOUNT_BLOCKED);
+                        session.setAttribute(Message.MESSAGE, Message.ACCOUNT_BLOCKED);
 
                     }
                 }
@@ -89,7 +89,7 @@ public class LoginationCommand implements Command {
                 dispatcher.forward(request, response);
             }
         } catch (NotAuthorizedException e) {
-            session.setAttribute(Message.WRONG, Message.WRONG_LOGIN_PASSWORD);
+            session.setAttribute(Message.MESSAGE, Message.WRONG_LOGIN_PASSWORD);
             response.sendRedirect(URL_REDIRECT);
         } catch (ServiceException e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ERROR_PAGE);

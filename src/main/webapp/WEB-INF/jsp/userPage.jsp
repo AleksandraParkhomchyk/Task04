@@ -43,11 +43,7 @@
 </header>
 <body>
 
-<p><c:out value="${sessionScope.account}"/></p>
-
-<p><c:out value="${sessionScope.payment}"/></p>
-<p><c:out value="${sessionScope.cashout}"/></p>
-
+<p><c:out value="${sessionScope.message}"/></p>
 
 <c:if test="${sessionScope.accountId == null}">
 <p>
