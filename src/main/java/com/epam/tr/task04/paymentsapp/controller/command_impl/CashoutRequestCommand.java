@@ -5,7 +5,6 @@ import com.epam.tr.task04.paymentsapp.controller.constant.Message;
 import com.epam.tr.task04.paymentsapp.controller.constant.PagePath;
 import com.epam.tr.task04.paymentsapp.controller.constant.Utils;
 import com.epam.tr.task04.paymentsapp.entity.Account;
-import com.epam.tr.task04.paymentsapp.entity.CashoutRequest;
 import com.epam.tr.task04.paymentsapp.services.AccountService;
 import com.epam.tr.task04.paymentsapp.services.CashRequestService;
 import com.epam.tr.task04.paymentsapp.services.ServiceFactory;
@@ -35,7 +34,7 @@ public class CashoutRequestCommand implements Command {
 
         try {
             Account account = accountService.getAccountByUserId(userId);
-            CashoutRequest cashoutRequest = cashRequestService.cashout(account, amount);
+            cashRequestService.cashout(account, amount);
             session.setAttribute(Message.MESSAGE, Message.SUCCESS_CASHOUT);
             response.sendRedirect(PagePath.URL_USERS_PAGE);
 
