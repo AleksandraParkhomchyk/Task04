@@ -24,7 +24,7 @@ import java.util.List;
 
 public class LoginationCommand implements Command {
 
-    private final String URL_NAME = "/payments/controller?command=GO_TO_USERS_PAGE";
+    private static final String URL_NAME = "/payments/controller?command=GO_TO_USERS_PAGE";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -48,7 +48,7 @@ public class LoginationCommand implements Command {
             Integer role = user.getRole();
 
             if (user.getRole() == null) {
-                throw new ServiceException(); //todo check
+                throw new ServiceException();
             }
 
             Integer id = user.getId();
