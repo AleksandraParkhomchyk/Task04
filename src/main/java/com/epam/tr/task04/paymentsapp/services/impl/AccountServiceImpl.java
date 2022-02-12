@@ -2,16 +2,13 @@ package com.epam.tr.task04.paymentsapp.services.impl;
 
 import com.epam.tr.task04.paymentsapp.dao.AccountDAO;
 import com.epam.tr.task04.paymentsapp.dao.DAOFactory;
-import com.epam.tr.task04.paymentsapp.dao.TransactionDAO;
 import com.epam.tr.task04.paymentsapp.dao.exception.DAOException;
 import com.epam.tr.task04.paymentsapp.entity.Account;
-import com.epam.tr.task04.paymentsapp.entity.Transaction;
 import com.epam.tr.task04.paymentsapp.entity.User;
 import com.epam.tr.task04.paymentsapp.services.AccountService;
 import com.epam.tr.task04.paymentsapp.services.exception.InsufficientFundsException;
 import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;
 import com.epam.tr.task04.paymentsapp.services.validator.PaymentValidator;
-import com.epam.tr.task04.paymentsapp.services.validator.UserValidator;
 import com.epam.tr.task04.paymentsapp.services.validator.ValidatorException;
 import com.epam.tr.task04.paymentsapp.services.validator.ValidatorFactory;
 import org.apache.logging.log4j.LogManager;
@@ -68,14 +65,14 @@ public class AccountServiceImpl implements AccountService {
             throw new ValidatorException(e);
         }
 
-        Double amountD = Double.parseDouble(amount);
+        Double amountParsed = Double.parseDouble(amount);
 
-        if (account.getBalance() < amountD) {
-            throw new InsufficientFundsException("insufficient funds.");
+        if (account.getBalance() < amountParsed) {
+            LOG.error("Insufficient funds of payment");
+            throw new InsufficientFundsException("Insufficient funds.");
         }
-
         try {
-            boolean result = accountDAO.accountPayment(account, accountNumber, amountD, userId);
+            boolean result = accountDAO.accountPayment(account, accountNumber, amountParsed, userId);
             return result;
 
         } catch (DAOException e) {
@@ -89,9 +86,11 @@ public class AccountServiceImpl implements AccountService {
     public Integer getAccountIdByRequestId(Integer requestId) throws ServiceException {
         DAOFactory factory = DAOFactory.getInstance();
         AccountDAO accountDAO = factory.getAccountDAO();
+
         try {
             Integer accountId = accountDAO.getAccountIdByRequestId(requestId);
             return accountId;
+
         } catch (DAOException e) {
             LOG.error("Exception while getting account id by request id", e);
 
@@ -148,6 +147,7 @@ public class AccountServiceImpl implements AccountService {
         DAOFactory factory = DAOFactory.getInstance();
         AccountDAO accountDAO = factory.getAccountDAO();
         List<Account> list;
+
         try {
             list = accountDAO.getAllBlockedAccounts();
 

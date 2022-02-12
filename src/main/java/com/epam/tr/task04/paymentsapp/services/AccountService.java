@@ -1,6 +1,5 @@
 package com.epam.tr.task04.paymentsapp.services;
 
-import com.epam.tr.task04.paymentsapp.dao.exception.DAOException;
 import com.epam.tr.task04.paymentsapp.entity.Account;
 import com.epam.tr.task04.paymentsapp.entity.User;
 import com.epam.tr.task04.paymentsapp.services.exception.InsufficientFundsException;

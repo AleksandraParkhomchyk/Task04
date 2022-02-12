@@ -8,6 +8,7 @@ public class CashoutRequest implements Serializable {
     private Date date;
     private Double amount;
     private String status;
+    private Integer accountId;
 
 
     public CashoutRequest() {
@@ -51,6 +52,10 @@ public class CashoutRequest implements Serializable {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public Integer getAccountId() { return accountId; }
+
+    public void setAccountId(Integer accountId) { this.accountId = accountId; }
 
     @Override
     public boolean equals(Object o) {

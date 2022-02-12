@@ -5,7 +5,6 @@ import com.epam.tr.task04.paymentsapp.dao.connectionpool.ConnectionPool;
 import com.epam.tr.task04.paymentsapp.dao.connectionpool.ConnectionPoolException;
 import com.epam.tr.task04.paymentsapp.dao.exception.DAOException;
 import com.epam.tr.task04.paymentsapp.entity.Account;
-import com.epam.tr.task04.paymentsapp.entity.Transaction;
 import com.epam.tr.task04.paymentsapp.entity.User;
 
 import java.sql.*;
@@ -211,6 +210,10 @@ public class AccountDAOImpl implements AccountDAO {
                 while (resultSet.next()) {
                     Account account = new Account();
                     account.setId(resultSet.getInt(1));
+                    account.setAccountNumber(resultSet.getString(2));
+                    account.setBalance(resultSet.getDouble(3));
+                    account.setStatus(resultSet.getInt(5));
+                    account.setOwnerId(resultSet.getInt(6));
                     list.add(account);
                 }
             } catch (SQLException e) {

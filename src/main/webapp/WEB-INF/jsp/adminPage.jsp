@@ -19,7 +19,9 @@
 <body>
 
 <h2>Admin page</h2>
-
+<br>
+<h3>Pending cashout requests</h3>
+<br>
 <div class="col-md-6 col-md-offset-3">
     <table class="table">
         <thead>
@@ -65,16 +67,27 @@
         </c:forEach>
     </table>
 </div>
+<br>
+<h3>Blocked accounts</h3>
+<br>
 <div class="col-md-6 col-md-offset-3">
     <table class="table">
         <thead>
         <tr>
             <th>Account id</th>
+            <th>Owner id</th>
+            <th>Number</th>
+            <th>Balance</th>
+            <th>Status</th>
         </tr>
         </thead>
         <c:forEach items="${requestScope.allAccountsBlocked}" var="account">
             <tr>
                 <td data-th="Id">${account.id}</td>
+                <td data-th="Id">${account.ownerId}</td>
+                <td data-th="Number">${account.accountNumber}</td>
+                <td data-th="Balance">${account.balance}</td>
+                <td data-th="Status">Blocked</td>
                 <td class="actions" data-th="">
                     <form action="${pageContext.request.contextPath}/controller?command=UNBLOCK_ACCOUNT" method="post">
                         <button type="submit" class="btn btn-info btn-sm" id="unblock"

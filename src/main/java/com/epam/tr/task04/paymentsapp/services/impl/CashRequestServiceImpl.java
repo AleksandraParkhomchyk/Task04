@@ -35,13 +35,15 @@ public class CashRequestServiceImpl implements CashRequestService {
 
             throw new ValidatorException(e);
         }
-        Double amount1 = Double.parseDouble(amount);
-        if (account.getBalance() < amount1) {
-            throw new InsufficientFundsException("insufficient funds.");
+        Double amountParsed = Double.parseDouble(amount);
+
+        if (account.getBalance() < amountParsed) {
+            LOG.error("Insufficient funds of cashout");
+            throw new InsufficientFundsException("Insufficient funds.");
         }
 
         try {
-            CashoutRequest cashoutRequest = cashRequestDAO.cashout(account, amount1);
+            CashoutRequest cashoutRequest = cashRequestDAO.cashout(account, amountParsed);
             return cashoutRequest;
         } catch (DAOException e) {
             LOG.error("Exception while writing cashout details to database", e);

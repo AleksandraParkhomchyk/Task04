@@ -67,6 +67,8 @@ public class CashRequestDAOImpl implements CashRequestDAO {
                 cashoutRequest.setDate(resultSet.getDate(2));
                 cashoutRequest.setAmount(resultSet.getDouble(3));
                 cashoutRequest.setStatus(resultSet.getString(4));
+                cashoutRequest.setAccountId(resultSet.getInt(5));
+
                 list.add(cashoutRequest);
             }
         } catch (ConnectionPoolException | SQLException e) {
