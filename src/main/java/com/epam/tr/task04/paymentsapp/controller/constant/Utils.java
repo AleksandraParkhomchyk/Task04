@@ -2,33 +2,33 @@ package com.epam.tr.task04.paymentsapp.controller.constant;
 
 public final class Utils {
 
-    public final static String URL = "url";
+    public static final String URL = "url";
 
-    public final static String NAME = "name";
-    public final static String SURNAME = "surname";
-    public final static String LOGIN = "login";
-    public final static String PASSWORD = "password";
-    public final static String PASSPORT = "passport";
+    public static final String NAME = "name";
+    public static final String SURNAME = "surname";
+    public static final String LOGIN = "login";
+    public static final String PASSWORD = "password";
+    public static final String PASSPORT = "passport";
 
-    public final static String ID = "id";
-    public final static String ACCOUNT_ID = "accountId";
-    public final static String ACCOUNT_NUMBER = "accountNumber";
-    public final static String BALANCE = "balance";
-    public final static String STATUS = "status";
+    public static final String ID = "id";
+    public static final String ACCOUNT_ID = "accountId";
+    public static final String ACCOUNT_NUMBER = "accountNumber";
+    public static final String BALANCE = "balance";
+    public static final String STATUS = "status";
 
-    public final static String ALL_REQUESTS = "allRequests";
-    public final static String ALL_ACCOUNTS_BLOCKED = "allAccountsBlocked";
-    public final static String USER_REQUESTS = "userRequests";
-    public final static String ALL_TRANSACTIONS = "allTransactions";
-    public final static String ALL_USERS = "allUsers";
-    public final static String APPROVE = "approve";
-    public final static String DECLINE = "decline";
-    public final static String CANCEL = "cancel";
-    public final static String UNBLOCK = "unblock";
+    public static final String ALL_REQUESTS = "allRequests";
+    public static final String ALL_ACCOUNTS_BLOCKED = "allAccountsBlocked";
+    public static final String USER_REQUESTS = "userRequests";
+    public static final String ALL_TRANSACTIONS = "allTransactions";
+    public static final String ALL_USERS = "allUsers";
+    public static final String APPROVE = "approve";
+    public static final String DECLINE = "decline";
+    public static final String CANCEL = "cancel";
+    public static final String UNBLOCK = "unblock";
 
-    public final static String LOCALE = "locale";
+    public static final String LOCALE = "locale";
 
-    public final static String TARGET_ACCOUNT = "targetAccount";
-    public final static String PAYMENT_AMOUNT = "amount";
-    public final static String CASHOUT_AMOUNT = "amount";
+    public static final String TARGET_ACCOUNT = "targetAccount";
+    public static final String PAYMENT_AMOUNT = "amount";
+    public static final String CASHOUT_AMOUNT = "amount";
 }
