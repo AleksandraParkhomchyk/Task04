@@ -15,6 +15,7 @@ import java.io.IOException;
 
 
 public class RegistrationCommand implements Command {
+    private final String URL_REDIRECT = "/payments/controller?command=GO_TO_LOGINATION_PAGE";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -30,8 +31,7 @@ public class RegistrationCommand implements Command {
 
         try {
             userService.registration(name, surname, login, password, passport);
-            RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.LOGINATION_PAGE);
-            dispatcher.forward(request, response);
+            response.sendRedirect(URL_REDIRECT);
         } catch (ServiceException e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ERROR_PAGE);
             dispatcher.forward(request, response);
