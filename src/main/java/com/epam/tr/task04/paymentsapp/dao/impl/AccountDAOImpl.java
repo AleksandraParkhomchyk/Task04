@@ -10,31 +10,31 @@ import com.epam.tr.task04.paymentsapp.entity.User;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class AccountDAOImpl implements AccountDAO {
 
-    private final String createAccount = "INSERT INTO accounts(a_number, a_balance, a_openning_date, a_status, users_u_id) VALUES(?, ?, ?, ?, ?)";
-    private final String getAccountNumberByUserId = "SELECT a_id, a_number, a_balance, a_status FROM accounts WHERE (users_u_id = ?)";
-    private final String afterPaymentBalance = "UPDATE accounts SET a_balance = ? WHERE (a_id = ?)";
-    private final String paymentTransaction = "INSERT INTO transactions(t_date, t_amount, t_from_account, t_before_acc_balance, t_after_acc_balance, t_to_account, users_u_id, transaction_type_tt_id) values (?, ?, ?, ?, ?, ?, ?, ?)";
-    private final String getAccountByRequestId = "SELECT accounts_a_id FROM cash_requests WHERE cr_id = ?";
-    private final String getAccountById = "SELECT * FROM accounts WHERE a_id = ?";
-    private final String blockAccount = "UPDATE accounts SET a_status = ? WHERE (users_u_id = ?)";
-    private final String unblockAccount = "UPDATE accounts SET a_status = ? WHERE (a_id = ?)";
-    private final String getAllBlockedAccounts = "SELECT * FROM accounts WHERE a_status = ?";
+    private static final String CREATE_ACCOUNT = "INSERT INTO accounts(a_number, a_balance, a_openning_date, a_status, users_u_id) VALUES(?, ?, ?, ?, ?)";
+    private static final String GET_ACCOUNT_NUMBER_BY_USER_ID = "SELECT a_id, a_number, a_balance, a_status FROM accounts WHERE (users_u_id = ?)";
+    private static final String AFTER_PAYMENT_BALANCE = "UPDATE accounts SET a_balance = ? WHERE (a_id = ?)";
+    private static final String PAYMENT_TRANSACTION = "INSERT INTO transactions(t_date, t_amount, t_from_account, t_before_acc_balance, t_after_acc_balance, t_to_account, users_u_id, transaction_type_tt_id) values (?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String GET_ACCOUNT_BY_REQUEST_ID = "SELECT accounts_a_id FROM cash_requests WHERE cr_id = ?";
+    private static final String GET_ACCOUNT_BY_ID = "SELECT * FROM accounts WHERE a_id = ?";
+    private static final String BLOCK_ACCOUNT = "UPDATE accounts SET a_status = ? WHERE (users_u_id = ?)";
+    private static final String UNBLOCK_ACCOUNT = "UPDATE accounts SET a_status = ? WHERE (a_id = ?)";
+    private static final String GET_ALL_BLOCKED_ACCOUNTS = "SELECT * FROM accounts WHERE a_status = ?";
 
     Date date = new java.sql.Date(System.currentTimeMillis());
-    final int max = 1000;
-    int random_number = 1 + (int) (Math.random() * max);
+    Random random = new Random();
 
     @Override
     public Account createAccount(User user) throws DAOException {
         Account account = new Account();
 
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(createAccount, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(CREATE_ACCOUNT, Statement.RETURN_GENERATED_KEYS)) {
 
-            preparedStatement.setString(1, String.valueOf(random_number));
+            preparedStatement.setString(1, String.valueOf(random.nextInt()));
             preparedStatement.setDouble(2, 1000.00);
             preparedStatement.setDate(3, date);
             preparedStatement.setInt(4, 1);
@@ -60,7 +60,7 @@ public class AccountDAOImpl implements AccountDAO {
         Account account = new Account();
 
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(getAccountNumberByUserId)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_ACCOUNT_NUMBER_BY_USER_ID)) {
 
             preparedStatement.setInt(1, userId);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -88,8 +88,8 @@ public class AccountDAOImpl implements AccountDAO {
         try (Connection connection = ConnectionPool.getInstance().takeConnection()) {
             connection.setAutoCommit(false);
 
-            try (PreparedStatement writeNewBalance = connection.prepareStatement(afterPaymentBalance);
-                 PreparedStatement writeTransaction = connection.prepareStatement(paymentTransaction)) {
+            try (PreparedStatement writeNewBalance = connection.prepareStatement(AFTER_PAYMENT_BALANCE);
+                 PreparedStatement writeTransaction = connection.prepareStatement(PAYMENT_TRANSACTION)) {
 
                 double finalBalance = account.getBalance() - amount;
                 writeNewBalance.setDouble(1, finalBalance);
@@ -126,7 +126,7 @@ public class AccountDAOImpl implements AccountDAO {
         Integer accountId = null;
 
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(getAccountByRequestId)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_ACCOUNT_BY_REQUEST_ID)) {
 
             preparedStatement.setInt(1, requestId);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -148,7 +148,7 @@ public class AccountDAOImpl implements AccountDAO {
         Account account = new Account();
 
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(getAccountById)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_ACCOUNT_BY_ID)) {
 
             preparedStatement.setInt(1, accountId);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -171,7 +171,7 @@ public class AccountDAOImpl implements AccountDAO {
     public void blockAccount(Integer userId) throws DAOException {
 
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(blockAccount)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(BLOCK_ACCOUNT)) {
 
             preparedStatement.setInt(1, 2);
             preparedStatement.setInt(2, userId);
@@ -186,7 +186,7 @@ public class AccountDAOImpl implements AccountDAO {
     @Override
     public void unblockAccount(Integer accountId) throws DAOException {
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(unblockAccount)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(UNBLOCK_ACCOUNT)) {
 
             preparedStatement.setInt(1, 1);
             preparedStatement.setInt(2, accountId);
@@ -202,7 +202,7 @@ public class AccountDAOImpl implements AccountDAO {
     public List<Account> getAllBlockedAccounts() throws DAOException {
         List<Account> list = new ArrayList<>();
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(getAllBlockedAccounts)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_BLOCKED_ACCOUNTS)) {
 
             preparedStatement.setInt(1, 2);
 
