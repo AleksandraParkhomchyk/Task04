@@ -8,9 +8,9 @@ public class ValidatorFactory {
 
     private static final ValidatorFactory instance = new ValidatorFactory();
 
-    private final static UserValidator userValidator = new UserValidatorImpl();
-    private final static PaymentValidator paymentValidator = new PaymentValidatorImpl();
-    private final static CashoutValidator cashoutValidator = new CashoutValidatorImpl();
+    private static final UserValidator userValidator = new UserValidatorImpl();
+    private static final PaymentValidator paymentValidator = new PaymentValidatorImpl();
+    private static final CashoutValidator cashoutValidator = new CashoutValidatorImpl();
 
     public ValidatorFactory() {
     }
