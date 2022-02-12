@@ -19,7 +19,6 @@ public final class CommandProvider {
 
         commands.put("CREATE_ACCOUNT", new CreateAccountCommand());
         commands.put("PAYMENT_ACCOUNT", new PaymentAccountCommand());
-        commands.put("GET_ALL_USERS", new GetAllUsersCommand());
         commands.put("GO_TO_USERS_PAGE", new GoToUsersPageCommand());
         commands.put("LOG_OUT_COMMAND", new LogOutCommand());
         commands.put("GET_USERS_TRANSACTIONS", new GetUsersTransactionsCommand());
@@ -30,7 +29,7 @@ public final class CommandProvider {
         commands.put("GET_USERS_REQUESTS", new GetUsersRequestsCommand());
         commands.put("CANCEL_REQUEST", new CancelRequestCommand());
         commands.put("BLOCK_ACCOUNT", new BlockAccountCommand());
-
+        commands.put("UNBLOCK_ACCOUNT", new UnblockAccountCommand());
     }
 
     public Command getCommand(String commandName) {

@@ -1,6 +1,5 @@
 package com.epam.tr.task04.paymentsapp.services.impl;
 
-import com.epam.tr.task04.paymentsapp.controller.ContextListener;
 import com.epam.tr.task04.paymentsapp.dao.DAOFactory;
 import com.epam.tr.task04.paymentsapp.dao.UserDAO;
 import com.epam.tr.task04.paymentsapp.dao.exception.DAOException;
@@ -14,9 +13,7 @@ import com.epam.tr.task04.paymentsapp.services.validator.ValidatorFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.List;
 import java.util.Optional;
-
 
 public class UserServiceImpl implements UserService {
 
@@ -33,7 +30,6 @@ public class UserServiceImpl implements UserService {
 
             if (!userOptional.isPresent()) {
                 throw new NotAuthorizedException();
-
             } else {
                 return userOptional.get();
             }
@@ -43,7 +39,6 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException(e);
         }
     }
-
 
     @Override
     public boolean registration(String name, String surname, String login, String password, String passport) throws ServiceException {
@@ -60,7 +55,6 @@ public class UserServiceImpl implements UserService {
         newUser.setPassword(password);
         newUser.setPassport(passport);
 
-
         try {
             userValidator.validate(newUser);
         } catch (ValidatorException e) {
@@ -68,31 +62,13 @@ public class UserServiceImpl implements UserService {
 
             throw new ServiceException(e);
         }
-
         try {
             userDAO.saveUser(newUser);
         } catch (DAOException e) {
             LOG.error("Exception while saving new user", e);
-
             throw new ServiceException(e);
         }
-
         return true;
-    }
-
-    @Override
-    public List<User> getAllUsers() throws ServiceException {
-        DAOFactory factory = DAOFactory.getInstance();
-        UserDAO userDAO = factory.getUserDAO();
-        List<User> list;
-        try {
-            list = userDAO.getAllUsers();
-        } catch (DAOException e) {
-            LOG.error("Exception while getting all user list", e);
-
-            throw new ServiceException(e);
-        }
-        return list;
     }
 }
 

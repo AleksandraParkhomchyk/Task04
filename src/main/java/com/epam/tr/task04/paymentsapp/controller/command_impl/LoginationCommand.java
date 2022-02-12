@@ -38,6 +38,7 @@ public class LoginationCommand implements Command {
         String password = request.getParameter(Utils.PASSWORD);
 
         List<CashoutRequest> list;
+        List<Account> list1;
 
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         UserService userService = serviceFactory.getUserService();
@@ -85,6 +86,8 @@ public class LoginationCommand implements Command {
             } else if (role == 2) {
                 list = cashRequestService.getAllCashoutRequests();
                 request.setAttribute(Utils.ALL_REQUESTS, list);
+                list1 = accountService.getAllBlockedAccounts();
+                request.setAttribute(Utils.ALL_ACCOUNTS_BLOCKED, list1);
                 RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ADMIN_PAGE);
                 dispatcher.forward(request, response);
             }

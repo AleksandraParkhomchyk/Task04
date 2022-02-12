@@ -2,8 +2,10 @@ package com.epam.tr.task04.paymentsapp.services.impl;
 
 import com.epam.tr.task04.paymentsapp.dao.AccountDAO;
 import com.epam.tr.task04.paymentsapp.dao.DAOFactory;
+import com.epam.tr.task04.paymentsapp.dao.TransactionDAO;
 import com.epam.tr.task04.paymentsapp.dao.exception.DAOException;
 import com.epam.tr.task04.paymentsapp.entity.Account;
+import com.epam.tr.task04.paymentsapp.entity.Transaction;
 import com.epam.tr.task04.paymentsapp.entity.User;
 import com.epam.tr.task04.paymentsapp.services.AccountService;
 import com.epam.tr.task04.paymentsapp.services.exception.InsufficientFundsException;
@@ -14,6 +16,8 @@ import com.epam.tr.task04.paymentsapp.services.validator.ValidatorException;
 import com.epam.tr.task04.paymentsapp.services.validator.ValidatorFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.List;
 
 
 public class AccountServiceImpl implements AccountService {
@@ -123,5 +127,35 @@ public class AccountServiceImpl implements AccountService {
 
             throw new ServiceException(e);
         }
+    }
+    @Override
+    public void unblockAccount(Integer accountId) throws ServiceException {
+        DAOFactory factory = DAOFactory.getInstance();
+        AccountDAO accountDAO = factory.getAccountDAO();
+
+        try {
+            accountDAO.unblockAccount(accountId);
+
+        } catch (DAOException e) {
+            LOG.error("Exception while unblocking account", e);
+
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<Account> getAllBlockedAccounts() throws ServiceException {
+        DAOFactory factory = DAOFactory.getInstance();
+        AccountDAO accountDAO = factory.getAccountDAO();
+        List<Account> list;
+        try {
+            list = accountDAO.getAllBlockedAccounts();
+
+        } catch (DAOException e) {
+            LOG.error("Exception while getting all blocked accounts list", e);
+
+            throw new ServiceException(e);
+        }
+        return list;
     }
 }

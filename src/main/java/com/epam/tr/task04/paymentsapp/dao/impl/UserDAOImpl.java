@@ -71,29 +71,4 @@ public class UserDAOImpl implements UserDAO {
         }
         return Optional.ofNullable(user);
     }
-
-    @Override
-    public List<User> getAllUsers() throws DAOException {
-        List<User> list = new ArrayList<>();
-
-        try (Connection connection = ConnectionPool.getInstance().takeConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(getAllUsersFromDB);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
-
-            while (resultSet.next()) {
-                User user = new User();
-                user.setId(resultSet.getInt(1));
-                user.setLogin(resultSet.getString(2));
-                user.setPassword(resultSet.getString(3));
-                user.setName(resultSet.getString(4));
-                user.setSurname(resultSet.getString(5));
-                user.setPassport(resultSet.getString(6));
-                user.setRole(resultSet.getInt(7));
-                list.add(user);
-            }
-        } catch (ConnectionPoolException | SQLException e) {
-            throw new DAOException(e);
-        }
-        return list;
-    }
 }

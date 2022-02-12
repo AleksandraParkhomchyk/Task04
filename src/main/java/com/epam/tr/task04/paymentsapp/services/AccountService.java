@@ -7,6 +7,8 @@ import com.epam.tr.task04.paymentsapp.services.exception.InsufficientFundsExcept
 import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;
 import com.epam.tr.task04.paymentsapp.services.validator.ValidatorException;
 
+import java.util.List;
+
 public interface AccountService {
 
     Account createAccount(User user) throws ServiceException;
@@ -20,4 +22,8 @@ public interface AccountService {
     Account getAccountById(Integer accountId) throws ServiceException;
 
     void blockAccount(Integer userId) throws ServiceException;
+
+    void unblockAccount(Integer accountId) throws ServiceException;
+
+    List<Account> getAllBlockedAccounts() throws ServiceException;
 }

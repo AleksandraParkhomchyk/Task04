@@ -3,9 +3,9 @@ package com.epam.tr.task04.paymentsapp.controller.command_impl;
 import com.epam.tr.task04.paymentsapp.controller.Command;
 import com.epam.tr.task04.paymentsapp.controller.constant.PagePath;
 import com.epam.tr.task04.paymentsapp.controller.constant.Utils;
-import com.epam.tr.task04.paymentsapp.entity.User;
+import com.epam.tr.task04.paymentsapp.entity.Account;
+import com.epam.tr.task04.paymentsapp.services.AccountService;
 import com.epam.tr.task04.paymentsapp.services.ServiceFactory;
-import com.epam.tr.task04.paymentsapp.services.UserService;
 import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;
 
 import javax.servlet.RequestDispatcher;
@@ -15,15 +15,22 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-public class GetAllUsersCommand implements Command {
+
+public class UnblockAccountCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
-        UserService userService = serviceFactory.getUserService();
-        List<User> list;
+        AccountService accountService = serviceFactory.getAccountService();
+
+        List<Account> list;
+
+        String accountIDGot = request.getParameter(Utils.UNBLOCK);
+        Integer accountID = Integer.parseInt(accountIDGot);
+
         try {
-            list = userService.getAllUsers();
-            request.setAttribute(Utils.ALL_USERS, list);
+            accountService.unblockAccount(accountID);
+            list = accountService.getAllBlockedAccounts();
+            request.setAttribute(Utils.ALL_ACCOUNTS_BLOCKED, list);
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ADMIN_PAGE);
             dispatcher.forward(request, response);
         } catch (ServiceException e) {

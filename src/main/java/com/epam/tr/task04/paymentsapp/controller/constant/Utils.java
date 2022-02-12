@@ -16,12 +16,14 @@ public final class Utils {
     public final static String STATUS = "status";
 
     public final static String ALL_REQUESTS = "allRequests";
+    public final static String ALL_ACCOUNTS_BLOCKED = "allAccountsBlocked";
     public final static String USER_REQUESTS = "userRequests";
     public final static String ALL_TRANSACTIONS = "allTransactions";
     public final static String ALL_USERS = "allUsers";
     public final static String APPROVE = "approve";
     public final static String DECLINE = "decline";
     public final static String CANCEL = "cancel";
+    public final static String UNBLOCK = "unblock";
 
     public final static String LOCALE = "locale";
 

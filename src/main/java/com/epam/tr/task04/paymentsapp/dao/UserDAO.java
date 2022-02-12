@@ -12,6 +12,4 @@ public interface UserDAO {
 
     Optional<User> authorisation(String login, String password) throws DAOException;
 
-    List<User> getAllUsers() throws DAOException;
-
 }

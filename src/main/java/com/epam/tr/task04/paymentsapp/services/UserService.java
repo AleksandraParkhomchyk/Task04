@@ -11,5 +11,4 @@ public interface UserService {
 
     boolean registration(String name, String surname, String login, String password, String  passport) throws ServiceException;
 
-    List<User> getAllUsers() throws ServiceException;
 }

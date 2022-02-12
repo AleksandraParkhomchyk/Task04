@@ -5,9 +5,12 @@ import com.epam.tr.task04.paymentsapp.dao.connectionpool.ConnectionPool;
 import com.epam.tr.task04.paymentsapp.dao.connectionpool.ConnectionPoolException;
 import com.epam.tr.task04.paymentsapp.dao.exception.DAOException;
 import com.epam.tr.task04.paymentsapp.entity.Account;
+import com.epam.tr.task04.paymentsapp.entity.Transaction;
 import com.epam.tr.task04.paymentsapp.entity.User;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AccountDAOImpl implements AccountDAO {
 
@@ -18,6 +21,8 @@ public class AccountDAOImpl implements AccountDAO {
     private final String getAccountByRequestId = "SELECT accounts_a_id FROM cash_requests WHERE cr_id = ?";
     private final String getAccountById = "SELECT * FROM accounts WHERE a_id = ?";
     private final String blockAccount = "UPDATE accounts SET a_status = ? WHERE (users_u_id = ?)";
+    private final String unblockAccount = "UPDATE accounts SET a_status = ? WHERE (a_id = ?)";
+    private final String getAllBlockedAccounts = "SELECT * FROM accounts WHERE a_status = ?";
 
     Date date = new java.sql.Date(System.currentTimeMillis());
     final int max = 1000;
@@ -177,5 +182,43 @@ public class AccountDAOImpl implements AccountDAO {
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
         }
+    }
+
+    @Override
+    public void unblockAccount(Integer accountId) throws DAOException {
+        try (Connection connection = ConnectionPool.getInstance().takeConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(unblockAccount)) {
+
+            preparedStatement.setInt(1, 1);
+            preparedStatement.setInt(2, accountId);
+
+            preparedStatement.executeUpdate();
+
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DAOException(e);
+        }
+    }
+
+    @Override
+    public List<Account> getAllBlockedAccounts() throws DAOException {
+        List<Account> list = new ArrayList<>();
+        try (Connection connection = ConnectionPool.getInstance().takeConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(getAllBlockedAccounts)) {
+
+            preparedStatement.setInt(1, 2);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Account account = new Account();
+                    account.setId(resultSet.getInt(1));
+                    list.add(account);
+                }
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DAOException(e);
+        }
+        return list;
     }
 }
