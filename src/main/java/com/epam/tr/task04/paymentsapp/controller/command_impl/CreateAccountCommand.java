@@ -18,7 +18,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class CreateAccountCommand implements Command {
-    private final String URL_REDIRECT = "/payments/controller?command=GO_TO_USERS_PAGE";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -40,7 +39,7 @@ public class CreateAccountCommand implements Command {
                 session.setAttribute(Utils.BALANCE, account.getBalance());
                 session.setAttribute(Utils.STATUS, account.getStatus());
                 session.setAttribute(Message.MESSAGE, Message.ACCOUNT_CREATED);
-                response.sendRedirect(URL_REDIRECT);
+                response.sendRedirect(PagePath.URL_USERS_PAGE);
 
 
             } catch (ServiceException e) {
@@ -49,7 +48,7 @@ public class CreateAccountCommand implements Command {
             }
         } else {
             session.setAttribute(Message.MESSAGE, Message.ACCOUNT_EXIST);
-            response.sendRedirect(URL_REDIRECT);
+            response.sendRedirect(PagePath.URL_USERS_PAGE);
         }
     }
 }

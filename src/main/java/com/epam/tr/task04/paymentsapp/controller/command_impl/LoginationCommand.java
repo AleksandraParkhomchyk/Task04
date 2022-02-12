@@ -25,7 +25,6 @@ import java.util.List;
 public class LoginationCommand implements Command {
 
     private final String URL_NAME = "/payments/controller?command=GO_TO_USERS_PAGE";
-    private final String URL_REDIRECT = "/payments/controller?command=GO_TO_LOGINATION_PAGE";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -92,7 +91,7 @@ public class LoginationCommand implements Command {
             }
         } catch (NotAuthorizedException e) {
             session.setAttribute(Message.MESSAGE, Message.WRONG_LOGIN_PASSWORD);
-            response.sendRedirect(URL_REDIRECT);
+            response.sendRedirect(PagePath.URL_LOGINATION);
         } catch (ServiceException e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ERROR_PAGE);
             dispatcher.forward(request, response);

@@ -11,4 +11,9 @@ public final class PagePath {
     public final static String INDEX_PAGE = "index.jsp";
     public final static String HISTORY_PAGE = "WEB-INF/jsp/historyPage.jsp";
     public final static String REQUESTS_PAGE = "WEB-INF/jsp/requestsPage.jsp";
+
+    public final static String URL_LOGINATION = "/payments/controller?command=GO_TO_LOGINATION_PAGE";
+    public final static String URL_USERS_PAGE = "/payments/controller?command=GO_TO_USERS_PAGE";
+
+
 }

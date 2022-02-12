@@ -22,13 +22,13 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <body>
 
-<p><c:out value="${sessionScope.wrong}"/></p>
+<p><c:out value="${sessionScope.message}"/></p>
 
 <div class="container">
     <h2>${page_name}</h2>
     <div class="card">
         <div class="card-body">
-            <form action="${pageContext.request.contextPath}/controller" method="post">
+            <form action="${pageContext.request.contextPath}/controller" method="get">
                 <input type="hidden" name="command" value="LOGINATION">
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">${login}</label>

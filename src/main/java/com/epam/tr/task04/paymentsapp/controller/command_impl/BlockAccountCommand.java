@@ -17,7 +17,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class BlockAccountCommand implements Command {
-    private final String URL_REDIRECT = "/payments/controller?command=GO_TO_USERS_PAGE";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -32,7 +31,7 @@ public class BlockAccountCommand implements Command {
             Account account = accountService.getAccountByUserId(id);
             session.setAttribute(Utils.STATUS, account.getStatus());
             session.setAttribute(Message.MESSAGE, Message.ACCOUNT_BLOCKED);
-            response.sendRedirect(URL_REDIRECT);
+            response.sendRedirect(PagePath.URL_USERS_PAGE);
 
         } catch (ServiceException e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ERROR_PAGE);

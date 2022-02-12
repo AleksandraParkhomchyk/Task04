@@ -21,7 +21,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class CashoutRequestCommand implements Command {
-    private final String URL_REDIRECT = "/payments/controller?command=GO_TO_USERS_PAGE";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -38,7 +37,7 @@ public class CashoutRequestCommand implements Command {
             Account account = accountService.getAccountByUserId(userId);
             CashoutRequest cashoutRequest = cashRequestService.cashout(account, amount);
             session.setAttribute(Message.MESSAGE, Message.SUCCESS_CASHOUT);
-            response.sendRedirect(URL_REDIRECT);
+            response.sendRedirect(PagePath.URL_USERS_PAGE);
 
         } catch (InsufficientFundsException e) {
             session.setAttribute(Message.MESSAGE, Message.FAILURE_CASHOUT);
