@@ -14,19 +14,11 @@ import java.sql.SQLException;
 class UserDAOImplTest {
     private static final UserDAO userDAO = new UserDAOImpl();
     private static User user;
-    //private static final String insertRoleUser = "INSERT INTO roles(r_title) value('user')";
     private static final String deleteUser = "DELETE FROM users WHERE u_name = ?";
 
 
     @Test
     void saveUser() throws DAOException {
-        /*try (Connection connection = ConnectionPool.getInstance().takeConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(insertRoleUser)) {
-            preparedStatement.executeUpdate();
-        } catch (ConnectionPoolException | SQLException e) {
-            throw new DAOException(e);
-        }*/
-
 
         user = new User();
         user.setLogin("alex");
@@ -43,6 +35,7 @@ class UserDAOImplTest {
 
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(deleteUser)) {
+
             preparedStatement.setString(1, user.getName());
             preparedStatement.executeUpdate();
         } catch (ConnectionPoolException | SQLException e) {
