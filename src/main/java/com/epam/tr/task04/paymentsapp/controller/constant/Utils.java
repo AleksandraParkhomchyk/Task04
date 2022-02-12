@@ -20,7 +20,6 @@ public final class Utils {
     public static final String ALL_ACCOUNTS_BLOCKED = "allAccountsBlocked";
     public static final String USER_REQUESTS = "userRequests";
     public static final String ALL_TRANSACTIONS = "allTransactions";
-    public static final String ALL_USERS = "allUsers";
     public static final String APPROVE = "approve";
     public static final String DECLINE = "decline";
     public static final String CANCEL = "cancel";
