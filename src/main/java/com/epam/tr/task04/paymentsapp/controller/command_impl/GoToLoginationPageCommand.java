@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class GoToLoginationPageCommand implements Command {
-    private final String URL_NAME = "/payments/controller?command=GO_TO_LOGINATION_PAGE";
+    private static final String URL_NAME = "/payments/controller?command=GO_TO_LOGINATION_PAGE";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

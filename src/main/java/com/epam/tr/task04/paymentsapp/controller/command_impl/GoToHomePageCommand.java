@@ -13,7 +13,7 @@ import java.io.IOException;
 
 public class GoToHomePageCommand implements Command {
 
-    private final String URL_NAME = "/payments/controller?command=GO_TO_HOME_PAGE";
+    private static final String URL_NAME = "/payments/controller?command=GO_TO_HOME_PAGE";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

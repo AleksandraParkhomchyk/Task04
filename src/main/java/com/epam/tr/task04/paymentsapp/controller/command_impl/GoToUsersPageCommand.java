@@ -3,7 +3,6 @@ package com.epam.tr.task04.paymentsapp.controller.command_impl;
 import com.epam.tr.task04.paymentsapp.controller.Command;
 import com.epam.tr.task04.paymentsapp.controller.constant.PagePath;
 import com.epam.tr.task04.paymentsapp.controller.constant.Utils;
-import com.epam.tr.task04.paymentsapp.entity.Account;
 import com.epam.tr.task04.paymentsapp.services.AccountService;
 import com.epam.tr.task04.paymentsapp.services.ServiceFactory;
 import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;
@@ -24,7 +23,7 @@ public class GoToUsersPageCommand implements Command {
         AccountService accountService = serviceFactory.getAccountService();
         Integer id = (Integer) session.getAttribute(Utils.ID);
         try {
-            Account account = accountService.getAccountByUserId(id);
+            accountService.getAccountByUserId(id);
         } catch (ServiceException e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ERROR_PAGE);
             dispatcher.forward(request, response);
