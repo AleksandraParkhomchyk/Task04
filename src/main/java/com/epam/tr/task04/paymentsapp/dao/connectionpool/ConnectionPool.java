@@ -11,7 +11,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
 
 public final class ConnectionPool {
-    private final static Logger LOG = LogManager.getLogger(ConnectionPool.class);
+    private static final Logger LOG = LogManager.getLogger(ConnectionPool.class);
 
     private static ConnectionPool instance;
 

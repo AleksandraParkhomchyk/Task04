@@ -3,7 +3,7 @@ package com.epam.tr.task04.paymentsapp.dao.connectionpool;
 import java.util.ResourceBundle;
 
 public class DBResourceManager {
-    private final static DBResourceManager instance = new DBResourceManager();
+    private static final DBResourceManager instance = new DBResourceManager();
 
     private ResourceBundle bundle = ResourceBundle.getBundle("db");
 
