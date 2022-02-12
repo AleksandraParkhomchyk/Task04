@@ -18,7 +18,7 @@ import java.util.List;
 
 public class CashRequestServiceImpl implements CashRequestService {
 
-    private final static Logger LOG = LogManager.getLogger(CashRequestServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(CashRequestServiceImpl.class);
 
     @Override
     public CashoutRequest cashout(Account account, String amount) throws ServiceException, InsufficientFundsException, ValidatorException {
@@ -42,8 +42,7 @@ public class CashRequestServiceImpl implements CashRequestService {
         }
 
         try {
-            CashoutRequest cashoutRequest = cashRequestDAO.cashout(account, amountParsed);
-            return cashoutRequest;
+            return cashRequestDAO.cashout(account, amountParsed);
         } catch (DAOException e) {
             LOG.error("Exception while writing cashout details to database", e);
 

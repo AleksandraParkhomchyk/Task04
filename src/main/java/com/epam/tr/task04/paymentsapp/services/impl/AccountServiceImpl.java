@@ -19,7 +19,7 @@ import java.util.List;
 
 public class AccountServiceImpl implements AccountService {
 
-    private final static Logger LOG = LogManager.getLogger(AccountServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(AccountServiceImpl.class);
 
     @Override
     public Account createAccount(User user) throws ServiceException {
@@ -27,8 +27,7 @@ public class AccountServiceImpl implements AccountService {
         AccountDAO accountDAO = factory.getAccountDAO();
 
         try {
-            Account account = accountDAO.createAccount(user);
-            return account;
+            return accountDAO.createAccount(user);
         } catch (DAOException e) {
             LOG.error("Exception while creating account", e);
 
@@ -72,8 +71,7 @@ public class AccountServiceImpl implements AccountService {
             throw new InsufficientFundsException("Insufficient funds.");
         }
         try {
-            boolean result = accountDAO.accountPayment(account, accountNumber, amountParsed, userId);
-            return result;
+            return accountDAO.accountPayment(account, accountNumber, amountParsed, userId);
 
         } catch (DAOException e) {
             LOG.error("Exception while writing payment details to database", e);
@@ -88,8 +86,7 @@ public class AccountServiceImpl implements AccountService {
         AccountDAO accountDAO = factory.getAccountDAO();
 
         try {
-            Integer accountId = accountDAO.getAccountIdByRequestId(requestId);
-            return accountId;
+            return accountDAO.getAccountIdByRequestId(requestId);
 
         } catch (DAOException e) {
             LOG.error("Exception while getting account id by request id", e);
@@ -104,8 +101,7 @@ public class AccountServiceImpl implements AccountService {
         AccountDAO accountDAO = factory.getAccountDAO();
 
         try {
-            Account account = accountDAO.getAccountById(accountId);
-            return account;
+            return accountDAO.getAccountById(accountId);
         } catch (DAOException e) {
             LOG.error("Exception while getting account by id", e);
 

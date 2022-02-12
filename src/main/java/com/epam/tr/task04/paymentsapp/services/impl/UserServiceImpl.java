@@ -17,7 +17,7 @@ import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
 
-    private final static Logger LOG = LogManager.getLogger(UserServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(UserServiceImpl.class);
 
     @Override
     public User authorisation(String login, String password) throws ServiceException {

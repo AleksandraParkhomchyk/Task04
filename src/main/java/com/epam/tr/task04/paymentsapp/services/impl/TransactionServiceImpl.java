@@ -13,7 +13,7 @@ import java.util.List;
 
 public class TransactionServiceImpl implements TransactionService {
 
-    private final static Logger LOG = LogManager.getLogger(TransactionServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(TransactionServiceImpl.class);
 
     @Override
     public List<Transaction> getAllTransactions(Integer userId) throws ServiceException {
