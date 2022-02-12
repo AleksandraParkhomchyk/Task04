@@ -13,16 +13,16 @@ import java.util.List;
 
 public class CashRequestDAOImpl implements CashRequestDAO {
 
-    private final String getAllRequestFromDB = "SELECT * FROM cash_requests";
-    private final String updateRequestStatusDB = "UPDATE cash_requests SET cr_status = ? WHERE (cr_id = ?)";
-    private final String createCashoutRequest = "INSERT INTO cash_requests(cr_date, cr_amount, cr_status, accounts_a_id) VALUES(?, ?, ?, ?)";
-    private final String afterCashoutBalance = "UPDATE accounts SET a_balance = ? WHERE (a_id = ?)";
-    private final String getAmountById = "SELECT cr_amount FROM cash_requests WHERE (cr_id = ?)";
-    private final String getAllRequestByAccountId = "SELECT * FROM cash_requests WHERE accounts_a_id = ?";
-    private final String cashoutTransaction = "INSERT INTO transactions(t_date, t_amount, t_from_account, t_before_acc_balance, t_after_acc_balance, t_to_account, users_u_id, transaction_type_tt_id) values (?, ?, ?, ?, ?, ?, ?, ?)";
-    private final String cancelRequest = "DELETE FROM cash_requests WHERE (cr_id = ?)";
+    private static final String GET_ALL_REQUEST_FROM_DB = "SELECT * FROM cash_requests";
+    private static final String UPDATE_REQUEST_STATUS_DB = "UPDATE cash_requests SET cr_status = ? WHERE (cr_id = ?)";
+    private static final String CREATE_CASHOUT_REQUEST = "INSERT INTO cash_requests(cr_date, cr_amount, cr_status, accounts_a_id) VALUES(?, ?, ?, ?)";
+    private static final String AFTER_CASHOUT_BALANCE = "UPDATE accounts SET a_balance = ? WHERE (a_id = ?)";
+    private static final String GET_AMOUNT_BY_ID = "SELECT cr_amount FROM cash_requests WHERE (cr_id = ?)";
+    private static final String GET_ALL_REQUEST_BY_ACCOUNT_ID = "SELECT * FROM cash_requests WHERE accounts_a_id = ?";
+    private static final String CASHOUT_TRANSACTION = "INSERT INTO transactions(t_date, t_amount, t_from_account, t_before_acc_balance, t_after_acc_balance, t_to_account, users_u_id, transaction_type_tt_id) values (?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String CANCEL_REQUEST = "DELETE FROM cash_requests WHERE (cr_id = ?)";
 
-    private final String CASHOUT = "cashout";
+    private static final String CASHOUT = "cashout";
 
     Date date = new java.sql.Date(System.currentTimeMillis());
 
@@ -31,7 +31,7 @@ public class CashRequestDAOImpl implements CashRequestDAO {
         CashoutRequest cashoutRequest = new CashoutRequest();
 
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(createCashoutRequest, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(CREATE_CASHOUT_REQUEST, Statement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setDate(1, date);
             preparedStatement.setDouble(2, amount);
@@ -58,7 +58,7 @@ public class CashRequestDAOImpl implements CashRequestDAO {
         List<CashoutRequest> list = new ArrayList<>();
 
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(getAllRequestFromDB);
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_REQUEST_FROM_DB);
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
@@ -83,9 +83,9 @@ public class CashRequestDAOImpl implements CashRequestDAO {
         try (Connection connection = ConnectionPool.getInstance().takeConnection()) {
             connection.setAutoCommit(false);
 
-            try (PreparedStatement updateStatus = connection.prepareStatement(updateRequestStatusDB);
-                 PreparedStatement updateBalance = connection.prepareStatement(afterCashoutBalance);
-                 PreparedStatement writeTransaction = connection.prepareStatement(cashoutTransaction)) {
+            try (PreparedStatement updateStatus = connection.prepareStatement(UPDATE_REQUEST_STATUS_DB);
+                 PreparedStatement updateBalance = connection.prepareStatement(AFTER_CASHOUT_BALANCE);
+                 PreparedStatement writeTransaction = connection.prepareStatement(CASHOUT_TRANSACTION)) {
 
                 updateStatus.setInt(1, 2);
                 updateStatus.setInt(2, requestID);
@@ -125,7 +125,7 @@ public class CashRequestDAOImpl implements CashRequestDAO {
     public boolean updateRequestStatusDeclined(Integer requestID) throws DAOException {
 
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(updateRequestStatusDB)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_REQUEST_STATUS_DB)) {
 
             preparedStatement.setInt(1, 3);
             preparedStatement.setInt(2, requestID);
@@ -143,7 +143,7 @@ public class CashRequestDAOImpl implements CashRequestDAO {
         Double amount = null;
 
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(getAmountById)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_AMOUNT_BY_ID)) {
 
             preparedStatement.setInt(1, requestId);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -165,7 +165,7 @@ public class CashRequestDAOImpl implements CashRequestDAO {
         List<CashoutRequest> list = new ArrayList<>();
 
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(getAllRequestByAccountId)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_REQUEST_BY_ACCOUNT_ID)) {
 
             preparedStatement.setInt(1, accountId);
 
@@ -193,7 +193,7 @@ public class CashRequestDAOImpl implements CashRequestDAO {
     public void cancelCashRequest(Integer requestId) throws DAOException {
 
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(cancelRequest)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(CANCEL_REQUEST)) {
 
             preparedStatement.setInt(1, requestId);
             preparedStatement.executeUpdate();
