@@ -17,7 +17,6 @@ public class Account implements Serializable {
     public Account(String accountNumber, double balance) {
         this.accountNumber = accountNumber;
         this.balance = balance;
-        this.accountOpeningDate = accountOpeningDate;
     }
 
     public Account(Integer id) {

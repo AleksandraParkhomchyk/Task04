@@ -15,7 +15,7 @@ import java.util.Random;
 public class AccountDAOImpl implements AccountDAO {
 
     private static final String CREATE_ACCOUNT = "INSERT INTO accounts(a_number, a_balance, a_openning_date, a_status, users_u_id) VALUES(?, ?, ?, ?, ?)";
-    private static final String GET_ACCOUNT_NUMBER_BY_USER_ID = "SELECT a_id, a_number, a_balance, a_status FROM accounts WHERE (users_u_id = ?)";
+    private static final String GET_ACCOUNT_BY_USER_ID = "SELECT a_id, a_number, a_balance, a_status, a_openning_date FROM accounts WHERE (users_u_id = ?)";
     private static final String AFTER_PAYMENT_BALANCE = "UPDATE accounts SET a_balance = ? WHERE (a_id = ?)";
     private static final String PAYMENT_TRANSACTION = "INSERT INTO transactions(t_date, t_amount, t_from_account, t_before_acc_balance, t_after_acc_balance, t_to_account, users_u_id, transaction_type_tt_id) values (?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String GET_ACCOUNT_BY_REQUEST_ID = "SELECT accounts_a_id FROM cash_requests WHERE cr_id = ?";
@@ -60,7 +60,7 @@ public class AccountDAOImpl implements AccountDAO {
         Account account = new Account();
 
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(GET_ACCOUNT_NUMBER_BY_USER_ID)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_ACCOUNT_BY_USER_ID)) {
 
             preparedStatement.setInt(1, userId);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -70,6 +70,7 @@ public class AccountDAOImpl implements AccountDAO {
                     account.setAccountNumber(resultSet.getString(2));
                     account.setBalance(resultSet.getDouble(3));
                     account.setStatus(resultSet.getInt(4));
+                    account.setAccountOpeningDate(resultSet.getDate(5));
                 }
             } catch (SQLException e) {
                 throw new DAOException(e);
