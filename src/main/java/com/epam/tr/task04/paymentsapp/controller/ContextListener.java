@@ -1,8 +1,6 @@
 package com.epam.tr.task04.paymentsapp.controller;
 
 import com.epam.tr.task04.paymentsapp.dao.connectionpool.ConnectionPool;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -12,7 +10,7 @@ public class ContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent event) {
 
-         ConnectionPool.getInstance();
+        ConnectionPool.getInstance();
     }
 
     @Override
