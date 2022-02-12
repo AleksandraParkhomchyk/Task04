@@ -9,7 +9,6 @@ import com.epam.tr.task04.paymentsapp.services.CashRequestService;
 import com.epam.tr.task04.paymentsapp.services.exception.InsufficientFundsException;
 import com.epam.tr.task04.paymentsapp.services.exception.ServiceException;
 import com.epam.tr.task04.paymentsapp.services.validator.CashoutValidator;
-import com.epam.tr.task04.paymentsapp.services.validator.PaymentValidator;
 import com.epam.tr.task04.paymentsapp.services.validator.ValidatorException;
 import com.epam.tr.task04.paymentsapp.services.validator.ValidatorFactory;
 import org.apache.logging.log4j.LogManager;

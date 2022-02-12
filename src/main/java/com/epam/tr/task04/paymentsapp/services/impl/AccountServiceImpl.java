@@ -127,6 +127,7 @@ public class AccountServiceImpl implements AccountService {
             throw new ServiceException(e);
         }
     }
+
     @Override
     public void unblockAccount(Integer accountId) throws ServiceException {
         DAOFactory factory = DAOFactory.getInstance();

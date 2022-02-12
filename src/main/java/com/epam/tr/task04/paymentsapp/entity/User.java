@@ -12,7 +12,8 @@ public class User implements Serializable {
     private String passport;
     private Integer role;
 
-    public User() {    }
+    public User() {
+    }
 
     public User(String name, String surname, String login, String password, String passport) {
         this.name = name;

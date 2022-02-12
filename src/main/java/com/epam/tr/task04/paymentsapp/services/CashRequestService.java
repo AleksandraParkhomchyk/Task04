@@ -9,6 +9,7 @@ import com.epam.tr.task04.paymentsapp.services.validator.ValidatorException;
 import java.util.List;
 
 public interface CashRequestService {
+
     CashoutRequest cashout(Account account, String amount) throws ServiceException, InsufficientFundsException, ValidatorException;
 
     List<CashoutRequest> getAllCashoutRequests() throws ServiceException;

@@ -56,9 +56,13 @@ public class Account implements Serializable {
         this.accountOpeningDate = accountOpeningDate;
     }
 
-    public Integer getStatus() { return status; }
+    public Integer getStatus() {
+        return status;
+    }
 
-    public void setStatus(Integer status) { this.status = status; }
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
     public Integer getOwnerId() {
         return ownerId;
@@ -76,19 +80,26 @@ public class Account implements Serializable {
         Account account = (Account) o;
 
         if (Double.compare(account.getBalance(), getBalance()) != 0) return false;
+        if (getId() != null ? !getId().equals(account.getId()) : account.getId() != null) return false;
         if (getAccountNumber() != null ? !getAccountNumber().equals(account.getAccountNumber()) : account.getAccountNumber() != null)
             return false;
-        return getAccountOpeningDate() != null ? getAccountOpeningDate().equals(account.getAccountOpeningDate()) : account.getAccountOpeningDate() == null;
+        if (getAccountOpeningDate() != null ? !getAccountOpeningDate().equals(account.getAccountOpeningDate()) : account.getAccountOpeningDate() != null)
+            return false;
+        if (getStatus() != null ? !getStatus().equals(account.getStatus()) : account.getStatus() != null) return false;
+        return getOwnerId() != null ? getOwnerId().equals(account.getOwnerId()) : account.getOwnerId() == null;
     }
 
     @Override
     public int hashCode() {
         int result;
         long temp;
-        result = getAccountNumber() != null ? getAccountNumber().hashCode() : 0;
+        result = getId() != null ? getId().hashCode() : 0;
+        result = 31 * result + (getAccountNumber() != null ? getAccountNumber().hashCode() : 0);
         temp = Double.doubleToLongBits(getBalance());
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (getAccountOpeningDate() != null ? getAccountOpeningDate().hashCode() : 0);
+        result = 31 * result + (getStatus() != null ? getStatus().hashCode() : 0);
+        result = 31 * result + (getOwnerId() != null ? getOwnerId().hashCode() : 0);
         return result;
     }
 }

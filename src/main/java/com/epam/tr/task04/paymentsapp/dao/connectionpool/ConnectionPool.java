@@ -34,7 +34,7 @@ public final class ConnectionPool {
         try {
             this.poolSize = Integer.parseInt(dbResourceManager.getValue(DBParameter.DB_POOL_SIZE));
         } catch (NumberFormatException e) {
-            LOG.error("Unable to get pool size");
+            LOG.error("Unable to get pool size", e);
             poolSize = 5;
         }
     }

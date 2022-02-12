@@ -1,6 +1,7 @@
 package com.epam.tr.task04.paymentsapp.services.exception;
 
 public class NotAuthorizedException extends ServiceException {
+
     public NotAuthorizedException() {
         super();
     }
@@ -13,6 +14,7 @@ public class NotAuthorizedException extends ServiceException {
         super(e);
     }
 
-    public NotAuthorizedException(String message, Exception e) { super(message, e);}
-
+    public NotAuthorizedException(String message, Exception e) {
+        super(message, e);
+    }
 }

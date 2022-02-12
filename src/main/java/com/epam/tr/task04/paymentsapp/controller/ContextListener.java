@@ -9,18 +9,14 @@ import javax.servlet.ServletContextListener;
 
 public class ContextListener implements ServletContextListener {
 
-    private final static Logger LOG = LogManager.getLogger(ContextListener.class);
-
     @Override
     public void contextInitialized(ServletContextEvent event) {
-        LOG.debug("Server initialized");
 
-        ConnectionPool.getInstance();
+         ConnectionPool.getInstance();
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent event) {
-        LOG.debug("Server stopped");
 
         ConnectionPool.getInstance().dispose();
     }

@@ -1,6 +1,5 @@
 package com.epam.tr.task04.paymentsapp.dao.connectionpool;
 
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class DBResourceManager {

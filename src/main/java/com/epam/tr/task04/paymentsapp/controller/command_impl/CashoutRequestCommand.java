@@ -44,7 +44,7 @@ public class CashoutRequestCommand implements Command {
             session.setAttribute(Message.MESSAGE, Message.FAILURE_CASHOUT);
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.USER_PAGE);
             dispatcher.forward(request, response);
-        } catch (ValidatorException e){
+        } catch (ValidatorException e) {
             session.setAttribute(Message.MESSAGE, Message.INVALID_AMOUNT);
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.USER_PAGE);
             dispatcher.forward(request, response);

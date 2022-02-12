@@ -53,9 +53,13 @@ public class CashoutRequest implements Serializable {
         this.status = status;
     }
 
-    public Integer getAccountId() { return accountId; }
+    public Integer getAccountId() {
+        return accountId;
+    }
 
-    public void setAccountId(Integer accountId) { this.accountId = accountId; }
+    public void setAccountId(Integer accountId) {
+        this.accountId = accountId;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -67,7 +71,8 @@ public class CashoutRequest implements Serializable {
         if (getId() != null ? !getId().equals(that.getId()) : that.getId() != null) return false;
         if (getDate() != null ? !getDate().equals(that.getDate()) : that.getDate() != null) return false;
         if (getAmount() != null ? !getAmount().equals(that.getAmount()) : that.getAmount() != null) return false;
-        return getStatus() != null ? getStatus().equals(that.getStatus()) : that.getStatus() == null;
+        if (getStatus() != null ? !getStatus().equals(that.getStatus()) : that.getStatus() != null) return false;
+        return getAccountId() != null ? getAccountId().equals(that.getAccountId()) : that.getAccountId() == null;
     }
 
     @Override
@@ -76,6 +81,7 @@ public class CashoutRequest implements Serializable {
         result = 31 * result + (getDate() != null ? getDate().hashCode() : 0);
         result = 31 * result + (getAmount() != null ? getAmount().hashCode() : 0);
         result = 31 * result + (getStatus() != null ? getStatus().hashCode() : 0);
+        result = 31 * result + (getAccountId() != null ? getAccountId().hashCode() : 0);
         return result;
     }
 }

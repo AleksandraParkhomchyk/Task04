@@ -20,13 +20,18 @@ public final class ServiceFactory {
     public UserService getUserService() {
         return userService;
     }
+
     public AccountService getAccountService() {
         return accountService;
     }
+
     public TransactionService getTransactionService() {
         return transactionService;
     }
-    public CashRequestService getCashRequestService() { return cashRequestService; }
+
+    public CashRequestService getCashRequestService() {
+        return cashRequestService;
+    }
 
     public static ServiceFactory getInstance() {
         return instance;

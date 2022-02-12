@@ -9,6 +9,7 @@ public final class CommandProvider {
     private final Map<String, Command> commands = new HashMap<>();
 
     public CommandProvider() {
+
         commands.put("LOGINATION", new LoginationCommand());
         commands.put("REGISTRATION", new RegistrationCommand());
 

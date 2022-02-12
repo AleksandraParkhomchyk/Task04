@@ -8,15 +8,12 @@ import com.epam.tr.task04.paymentsapp.entity.User;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 public class UserDAOImpl implements UserDAO {
 
     private final String saveUser = "INSERT INTO users(u_name, u_surname, u_login, u_password, u_passport, roles_r_id) VALUES( ?, ?, ?, ?, ?, ?)";
     private final String authorisation = "SELECT u_id, u_login, u_password, roles_r_id FROM users WHERE u_login = ?";
-    private final String getAllUsersFromDB = "SELECT * FROM users";
 
     private static final String PASSWORD_SALT = "$2a$10$7Xtwz2dUaNW2055I9dhhv.";
 

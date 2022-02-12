@@ -46,7 +46,7 @@ public class PaymentAccountCommand implements Command {
             session.setAttribute(Message.MESSAGE, Message.FAILURE_PAYMENT);
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.USER_PAGE);
             dispatcher.forward(request, response);
-        } catch (ValidatorException e){
+        } catch (ValidatorException e) {
             session.setAttribute(Message.MESSAGE, Message.INVALID_ACCOUNT_OR_AMOUNT);
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.USER_PAGE);
             dispatcher.forward(request, response);

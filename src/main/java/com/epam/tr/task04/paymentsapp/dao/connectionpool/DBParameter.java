@@ -1,7 +1,8 @@
 package com.epam.tr.task04.paymentsapp.dao.connectionpool;
 
 public final class DBParameter {
-    private DBParameter(){}
+    private DBParameter() {
+    }
 
     public static final String DB_DRIVER = "db.driver";
     public static final String DB_URL = "db.url";

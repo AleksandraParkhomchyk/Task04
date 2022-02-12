@@ -15,12 +15,20 @@ public class ValidatorFactory {
     public ValidatorFactory() {
     }
 
-    public  static ValidatorFactory getInstance(){
+    public static ValidatorFactory getInstance() {
         return instance;
     }
 
-    public UserValidator getUserValidator() { return userValidator; }
-    public PaymentValidator getPaymentValidator() { return paymentValidator; }
-    public CashoutValidator getCashoutValidator() { return cashoutValidator; }
+    public UserValidator getUserValidator() {
+        return userValidator;
+    }
+
+    public PaymentValidator getPaymentValidator() {
+        return paymentValidator;
+    }
+
+    public CashoutValidator getCashoutValidator() {
+        return cashoutValidator;
+    }
 
 }

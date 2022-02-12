@@ -13,7 +13,6 @@ public class CharsetFilter implements Filter {
         encoding = filterConfig.getInitParameter("requestEncoding");
 
         if (encoding == null) encoding = "utf-8";
-
     }
 
     @Override
@@ -22,11 +21,9 @@ public class CharsetFilter implements Filter {
         request.setCharacterEncoding(encoding);
 
         chain.doFilter(request, response);
-
     }
 
     @Override
     public void destroy() {
-
     }
 }

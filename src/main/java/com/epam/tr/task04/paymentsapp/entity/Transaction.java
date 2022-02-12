@@ -13,7 +13,8 @@ public class Transaction implements Serializable {
     private String inAccount;
 
 
-    public Transaction() {}
+    public Transaction() {
+    }
 
     public Transaction(Integer id, Date date, Double amount, String outAccount, Double startBalance, Double endBalance, String inAccount) {
         this.id = id;
