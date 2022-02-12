@@ -14,14 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionDAOImpl implements TransactionDAO {
-    private final String getUsersTransactionsFromDB = "SELECT * FROM transactions WHERE users_u_id = ?";
+    private static final String GET_USERS_TRANSACTIONS_FROM_DB = "SELECT * FROM transactions WHERE users_u_id = ?";
 
     @Override
     public List<Transaction> getAllTransactions(Integer userId) throws DAOException {
         List<Transaction> list = new ArrayList<>();
 
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(getUsersTransactionsFromDB)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_USERS_TRANSACTIONS_FROM_DB)) {
 
             preparedStatement.setInt(1, userId);
 
