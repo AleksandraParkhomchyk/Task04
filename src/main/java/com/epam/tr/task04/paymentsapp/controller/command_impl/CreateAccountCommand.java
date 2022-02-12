@@ -33,8 +33,8 @@ public class CreateAccountCommand implements Command {
             try {
                 accountService.createAccount(user);
                 Account account = accountService.getAccountByUserId(id);
-                Integer account_id = account.getId();
-                session.setAttribute(Utils.ACCOUNT_ID, account_id);
+                Integer accountId = account.getId();
+                session.setAttribute(Utils.ACCOUNT_ID, accountId);
                 session.setAttribute(Utils.ACCOUNT_NUMBER, account.getAccountNumber());
                 session.setAttribute(Utils.BALANCE, account.getBalance());
                 session.setAttribute(Utils.STATUS, account.getStatus());
