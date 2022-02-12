@@ -37,16 +37,16 @@ public class PaymentAccountCommand implements Command {
             boolean result = accountService.accountPayment(account, targetAccount, amount, userId);
             Account accountUPD = accountService.getAccountByUserId(userId);
             if (result) {
-                session.setAttribute(Message.MESSAGE, Message.SUCCESS_PAYMENT);
+                session.setAttribute(Message.MESSAGE_TO_USER, Message.SUCCESS_PAYMENT);
                 session.setAttribute(Utils.BALANCE, accountUPD.getBalance());
                 response.sendRedirect(PagePath.URL_USERS_PAGE);
             }
         } catch (InsufficientFundsException e) {
-            session.setAttribute(Message.MESSAGE, Message.FAILURE_PAYMENT);
+            session.setAttribute(Message.MESSAGE_TO_USER, Message.FAILURE_PAYMENT);
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.USER_PAGE);
             dispatcher.forward(request, response);
         } catch (ValidatorException e) {
-            session.setAttribute(Message.MESSAGE, Message.INVALID_ACCOUNT_OR_AMOUNT);
+            session.setAttribute(Message.MESSAGE_TO_USER, Message.INVALID_ACCOUNT_OR_AMOUNT);
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.USER_PAGE);
             dispatcher.forward(request, response);
         } catch (ServiceException e) {

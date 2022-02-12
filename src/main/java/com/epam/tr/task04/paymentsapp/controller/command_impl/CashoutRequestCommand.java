@@ -35,15 +35,15 @@ public class CashoutRequestCommand implements Command {
         try {
             Account account = accountService.getAccountByUserId(userId);
             cashRequestService.cashout(account, amount);
-            session.setAttribute(Message.MESSAGE, Message.SUCCESS_CASHOUT);
+            session.setAttribute(Message.MESSAGE_TO_USER, Message.SUCCESS_CASHOUT);
             response.sendRedirect(PagePath.URL_USERS_PAGE);
 
         } catch (InsufficientFundsException e) {
-            session.setAttribute(Message.MESSAGE, Message.FAILURE_CASHOUT);
+            session.setAttribute(Message.MESSAGE_TO_USER, Message.FAILURE_CASHOUT);
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.USER_PAGE);
             dispatcher.forward(request, response);
         } catch (ValidatorException e) {
-            session.setAttribute(Message.MESSAGE, Message.INVALID_AMOUNT);
+            session.setAttribute(Message.MESSAGE_TO_USER, Message.INVALID_AMOUNT);
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.USER_PAGE);
             dispatcher.forward(request, response);
         } catch (ServiceException e) {
