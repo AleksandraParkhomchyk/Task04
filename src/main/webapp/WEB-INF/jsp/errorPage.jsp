@@ -15,7 +15,7 @@
 
 <h2>Something went wrong</h2>
 
-<form action="${pageContext.request.contextPath}/controller" method="post">
+<form action="${pageContext.request.contextPath}/controller" method="get">
     <a href="index.jsp">Try again</a>
 
    </form>
