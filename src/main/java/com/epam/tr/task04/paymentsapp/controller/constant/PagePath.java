@@ -2,6 +2,8 @@ package com.epam.tr.task04.paymentsapp.controller.constant;
 
 public final class PagePath {
 
+    private PagePath() { }
+
     public static final String HOME_PAGE = "WEB-INF/jsp/homePage.jsp";
     public static final String USER_PAGE = "WEB-INF/jsp/userPage.jsp";
     public static final String ADMIN_PAGE = "WEB-INF/jsp/adminPage.jsp";
@@ -14,6 +16,5 @@ public final class PagePath {
 
     public static final String URL_LOGINATION = "/payments/controller?command=GO_TO_LOGINATION_PAGE";
     public static final String URL_USERS_PAGE = "/payments/controller?command=GO_TO_USERS_PAGE";
-
 
 }
