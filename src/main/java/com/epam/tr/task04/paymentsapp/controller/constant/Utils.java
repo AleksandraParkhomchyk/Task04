@@ -2,6 +2,8 @@ package com.epam.tr.task04.paymentsapp.controller.constant;
 
 public final class Utils {
 
+    private Utils() { }
+
     public static final String URL = "url";
 
     public static final String NAME = "name";

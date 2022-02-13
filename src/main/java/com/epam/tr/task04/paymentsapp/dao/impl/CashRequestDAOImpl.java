@@ -24,8 +24,6 @@ public class CashRequestDAOImpl implements CashRequestDAO {
 
     private static final String CASHOUT = "cashout";
 
-    Date date = new java.sql.Date(System.currentTimeMillis());
-
     @Override
     public CashoutRequest cashout(Account account, Double amount) throws DAOException {
         CashoutRequest cashoutRequest = new CashoutRequest();
@@ -33,7 +31,7 @@ public class CashRequestDAOImpl implements CashRequestDAO {
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(CREATE_CASHOUT_REQUEST, Statement.RETURN_GENERATED_KEYS)) {
 
-            preparedStatement.setDate(1, date);
+            preparedStatement.setDate(1, new java.sql.Date(System.currentTimeMillis()));
             preparedStatement.setDouble(2, amount);
             preparedStatement.setInt(3, 1);
             preparedStatement.setInt(4, account.getId());
@@ -98,7 +96,7 @@ public class CashRequestDAOImpl implements CashRequestDAO {
 
                 updateBalance.executeUpdate();
 
-                writeTransaction.setDate(1, date);
+                writeTransaction.setDate(1, new java.sql.Date(System.currentTimeMillis()));
                 writeTransaction.setDouble(2, amount);
                 writeTransaction.setString(3, account.getAccountNumber());
                 writeTransaction.setDouble(4, account.getBalance());

@@ -24,7 +24,6 @@ public class AccountDAOImpl implements AccountDAO {
     private static final String UNBLOCK_ACCOUNT = "UPDATE accounts SET a_status = ? WHERE (a_id = ?)";
     private static final String GET_ALL_BLOCKED_ACCOUNTS = "SELECT * FROM accounts WHERE a_status = ?";
 
-    Date date = new java.sql.Date(System.currentTimeMillis());
     Random random = new Random();
 
     @Override
@@ -36,7 +35,7 @@ public class AccountDAOImpl implements AccountDAO {
 
             preparedStatement.setString(1, String.valueOf(random.nextInt()));
             preparedStatement.setDouble(2, 1000.00);
-            preparedStatement.setDate(3, date);
+            preparedStatement.setDate(3, new java.sql.Date(System.currentTimeMillis()));
             preparedStatement.setInt(4, 1);
             preparedStatement.setInt(5, user.getId());
 
@@ -98,7 +97,7 @@ public class AccountDAOImpl implements AccountDAO {
 
                 writeNewBalance.executeUpdate();
 
-                writeTransaction.setDate(1, date);
+                writeTransaction.setDate(1, new java.sql.Date(System.currentTimeMillis()));
                 writeTransaction.setDouble(2, amount);
                 writeTransaction.setString(3, account.getAccountNumber());
                 writeTransaction.setDouble(4, account.getBalance());
