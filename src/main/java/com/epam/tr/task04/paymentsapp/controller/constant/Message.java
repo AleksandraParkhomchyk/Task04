@@ -2,6 +2,8 @@ package com.epam.tr.task04.paymentsapp.controller.constant;
 
 public class Message {
 
+    private Message() {  }
+
     public static final String MESSAGE_TO_USER = "message";
     public static final String WRONG_LOGIN_PASSWORD = "Wrong login or password";
     public static final String SUCCESS_PAYMENT = "Payment made successful";
