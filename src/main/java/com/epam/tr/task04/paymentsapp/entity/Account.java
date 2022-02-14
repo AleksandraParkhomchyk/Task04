@@ -14,9 +14,13 @@ public class Account implements Serializable {
     public Account() {
     }
 
-    public Account(String accountNumber, double balance) {
+    public Account(Integer id, String accountNumber, double balance, Date accountOpeningDate, Integer status, Integer ownerId) {
+        this.id = id;
         this.accountNumber = accountNumber;
         this.balance = balance;
+        this.accountOpeningDate = accountOpeningDate;
+        this.status = status;
+        this.ownerId = ownerId;
     }
 
     public Account(Integer id) {

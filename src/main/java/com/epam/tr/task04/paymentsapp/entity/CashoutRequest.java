@@ -14,6 +14,14 @@ public class CashoutRequest implements Serializable {
     public CashoutRequest() {
     }
 
+    public CashoutRequest(Integer id, Date date, Double amount, String status, Integer accountId) {
+        this.id = id;
+        this.date = date;
+        this.amount = amount;
+        this.status = status;
+        this.accountId = accountId;
+    }
+
     public CashoutRequest(Integer id, Date date, Double amount, String status) {
         this.id = id;
         this.date = date;
