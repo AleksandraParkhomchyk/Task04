@@ -27,11 +27,10 @@ public class AccountDAOImpl implements AccountDAO {
     Random random = new Random();
 
     @Override
-    public Account createAccount(User user) throws DAOException {
-        Account account = new Account();
+    public void createAccount(User user) throws DAOException {
 
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(CREATE_ACCOUNT, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(CREATE_ACCOUNT)) {
 
             preparedStatement.setString(1, String.valueOf(random.nextInt()));
             preparedStatement.setDouble(2, 1000.00);
@@ -41,17 +40,9 @@ public class AccountDAOImpl implements AccountDAO {
 
             preparedStatement.executeUpdate();
 
-            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    account.setId(generatedKeys.getInt(1));
-                }
-            } catch (SQLException e) {
-                throw new DAOException(e);
-            }
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
         }
-        return account;
     }
 
     @Override

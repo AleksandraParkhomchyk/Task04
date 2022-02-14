@@ -22,12 +22,12 @@ public class AccountServiceImpl implements AccountService {
     private static final Logger LOG = LogManager.getLogger(AccountServiceImpl.class);
 
     @Override
-    public Account createAccount(User user) throws ServiceException {
+    public void createAccount(User user) throws ServiceException {
         DAOFactory factory = DAOFactory.getInstance();
         AccountDAO accountDAO = factory.getAccountDAO();
 
         try {
-            return accountDAO.createAccount(user);
+            accountDAO.createAccount(user);
         } catch (DAOException e) {
             LOG.error("Exception while creating account", e);
 

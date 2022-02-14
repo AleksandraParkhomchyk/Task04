@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface AccountService {
 
-    Account createAccount(User user) throws ServiceException;
+    void createAccount(User user) throws ServiceException;
 
     Account getAccountByUserId(Integer userId) throws ServiceException;
 

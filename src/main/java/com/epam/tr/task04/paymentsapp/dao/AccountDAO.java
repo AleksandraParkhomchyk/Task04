@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface AccountDAO {
 
-    Account createAccount(User user) throws DAOException;
+    void createAccount(User user) throws DAOException;
 
     Account getAccountByUserId(Integer userId) throws DAOException;
 
