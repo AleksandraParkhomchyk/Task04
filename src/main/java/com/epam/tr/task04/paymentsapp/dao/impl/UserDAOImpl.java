@@ -15,15 +15,13 @@ public class UserDAOImpl implements UserDAO {
     private static final String SAVE_USER = "INSERT INTO users(u_name, u_surname, u_login, u_password, u_passport, roles_r_id) VALUES( ?, ?, ?, ?, ?, ?)";
     private static final String AUTHORISATION = "SELECT u_id, u_login, u_password, roles_r_id FROM users WHERE u_login = ?";
 
-    private static final String PASSWORD_SALT = "$2a$10$7Xtwz2dUaNW2055I9dhhv.";// todo SALT
-
     @Override
     public void saveUser(User user) throws DAOException {
 
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SAVE_USER)) {
 
-            String passwordHash = BCrypt.hashpw(user.getPassword(), PASSWORD_SALT);
+            String passwordHash = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(10));
 
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getSurname());
