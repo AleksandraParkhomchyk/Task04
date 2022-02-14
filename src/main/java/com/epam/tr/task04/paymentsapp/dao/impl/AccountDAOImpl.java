@@ -147,6 +147,7 @@ public class AccountDAOImpl implements AccountDAO {
                     account.setId(resultSet.getInt(1));
                     account.setAccountNumber(resultSet.getString(2));
                     account.setBalance(resultSet.getDouble(3));
+                    account.setStatus(resultSet.getInt(5));
                     account.setOwnerId(resultSet.getInt(6));
                 }
             } catch (SQLException e) {
