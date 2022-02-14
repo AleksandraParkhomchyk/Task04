@@ -22,6 +22,7 @@ public class UserDAOImpl implements UserDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(SAVE_USER)) {
 
             String passwordHash = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(10));
+            user.setPassword(null);
 
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getSurname());
