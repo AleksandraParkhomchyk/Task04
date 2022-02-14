@@ -18,11 +18,12 @@ class AccountDAOImplTest {
     void getAccountById() {
 
         Account account = new Account();
-        account.setId(6);
-        account.setAccountNumber("1022099951");
+        account.setId(7);
+        account.setAccountNumber("1052085658");
         account.setBalance(1000);
         account.setStatus(1);
         account.setOwnerId(5);
+
 
         try {
             Account accountFromDB = ACCOUNT_DAO.getAccountById(account.getId());
