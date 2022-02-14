@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AccountDAOImplTest {
-    private final static DAOFactory DAO_FACTORY = DAOFactory.getInstance();
-    private final static AccountDAO ACCOUNT_DAO = DAO_FACTORY.getAccountDAO();
+    private static final DAOFactory DAO_FACTORY = DAOFactory.getInstance();
+    private static final AccountDAO ACCOUNT_DAO = DAO_FACTORY.getAccountDAO();
 
 
     @Test
