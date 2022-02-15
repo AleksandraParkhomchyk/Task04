@@ -33,7 +33,8 @@ public class CancelRequestCommand implements Command {
             cashRequestService.cancelCashRequest(requestID);
             list = cashRequestService.getUsersRequests(accountId);
             request.setAttribute(Utils.USER_REQUESTS, list);
-            response.sendRedirect(PagePath.URL_REQUESTS_PAGE);
+            RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.REQUESTS_PAGE);
+            dispatcher.forward(request, response);
 
         } catch (ServiceException e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ERROR_PAGE);
