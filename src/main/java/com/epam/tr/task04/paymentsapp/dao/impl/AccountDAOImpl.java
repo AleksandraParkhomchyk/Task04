@@ -32,7 +32,7 @@ public class AccountDAOImpl implements AccountDAO {
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(CREATE_ACCOUNT)) {
 
-            preparedStatement.setString(1, String.valueOf(random.nextInt()));
+            preparedStatement.setString(1, String.valueOf(Math.abs(random.nextInt())));
             preparedStatement.setDouble(2, 1000.00);
             preparedStatement.setDate(3, new java.sql.Date(System.currentTimeMillis()));
             preparedStatement.setInt(4, 1);
