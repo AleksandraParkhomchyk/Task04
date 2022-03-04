@@ -17,8 +17,8 @@ import java.io.IOException;
 import java.util.List;
 
 public class CancelRequestCommand implements Command {
-    private static final ServiceFactory serviceFactory = ServiceFactory.getInstance();
-    private static final CashRequestService cashRequestService = serviceFactory.getCashRequestService();
+    private static final ServiceFactory SERVICE_FACTORY = ServiceFactory.getInstance();
+    private static final CashRequestService CASH_REQUEST_SERVICE = SERVICE_FACTORY.getCashRequestService();
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -29,8 +29,8 @@ public class CancelRequestCommand implements Command {
         try {
             String requestIDGot = request.getParameter(Utils.CANCEL);
             Integer requestID = Integer.parseInt(requestIDGot);
-            cashRequestService.cancelCashRequest(requestID);
-            list = cashRequestService.getUsersRequests(accountId);
+            CASH_REQUEST_SERVICE.cancelCashRequest(requestID);
+            list = CASH_REQUEST_SERVICE.getUsersRequests(accountId);
             request.setAttribute(Utils.USER_REQUESTS, list);
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.REQUESTS_PAGE);
             dispatcher.forward(request, response);

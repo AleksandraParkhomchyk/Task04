@@ -17,8 +17,8 @@ import java.util.List;
 
 
 public class DeclineRequestCommand implements Command {
-    private static final ServiceFactory serviceFactory = ServiceFactory.getInstance();
-    private static final CashRequestService cashRequestService = serviceFactory.getCashRequestService();
+    private static final ServiceFactory SERVICE_FACTORY = ServiceFactory.getInstance();
+    private static final CashRequestService CASH_REQUEST_SERVICE = SERVICE_FACTORY.getCashRequestService();
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -28,8 +28,8 @@ public class DeclineRequestCommand implements Command {
         Integer requestID = Integer.parseInt(requestIDGot);
 
         try {
-            cashRequestService.updateRequestStatusDeclined(requestID);
-            list = cashRequestService.getAllCashoutRequests();
+            CASH_REQUEST_SERVICE.updateRequestStatusDeclined(requestID);
+            list = CASH_REQUEST_SERVICE.getAllCashoutRequests();
             request.setAttribute(Utils.ALL_REQUESTS, list);
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ADMIN_PAGE);
             dispatcher.forward(request, response);

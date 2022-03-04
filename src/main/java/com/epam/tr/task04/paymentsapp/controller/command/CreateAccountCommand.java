@@ -18,8 +18,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class CreateAccountCommand implements Command {
-    private static final ServiceFactory serviceFactory = ServiceFactory.getInstance();
-    private static final AccountService accountService = serviceFactory.getAccountService();
+    private static final ServiceFactory SERVICE_FACTORY = ServiceFactory.getInstance();
+    private static final AccountService ACCOUNT_SERVICE = SERVICE_FACTORY.getAccountService();
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -30,8 +30,8 @@ public class CreateAccountCommand implements Command {
 
         if (session.getAttribute(Utils.ACCOUNT_ID) == null) {
             try {
-                accountService.createAccount(user);
-                Account account = accountService.getAccountByUserId(id);
+                ACCOUNT_SERVICE.createAccount(user);
+                Account account = ACCOUNT_SERVICE.getAccountByUserId(id);
                 Integer accountId = account.getId();
                 session.setAttribute(Utils.ACCOUNT_ID, accountId);
                 session.setAttribute(Utils.ACCOUNT_NUMBER, account.getAccountNumber());

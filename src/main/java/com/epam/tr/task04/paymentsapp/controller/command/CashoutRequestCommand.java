@@ -19,9 +19,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class CashoutRequestCommand implements Command {
-    private static final ServiceFactory serviceFactory = ServiceFactory.getInstance();
-    private static final AccountService accountService = serviceFactory.getAccountService();
-    private static final CashRequestService cashRequestService = serviceFactory.getCashRequestService();
+    private static final ServiceFactory SERVICE_FACTORY = ServiceFactory.getInstance();
+    private static final AccountService ACCOUNT_SERVICE = SERVICE_FACTORY.getAccountService();
+    private static final CashRequestService CASH_REQUEST_SERVICE = SERVICE_FACTORY.getCashRequestService();
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -30,8 +30,8 @@ public class CashoutRequestCommand implements Command {
         Integer userId = (Integer) session.getAttribute(Utils.ID);
 
         try {
-            Account account = accountService.getAccountByUserId(userId);
-            cashRequestService.cashout(account, amount);
+            Account account = ACCOUNT_SERVICE.getAccountByUserId(userId);
+            CASH_REQUEST_SERVICE.cashout(account, amount);
             session.setAttribute(Message.MESSAGE_TO_USER, Message.SUCCESS_CASHOUT);
             response.sendRedirect(PagePath.URL_USERS_PAGE);
 

@@ -17,8 +17,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class BlockAccountCommand implements Command {
-    private static final ServiceFactory serviceFactory = ServiceFactory.getInstance();
-    private static final AccountService accountService = serviceFactory.getAccountService();
+    private static final ServiceFactory SERVICE_FACTORY = ServiceFactory.getInstance();
+    private static final AccountService ACCOUNT_SERVICE = SERVICE_FACTORY.getAccountService();
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -27,8 +27,8 @@ public class BlockAccountCommand implements Command {
         Integer id = (Integer) session.getAttribute(Utils.ID);
 
         try {
-            accountService.blockAccount(id);
-            Account account = accountService.getAccountByUserId(id);
+            ACCOUNT_SERVICE.blockAccount(id);
+            Account account = ACCOUNT_SERVICE.getAccountByUserId(id);
             session.setAttribute(Utils.STATUS, account.getStatus());
             session.setAttribute(Message.MESSAGE_TO_USER, Message.ACCOUNT_BLOCKED);
             response.sendRedirect(PagePath.URL_USERS_PAGE);

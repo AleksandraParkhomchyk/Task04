@@ -18,8 +18,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class PaymentCommand implements Command {
-    private static final ServiceFactory serviceFactory = ServiceFactory.getInstance();
-    private static final AccountService accountService = serviceFactory.getAccountService();
+    private static final ServiceFactory SERVICE_FACTORY = ServiceFactory.getInstance();
+    private static final AccountService ACCOUNT_SERVICE = SERVICE_FACTORY.getAccountService();
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -31,9 +31,9 @@ public class PaymentCommand implements Command {
         Integer userId = (Integer) session.getAttribute(Utils.ID);
 
         try {
-            Account account = accountService.getAccountByUserId(userId);
-            boolean result = accountService.accountPayment(account, targetAccount, amount, userId);
-            Account accountUPD = accountService.getAccountByUserId(userId);
+            Account account = ACCOUNT_SERVICE.getAccountByUserId(userId);
+            boolean result = ACCOUNT_SERVICE.accountPayment(account, targetAccount, amount, userId);
+            Account accountUPD = ACCOUNT_SERVICE.getAccountByUserId(userId);
             if (result) {
                 session.setAttribute(Message.MESSAGE_TO_USER, Message.SUCCESS_PAYMENT);
                 session.setAttribute(Utils.BALANCE, accountUPD.getBalance());

@@ -15,8 +15,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class GoToUsersPageCommand implements Command {
-    private static final ServiceFactory serviceFactory = ServiceFactory.getInstance();
-    private static final AccountService accountService = serviceFactory.getAccountService();
+    private static final ServiceFactory SERVICE_FACTORY = ServiceFactory.getInstance();
+    private static final AccountService ACCOUNT_SERVICE = SERVICE_FACTORY.getAccountService();
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -24,7 +24,7 @@ public class GoToUsersPageCommand implements Command {
         Integer id = (Integer) session.getAttribute(Utils.ID);
 
         try {
-            accountService.getAccountByUserId(id);
+            ACCOUNT_SERVICE.getAccountByUserId(id);
         } catch (ServiceException e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ERROR_PAGE);
             dispatcher.forward(request, response);

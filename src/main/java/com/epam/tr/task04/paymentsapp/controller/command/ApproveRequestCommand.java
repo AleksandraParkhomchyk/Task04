@@ -18,9 +18,9 @@ import java.io.IOException;
 import java.util.List;
 
 public class ApproveRequestCommand implements Command {
-    private static final ServiceFactory serviceFactory = ServiceFactory.getInstance();
-    private static final CashRequestService cashRequestService = serviceFactory.getCashRequestService();
-    private static final AccountService accountService = serviceFactory.getAccountService();
+    private static final ServiceFactory SERVICE_FACTORY = ServiceFactory.getInstance();
+    private static final CashRequestService CASH_REQUEST_SERVICE = SERVICE_FACTORY.getCashRequestService();
+    private static final AccountService ACCOUNT_SERVICE = SERVICE_FACTORY.getAccountService();
 
 
     @Override
@@ -32,14 +32,14 @@ public class ApproveRequestCommand implements Command {
         try {
             String requestIDGot = request.getParameter(Utils.APPROVE);
             Integer requestID = Integer.parseInt(requestIDGot);
-            amount = cashRequestService.getAmountByRequestId(requestID);
-            Integer accountId = accountService.getAccountIdByRequestId(requestID);
-            Account account = accountService.getAccountById(accountId);
+            amount = CASH_REQUEST_SERVICE.getAmountByRequestId(requestID);
+            Integer accountId = ACCOUNT_SERVICE.getAccountIdByRequestId(requestID);
+            Account account = ACCOUNT_SERVICE.getAccountById(accountId);
             Integer userId = account.getOwnerId();
 
 
-            cashRequestService.updateRequestStatusApproved(account, requestID, amount, userId);
-            list = cashRequestService.getAllCashoutRequests();
+            CASH_REQUEST_SERVICE.updateRequestStatusApproved(account, requestID, amount, userId);
+            list = CASH_REQUEST_SERVICE.getAllCashoutRequests();
             request.setAttribute(Utils.ALL_REQUESTS, list);
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ADMIN_PAGE);
             dispatcher.forward(request, response);

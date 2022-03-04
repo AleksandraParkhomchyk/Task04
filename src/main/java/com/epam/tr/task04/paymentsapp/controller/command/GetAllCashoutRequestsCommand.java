@@ -16,15 +16,15 @@ import java.io.IOException;
 import java.util.List;
 
 public class GetAllCashoutRequestsCommand implements Command {
-    private static final ServiceFactory serviceFactory = ServiceFactory.getInstance();
-    private static final CashRequestService cashRequestService = serviceFactory.getCashRequestService();
+    private static final ServiceFactory SERVICE_FACTORY = ServiceFactory.getInstance();
+    private static final CashRequestService CASH_REQUEST_SERVICE = SERVICE_FACTORY.getCashRequestService();
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         List<CashoutRequest> list;
 
         try {
-            list = cashRequestService.getAllCashoutRequests();
+            list = CASH_REQUEST_SERVICE.getAllCashoutRequests();
             request.setAttribute(Utils.ALL_REQUESTS, list);
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ADMIN_PAGE);
             dispatcher.forward(request, response);

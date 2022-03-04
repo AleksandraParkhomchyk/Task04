@@ -17,8 +17,8 @@ import java.util.List;
 
 
 public class UnblockAccountCommand implements Command {
-    private static final ServiceFactory serviceFactory = ServiceFactory.getInstance();
-    private static final AccountService accountService = serviceFactory.getAccountService();
+    private static final ServiceFactory SERVICE_FACTORY = ServiceFactory.getInstance();
+    private static final AccountService ACCOUNT_SERVICE = SERVICE_FACTORY.getAccountService();
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -28,8 +28,8 @@ public class UnblockAccountCommand implements Command {
         Integer accountID = Integer.parseInt(accountIDGot);
 
         try {
-            accountService.unblockAccount(accountID);
-            list = accountService.getAllBlockedAccounts();
+            ACCOUNT_SERVICE.unblockAccount(accountID);
+            list = ACCOUNT_SERVICE.getAllBlockedAccounts();
             request.setAttribute(Utils.ALL_ACCOUNTS_BLOCKED, list);
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ADMIN_PAGE);
             dispatcher.forward(request, response);

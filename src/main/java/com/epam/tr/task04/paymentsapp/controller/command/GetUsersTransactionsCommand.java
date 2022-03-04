@@ -17,8 +17,8 @@ import java.io.IOException;
 import java.util.List;
 
 public class GetUsersTransactionsCommand implements Command {
-    private static final ServiceFactory serviceFactory = ServiceFactory.getInstance();
-    private static final TransactionService transactionService = serviceFactory.getTransactionService();
+    private static final ServiceFactory SERVICE_FACTORY = ServiceFactory.getInstance();
+    private static final TransactionService TRANSACTION_SERVICE = SERVICE_FACTORY.getTransactionService();
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -27,7 +27,7 @@ public class GetUsersTransactionsCommand implements Command {
         Integer userId = (Integer) session.getAttribute(Utils.ID);
 
         try {
-            list = transactionService.getAllTransactions(userId);
+            list = TRANSACTION_SERVICE.getAllTransactions(userId);
             request.setAttribute(Utils.ALL_TRANSACTIONS, list);
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.HISTORY_PAGE);
             dispatcher.forward(request, response);

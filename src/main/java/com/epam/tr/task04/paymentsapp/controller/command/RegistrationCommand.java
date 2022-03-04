@@ -15,8 +15,8 @@ import java.io.IOException;
 
 
 public class RegistrationCommand implements Command {
-    private static final ServiceFactory serviceFactory = ServiceFactory.getInstance();
-    private static final UserService userService = serviceFactory.getUserService();
+    private static final ServiceFactory SERVICE_FACTORY = ServiceFactory.getInstance();
+    private static final UserService USER_SERVICE = SERVICE_FACTORY.getUserService();
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -28,7 +28,7 @@ public class RegistrationCommand implements Command {
         String passport = request.getParameter(Utils.PASSPORT);
 
         try {
-            userService.registration(name, surname, login, password, passport);
+            USER_SERVICE.registration(name, surname, login, password, passport);
             response.sendRedirect(PagePath.URL_LOGINATION);
         } catch (ServiceException e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ERROR_PAGE);

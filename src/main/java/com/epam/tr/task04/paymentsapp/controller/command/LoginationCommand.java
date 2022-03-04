@@ -23,10 +23,10 @@ import java.io.IOException;
 import java.util.List;
 
 public class LoginationCommand implements Command {
-    private static final ServiceFactory serviceFactory = ServiceFactory.getInstance();
-    private static final UserService userService = serviceFactory.getUserService();
-    private static final AccountService accountService = serviceFactory.getAccountService();
-    private static final CashRequestService cashRequestService = serviceFactory.getCashRequestService();
+    private static final ServiceFactory SERVICE_FACTORY = ServiceFactory.getInstance();
+    private static final UserService USER_SERVICE = SERVICE_FACTORY.getUserService();
+    private static final AccountService ACCOUNT_SERVICE = SERVICE_FACTORY.getAccountService();
+    private static final CashRequestService CASH_REQUEST_SERVICE = SERVICE_FACTORY.getCashRequestService();
 
     private static final String URL_NAME = "/payments/controller?command=GO_TO_USERS_PAGE";
 
@@ -43,7 +43,7 @@ public class LoginationCommand implements Command {
         List<Account> list1;
 
         try {
-            User user = userService.authorisation(login, password);
+            User user = USER_SERVICE.authorisation(login, password);
             Integer role = user.getRole();
 
             if (user.getRole() == null) {
@@ -54,7 +54,7 @@ public class LoginationCommand implements Command {
             session.setAttribute(Utils.ID, id);
 
             if (role == 1) {
-                Account account = accountService.getAccountByUserId(id);
+                Account account = ACCOUNT_SERVICE.getAccountByUserId(id);
 
                 if (account.getId() == null) {
                     session.setAttribute(Message.MESSAGE_TO_USER, Message.CREATE_ACCOUNT);
@@ -79,9 +79,9 @@ public class LoginationCommand implements Command {
                 dispatcher.forward(request, response);
 
             } else if (role == 2) {
-                list = cashRequestService.getAllCashoutRequests();
+                list = CASH_REQUEST_SERVICE.getAllCashoutRequests();
                 request.setAttribute(Utils.ALL_REQUESTS, list);
-                list1 = accountService.getAllBlockedAccounts();
+                list1 = ACCOUNT_SERVICE.getAllBlockedAccounts();
                 request.setAttribute(Utils.ALL_ACCOUNTS_BLOCKED, list1);
                 RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ADMIN_PAGE);
                 dispatcher.forward(request, response);
