@@ -17,11 +17,11 @@ import java.util.List;
 
 
 public class DeclineRequestCommand implements Command {
+    private static final ServiceFactory serviceFactory = ServiceFactory.getInstance();
+    private static final CashRequestService cashRequestService = serviceFactory.getCashRequestService();
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        ServiceFactory serviceFactory = ServiceFactory.getInstance();
-        CashRequestService cashRequestService = serviceFactory.getCashRequestService();
-
         List<CashoutRequest> list;
 
         String requestIDGot = request.getParameter(Utils.DECLINE);

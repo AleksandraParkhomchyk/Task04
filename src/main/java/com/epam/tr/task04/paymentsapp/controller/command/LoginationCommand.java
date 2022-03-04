@@ -23,6 +23,10 @@ import java.io.IOException;
 import java.util.List;
 
 public class LoginationCommand implements Command {
+    private static final ServiceFactory serviceFactory = ServiceFactory.getInstance();
+    private static final UserService userService = serviceFactory.getUserService();
+    private static final AccountService accountService = serviceFactory.getAccountService();
+    private static final CashRequestService cashRequestService = serviceFactory.getCashRequestService();
 
     private static final String URL_NAME = "/payments/controller?command=GO_TO_USERS_PAGE";
 
@@ -37,11 +41,6 @@ public class LoginationCommand implements Command {
 
         List<CashoutRequest> list;
         List<Account> list1;
-
-        ServiceFactory serviceFactory = ServiceFactory.getInstance();
-        UserService userService = serviceFactory.getUserService();
-        AccountService accountService = serviceFactory.getAccountService();
-        CashRequestService cashRequestService = serviceFactory.getCashRequestService();
 
         try {
             User user = userService.authorisation(login, password);
@@ -74,10 +73,8 @@ public class LoginationCommand implements Command {
                         session.setAttribute(Utils.BALANCE, account.getBalance());
                         session.setAttribute(Utils.STATUS, account.getStatus());
                         session.setAttribute(Message.MESSAGE_TO_USER, Message.ACCOUNT_BLOCKED);
-
                     }
                 }
-
                 RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.USER_PAGE);
                 dispatcher.forward(request, response);
 

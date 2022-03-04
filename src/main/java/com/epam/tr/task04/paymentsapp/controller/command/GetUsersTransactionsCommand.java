@@ -17,11 +17,11 @@ import java.io.IOException;
 import java.util.List;
 
 public class GetUsersTransactionsCommand implements Command {
+    private static final ServiceFactory serviceFactory = ServiceFactory.getInstance();
+    private static final TransactionService transactionService = serviceFactory.getTransactionService();
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        ServiceFactory serviceFactory = ServiceFactory.getInstance();
-        TransactionService transactionService = serviceFactory.getTransactionService();
         HttpSession session = request.getSession(true);
         List<Transaction> list;
         Integer userId = (Integer) session.getAttribute(Utils.ID);

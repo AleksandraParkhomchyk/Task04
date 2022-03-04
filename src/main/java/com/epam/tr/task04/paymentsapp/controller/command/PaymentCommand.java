@@ -18,15 +18,14 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class PaymentCommand implements Command {
+    private static final ServiceFactory serviceFactory = ServiceFactory.getInstance();
+    private static final AccountService accountService = serviceFactory.getAccountService();
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         String targetAccount = request.getParameter(Utils.TARGET_ACCOUNT);
         String amount = request.getParameter(Utils.PAYMENT_AMOUNT);
-
-        ServiceFactory serviceFactory = ServiceFactory.getInstance();
-        AccountService accountService = serviceFactory.getAccountService();
 
         HttpSession session = request.getSession(true);
         Integer userId = (Integer) session.getAttribute(Utils.ID);

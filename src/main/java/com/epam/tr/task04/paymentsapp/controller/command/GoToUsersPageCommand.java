@@ -15,13 +15,14 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class GoToUsersPageCommand implements Command {
+    private static final ServiceFactory serviceFactory = ServiceFactory.getInstance();
+    private static final AccountService accountService = serviceFactory.getAccountService();
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
         HttpSession session = request.getSession(true);
-        ServiceFactory serviceFactory = ServiceFactory.getInstance();
-        AccountService accountService = serviceFactory.getAccountService();
         Integer id = (Integer) session.getAttribute(Utils.ID);
+
         try {
             accountService.getAccountByUserId(id);
         } catch (ServiceException e) {

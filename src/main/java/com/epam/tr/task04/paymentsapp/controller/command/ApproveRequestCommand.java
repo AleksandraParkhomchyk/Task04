@@ -18,11 +18,13 @@ import java.io.IOException;
 import java.util.List;
 
 public class ApproveRequestCommand implements Command {
+    private static final ServiceFactory serviceFactory = ServiceFactory.getInstance();
+    private static final CashRequestService cashRequestService = serviceFactory.getCashRequestService();
+    private static final AccountService accountService = serviceFactory.getAccountService();
+
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        ServiceFactory serviceFactory = ServiceFactory.getInstance();
-        CashRequestService cashRequestService = serviceFactory.getCashRequestService();
-        AccountService accountService = serviceFactory.getAccountService();
         Double amount;
 
         List<CashoutRequest> list;
