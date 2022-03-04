@@ -1,5 +1,6 @@
 package com.epam.tr.task04.paymentsapp.dao.impl;
 
+import com.epam.tr.task04.paymentsapp.dao.builder.BuilderFactory;
 import com.epam.tr.task04.paymentsapp.dao.connectionpool.ConnectionPool;
 import com.epam.tr.task04.paymentsapp.dao.UserDAO;
 import com.epam.tr.task04.paymentsapp.dao.connectionpool.ConnectionPoolException;
@@ -13,7 +14,7 @@ import java.util.Optional;
 public class UserDAOImpl implements UserDAO {
 
     private static final String SAVE_USER = "INSERT INTO users(u_name, u_surname, u_login, u_password, u_passport, roles_r_id) VALUES( ?, ?, ?, ?, ?, ?)";
-    private static final String AUTHORISATION = "SELECT u_id, u_login, u_password, roles_r_id FROM users WHERE u_login = ?";
+    private static final String AUTHORISATION = "SELECT * FROM users WHERE u_login = ?";
 
     @Override
     public void saveUser(User user) throws DAOException {
@@ -53,10 +54,7 @@ public class UserDAOImpl implements UserDAO {
                     String passwordFromDB = resultSet.getString(3);
 
                     if (BCrypt.checkpw(password, passwordFromDB)) {
-                        user = new User();
-                        user.setId(resultSet.getInt(1));
-                        user.setLogin(resultSet.getString(2));
-                        user.setRole(resultSet.getInt(4));
+                        user = BuilderFactory.getUserBuilder().build(resultSet);
                     }
                 }
             } catch (SQLException e) {
