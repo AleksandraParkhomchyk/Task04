@@ -16,17 +16,19 @@ import org.apache.logging.log4j.Logger;
 import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
+    private static final DAOFactory DAO_FACTORY = DAOFactory.getInstance();
+    private static final UserDAO USER_DAO = DAO_FACTORY.getUserDAO();
+
+    private static final ValidatorFactory VALIDATOR_FACTORY = ValidatorFactory.getInstance();
+    private static final UserValidator USER_VALIDATOR = VALIDATOR_FACTORY.getUserValidator();
 
     private static final Logger LOG = LogManager.getLogger(UserServiceImpl.class);
 
     @Override
     public User authorisation(String login, String password) throws ServiceException {
 
-        DAOFactory factory = DAOFactory.getInstance();
-        UserDAO userDAO = factory.getUserDAO();
-
         try {
-            Optional<User> userOptional = userDAO.authorisation(login, password);
+            Optional<User> userOptional = USER_DAO.authorisation(login, password);
 
             if (!userOptional.isPresent()) {
                 throw new NotAuthorizedException();
@@ -43,12 +45,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean registration(String name, String surname, String login, String password, String passport) throws ServiceException {
 
-        DAOFactory factory = DAOFactory.getInstance();
-        UserDAO userDAO = factory.getUserDAO();
-
-        UserValidator userValidator = ValidatorFactory.getInstance().getUserValidator();
-
-        User newUser = new User();
+        User newUser = new User();//todo builder
         newUser.setName(name);
         newUser.setSurname(surname);
         newUser.setLogin(login);
@@ -56,14 +53,14 @@ public class UserServiceImpl implements UserService {
         newUser.setPassport(passport);
 
         try {
-            userValidator.validate(newUser);
+            USER_VALIDATOR.validate(newUser);
         } catch (ValidatorException e) {
             LOG.error("Unable to validate user registration data", e);
 
             throw new ServiceException(e);
         }
         try {
-            userDAO.saveUser(newUser);
+            USER_DAO.saveUser(newUser);
         } catch (DAOException e) {
             LOG.error("Exception while saving new user", e);
             throw new ServiceException(e);

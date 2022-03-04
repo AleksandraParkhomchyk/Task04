@@ -12,16 +12,17 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 
 public class TransactionServiceImpl implements TransactionService {
+    private static final DAOFactory DAO_FACTORY = DAOFactory.getInstance();
+    private static final TransactionDAO TRANSACTION_DAO = DAO_FACTORY.getTransactionDAO();
 
     private static final Logger LOG = LogManager.getLogger(TransactionServiceImpl.class);
 
     @Override
     public List<Transaction> getAllTransactions(Integer userId) throws ServiceException {
-        DAOFactory factory = DAOFactory.getInstance();
-        TransactionDAO transactionDAO = factory.getTransactionDAO();
         List<Transaction> list;
+
         try {
-            list = transactionDAO.getAllTransactions(userId);
+            list = TRANSACTION_DAO.getAllTransactions(userId);
 
         } catch (DAOException e) {
             LOG.error("Exception while getting all transaction list", e);

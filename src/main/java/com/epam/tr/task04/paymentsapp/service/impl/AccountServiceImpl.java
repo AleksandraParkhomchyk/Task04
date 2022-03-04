@@ -18,30 +18,30 @@ import java.util.List;
 
 
 public class AccountServiceImpl implements AccountService {
+    private static final DAOFactory DAO_FACTORY = DAOFactory.getInstance();
+    private static final AccountDAO ACCOUNT_DAO = DAO_FACTORY.getAccountDAO();
+
+    private static final ValidatorFactory VALIDATOR_FACTORY = ValidatorFactory.getInstance();
+    private static final PaymentValidator PAYMENT_VALIDATOR = VALIDATOR_FACTORY.getPaymentValidator();
 
     private static final Logger LOG = LogManager.getLogger(AccountServiceImpl.class);
 
     @Override
     public void createAccount(User user) throws ServiceException {
-        DAOFactory factory = DAOFactory.getInstance();
-        AccountDAO accountDAO = factory.getAccountDAO();
 
         try {
-            accountDAO.createAccount(user);
+            ACCOUNT_DAO.createAccount(user);
         } catch (DAOException e) {
             LOG.error("Exception while creating account", e);
-
             throw new ServiceException(e);
         }
     }
 
     @Override
     public Account getAccountByUserId(Integer userId) throws ServiceException {
-        DAOFactory factory = DAOFactory.getInstance();
-        AccountDAO accountDAO = factory.getAccountDAO();
 
         try {
-            return accountDAO.getAccountByUserId(userId);
+            return ACCOUNT_DAO.getAccountByUserId(userId);
         } catch (DAOException e) {
             LOG.error("Exception while getting account by user id", e);
 
@@ -51,27 +51,24 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public boolean accountPayment(Account account, String accountNumber, String amount, Integer userId) throws ServiceException, InsufficientFundsException, ValidatorException {
-        DAOFactory factory = DAOFactory.getInstance();
-        AccountDAO accountDAO = factory.getAccountDAO();
-
-        PaymentValidator paymentValidator = ValidatorFactory.getInstance().getPaymentValidator();
 
         try {
-            paymentValidator.validate(accountNumber, amount);
+            PAYMENT_VALIDATOR.validate(accountNumber, amount);
         } catch (ValidatorException e) {
             LOG.error("Unable to validate payment details", e);
 
             throw new ValidatorException(e);
         }
 
-        Double amountParsed = Double.parseDouble(amount);
+        double amountParsed = Double.parseDouble(amount);
 
         if (account.getBalance() < amountParsed) {
             LOG.error("Insufficient funds of payment");
+
             throw new InsufficientFundsException("Insufficient funds.");
         }
         try {
-            return accountDAO.accountPayment(account, accountNumber, amountParsed, userId);
+            return ACCOUNT_DAO.accountPayment(account, accountNumber, amountParsed, userId);
 
         } catch (DAOException e) {
             LOG.error("Exception while writing payment details to database", e);
@@ -82,11 +79,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Integer getAccountIdByRequestId(Integer requestId) throws ServiceException {
-        DAOFactory factory = DAOFactory.getInstance();
-        AccountDAO accountDAO = factory.getAccountDAO();
 
         try {
-            return accountDAO.getAccountIdByRequestId(requestId);
+            return ACCOUNT_DAO.getAccountIdByRequestId(requestId);
 
         } catch (DAOException e) {
             LOG.error("Exception while getting account id by request id", e);
@@ -97,11 +92,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account getAccountById(Integer accountId) throws ServiceException {
-        DAOFactory factory = DAOFactory.getInstance();
-        AccountDAO accountDAO = factory.getAccountDAO();
 
         try {
-            return accountDAO.getAccountById(accountId);
+            return ACCOUNT_DAO.getAccountById(accountId);
         } catch (DAOException e) {
             LOG.error("Exception while getting account by id", e);
 
@@ -111,11 +104,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void blockAccount(Integer userId) throws ServiceException {
-        DAOFactory factory = DAOFactory.getInstance();
-        AccountDAO accountDAO = factory.getAccountDAO();
 
         try {
-            accountDAO.blockAccount(userId);
+            ACCOUNT_DAO.blockAccount(userId);
 
         } catch (DAOException e) {
             LOG.error("Exception while blocking account", e);
@@ -126,11 +117,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void unblockAccount(Integer accountId) throws ServiceException {
-        DAOFactory factory = DAOFactory.getInstance();
-        AccountDAO accountDAO = factory.getAccountDAO();
 
         try {
-            accountDAO.unblockAccount(accountId);
+            ACCOUNT_DAO.unblockAccount(accountId);
 
         } catch (DAOException e) {
             LOG.error("Exception while unblocking account", e);
@@ -141,12 +130,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public List<Account> getAllBlockedAccounts() throws ServiceException {
-        DAOFactory factory = DAOFactory.getInstance();
-        AccountDAO accountDAO = factory.getAccountDAO();
         List<Account> list;
-
         try {
-            list = accountDAO.getAllBlockedAccounts();
+            list = ACCOUNT_DAO.getAllBlockedAccounts();
 
         } catch (DAOException e) {
             LOG.error("Exception while getting all blocked accounts list", e);
