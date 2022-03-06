@@ -18,6 +18,8 @@
 
 <head>
     <title>${page_name}</title>
+
+    <jsp:include page="include/header.jsp" />
 </head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <body>

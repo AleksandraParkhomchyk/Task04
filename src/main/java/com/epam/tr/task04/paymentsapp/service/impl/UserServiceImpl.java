@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean registration(String name, String surname, String login, String password, String passport) throws ServiceException {
 
-        User newUser = new User();//todo builder
+        User newUser = new User();
         newUser.setName(name);
         newUser.setSurname(surname);
         newUser.setLogin(login);

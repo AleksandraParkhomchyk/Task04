@@ -15,6 +15,8 @@
 
 <head>
     <title>${page_name}</title>
+
+    <jsp:include page="include/header.jsp" />
 </head>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -28,6 +30,7 @@
 </style>
 
 <body>
+
 <div class="jumbotron">
     <h1 class="display-3">${home_title}</h1>
     <p class="lead">

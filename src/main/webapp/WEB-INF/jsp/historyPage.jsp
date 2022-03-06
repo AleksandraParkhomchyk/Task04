@@ -4,6 +4,8 @@
 <head>
     <title>History page</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <jsp:include page="include/header.jsp" />
 </head>
 <header>
     <ul class="nav justify-content-center">

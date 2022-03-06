@@ -4,6 +4,11 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
+    <display-name>payments-app</display-name>
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
     <servlet>
         <servlet-name>Controller</servlet-name>
         <servlet-class>com.epam.tr.task04.paymentsapp.controller.Controller</servlet-class>
