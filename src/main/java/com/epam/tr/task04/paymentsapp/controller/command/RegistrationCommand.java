@@ -29,7 +29,7 @@ public class RegistrationCommand implements Command {
 
         try {
             USER_SERVICE.registration(name, surname, login, password, passport);
-            response.sendRedirect(PagePath.URL_LOGINATION);
+            response.sendRedirect(PagePath.HOME_PAGE);
         } catch (ServiceException e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ERROR_PAGE);
             dispatcher.forward(request, response);

@@ -1,25 +1,19 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: A-PC
-  Date: 05.01.2022
-  Time: 1:03
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <title>Error page</title>
 
-    <jsp:include page="include/header.jsp" />
+    <jsp:include page="include/header.jsp"/>
 </head>
 <body>
 
 <h2>Something went wrong</h2>
 
-<form action="${pageContext.request.contextPath}/controller" method="get">
-    <a href="index.jsp">Try again</a>
-
-   </form>
+<a href="${pageContext.request.contextPath}/controller?command=GO_TO_HOME_PAGE">Home</a>
 </body>
 </html>

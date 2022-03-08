@@ -14,7 +14,7 @@
     <title></title>
 </head>
 <body>
-<ul class="nav justify-content-start">
+<ul class="nav justify-content-center">
     <li class="nav-item">
         <form action="controller?command=CHANGE_LANGUAGE" method="post">
             <input type="hidden" name="locale" value="en"/> <input type="submit" value="${en_button}">
@@ -25,9 +25,6 @@
             <input type="hidden" name="locale" value="ru"/> <input type="submit" value="${ru_button}"><br/>
         </form>
     </li>
-</ul>
-
-<ul class="nav justify-content-center">
     <li class="nav-item">
         <a class="nav-link active"
            href="${pageContext.request.contextPath}/controller?command=GO_TO_HOME_PAGE">HOME</a>

@@ -80,7 +80,7 @@
                 <button type="submit" class="btn btn-primary">${register}</button>
             </form>
             <br/>
-            <a href="${pageContext.request.contextPath}/controller?command=GO_TO_REGISTRATION_PAGE">Home</a>
+            <a href="${pageContext.request.contextPath}/controller?command=GO_TO_HOME_PAGE">Home</a>
         </div>
     </div>
 </div>

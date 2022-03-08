@@ -22,29 +22,13 @@
 <fmt:message bundle="${loc}" key="user.block.account" var="block_account"/>
 <fmt:message bundle="${loc}" key="user.history" var="history"/>
 
-<fmt:message bundle="${loc}" key="local.local.button.name.ru" var="ru_button"/>
-<fmt:message bundle="${loc}" key="local.local.button.name.en" var="en_button"/>
-
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>${page_name}</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <jsp:include page="include/header.jsp"/>
 </head>
-<header>
-    <ul class="nav justify-content-center">
-        <li class="nav-item">
-            <a class="nav-link active"
-               href="${pageContext.request.contextPath}/controller?command=GO_TO_HOME_PAGE">${home}</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active"
-               href="${pageContext.request.contextPath}/controller?command=LOG_OUT_COMMAND">${logout}</a>
-        </li>
-    </ul>
-</header>
 <body>
-
 
 <p><c:out value="${sessionScope.message}"/></p>
 

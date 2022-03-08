@@ -88,7 +88,7 @@ public class LoginationCommand implements Command {
             }
         } catch (NotAuthorizedException e) {
             session.setAttribute(Message.MESSAGE_TO_USER, Message.WRONG_LOGIN_PASSWORD);
-            response.sendRedirect(PagePath.URL_LOGINATION);
+            response.sendRedirect(PagePath.HOME_PAGE);
         } catch (ServiceException e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ERROR_PAGE);
             dispatcher.forward(request, response);
