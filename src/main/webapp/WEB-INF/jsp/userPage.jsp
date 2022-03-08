@@ -1,9 +1,9 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="local" var="loc"/>
 
@@ -22,10 +22,11 @@
 <fmt:message bundle="${loc}" key="user.block.account" var="block_account"/>
 <fmt:message bundle="${loc}" key="user.history" var="history"/>
 
-<fmt:message bundle="${loc}" key="local.localbutton.name.ru" var="ru_button"/>
-<fmt:message bundle="${loc}" key="local.localbutton.name.en" var="en_button"/>
+<fmt:message bundle="${loc}" key="local.local.button.name.ru" var="ru_button"/>
+<fmt:message bundle="${loc}" key="local.local.button.name.en" var="en_button"/>
 
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>${page_name}</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <jsp:include page="include/header.jsp"/>
@@ -76,11 +77,15 @@
             <input type="hidden" name="command" value="PAYMENT_ACCOUNT">
             <label class="col-sm-2 col-form-label">${target_account}</label>
             <div class="col-sm-7">
-                <input type="text" class="form-control" name="targetAccount">
+                <label>
+                    <input type="text" class="form-control" name="targetAccount">
+                </label>
             </div>
             <label class="col-sm-2 col-form-label">${payment_amount}</label>
             <div class="col-sm-7">
-                <input type="text" class="form-control" name="amount">
+                <label>
+                    <input type="text" class="form-control" name="amount">
+                </label>
             </div>
             <br>
             <button type="submit" class="btn btn-primary">${pay}</button>
@@ -93,7 +98,9 @@
             <input type="hidden" name="command" value="CASHOUT_REQUEST">
             <label class="col-sm-2 col-form-label">${request_amount}</label>
             <div class="col-sm-7">
-                <input type="text" class="form-control" name="amount">
+                <label>
+                    <input type="text" class="form-control" name="amount">
+                </label>
             </div>
             <br>
             <button type="submit" class="btn btn-primary">${request}</button>
@@ -132,18 +139,4 @@
 </c:if>
 
 </body>
-<footer>
-    <ul class="nav justify-content-center">
-        <li class="nav-item">
-            <form action="controller?command=CHANGE_LANGUAGE" method="post">
-                <input type="hidden" name="locale" value="en"/> <input type="submit" value="${en_button}">
-            </form>
-        </li>
-        <li class="nav-item">
-            <form action="controller?command=CHANGE_LANGUAGE" method="post">
-                <input type="hidden" name="locale" value="ru"/> <input type="submit" value="${ru_button}"><br/>
-            </form>
-        </li>
-    </ul>
-</footer>
 </html>

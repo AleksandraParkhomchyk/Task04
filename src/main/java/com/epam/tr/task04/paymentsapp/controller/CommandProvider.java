@@ -14,7 +14,6 @@ public final class CommandProvider {
         commands.put("REGISTRATION", new RegistrationCommand());
 
         commands.put("GO_TO_REGISTRATION_PAGE", new GoToRegistrationPageCommand());
-        commands.put("GO_TO_LOGINATION_PAGE", new GoToLoginationPageCommand());
         commands.put("GO_TO_HOME_PAGE", new GoToHomePageCommand());
         commands.put("CHANGE_LANGUAGE", new ChangeLanguage());
 
