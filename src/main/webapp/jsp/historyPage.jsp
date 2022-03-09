@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="/WEB-INF/tld/taglib.tld" prefix="mytag"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -35,6 +36,7 @@
             </tr>
         </c:forEach>
     </table>
+    <mytag:historyList transactionList="${requestScope.allTransactions}"></mytag:historyList>
 </div>
 <a href="${pageContext.request.contextPath}/controller?command=GO_TO_USERS_PAGE">Back</a>
 </body>

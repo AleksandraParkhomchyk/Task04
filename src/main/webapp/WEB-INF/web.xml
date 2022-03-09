@@ -19,6 +19,13 @@
         <url-pattern>/controller</url-pattern>
     </servlet-mapping>
 
+    <jsp-config>
+        <taglib>
+            <taglib-uri>/WEB-INF/tld/taglib.tld</taglib-uri>
+            <taglib-location>/WEB-INF/tld/taglib.tld</taglib-location>
+        </taglib>
+    </jsp-config>
+
     <listener>
         <listener-class>com.epam.tr.task04.paymentsapp.controller.ContextListener</listener-class>
     </listener>
