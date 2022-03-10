@@ -28,8 +28,9 @@ public class RegistrationCommand implements Command {
         String passport = request.getParameter(Utils.PASSPORT);
 
         try {
+
             USER_SERVICE.registration(name, surname, login, password, passport);
-            response.sendRedirect(PagePath.HOME_PAGE);
+            response.sendRedirect("controller?command=GO_TO_HOME_PAGE&registrationInfo=" + "Successfully registered");
         } catch (ServiceException e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ERROR_PAGE);
             dispatcher.forward(request, response);

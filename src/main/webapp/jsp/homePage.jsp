@@ -28,6 +28,18 @@
     <jsp:include page="include/header.jsp"/>
 </head>
 <body>
+
+<%
+    String regInfo = request.getParameter("registrationInfo");
+    if (regInfo != null) {
+%>
+<h2>
+    <%
+        out.println(regInfo);
+        }
+    %>
+</h2>
+
 <div class="login_form_wrapper">
     <div class="container">
         <div class="row">
