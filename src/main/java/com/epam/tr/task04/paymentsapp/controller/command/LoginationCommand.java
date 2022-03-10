@@ -38,8 +38,8 @@ public class LoginationCommand implements Command {
         String login = request.getParameter(Utils.LOGIN);
         String password = request.getParameter(Utils.PASSWORD);
 
-        List<CashoutRequest> list;
-        List<Account> list1;
+        List<CashoutRequest> cashoutRequestList;
+        List<Account> blockedAccountList;
 
         try {
             User user = USER_SERVICE.authorisation(login, password);
@@ -59,28 +59,22 @@ public class LoginationCommand implements Command {
                     session.setAttribute(Message.MESSAGE_TO_USER, Message.CREATE_ACCOUNT);
 
                 } else {
-                    if (account.getStatus() == 1) {
+                    session.setAttribute(Utils.ACCOUNT_ID, account.getId());
+                    session.setAttribute(Utils.ACCOUNT_NUMBER, account.getAccountNumber());
+                    session.setAttribute(Utils.BALANCE, account.getBalance());
+                    session.setAttribute(Utils.STATUS, account.getStatus());
 
-                        session.setAttribute(Utils.ACCOUNT_ID, account.getId());
-                        session.setAttribute(Utils.ACCOUNT_NUMBER, account.getAccountNumber());
-                        session.setAttribute(Utils.BALANCE, account.getBalance());
-                        session.setAttribute(Utils.STATUS, account.getStatus());
-
-                    } else if (account.getStatus() == 2) {
-                        session.setAttribute(Utils.ACCOUNT_ID, account.getId());
-                        session.setAttribute(Utils.ACCOUNT_NUMBER, account.getAccountNumber());
-                        session.setAttribute(Utils.BALANCE, account.getBalance());
-                        session.setAttribute(Utils.STATUS, account.getStatus());
+                    if (account.getStatus() == 2) {
                         session.setAttribute(Message.MESSAGE_TO_USER, Message.ACCOUNT_BLOCKED);
                     }
                 }
                 response.sendRedirect(PagePath.USER_PAGE);
 
             } else if (role == 2) {
-                list = CASH_REQUEST_SERVICE.getAllCashoutRequests();
-                request.setAttribute(Utils.ALL_REQUESTS, list);
-                list1 = ACCOUNT_SERVICE.getAllBlockedAccounts();
-                request.setAttribute(Utils.ALL_ACCOUNTS_BLOCKED, list1);
+                cashoutRequestList = CASH_REQUEST_SERVICE.getAllCashoutRequests();
+                request.setAttribute(Utils.ALL_REQUESTS, cashoutRequestList);
+                blockedAccountList = ACCOUNT_SERVICE.getAllBlockedAccounts();
+                request.setAttribute(Utils.ALL_ACCOUNTS_BLOCKED, blockedAccountList);
                 response.sendRedirect(PagePath.ADMIN_PAGE);
             }
         } catch (NotAuthorizedException e) {
