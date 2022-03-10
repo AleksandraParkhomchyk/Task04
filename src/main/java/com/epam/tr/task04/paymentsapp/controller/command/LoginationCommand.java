@@ -14,7 +14,6 @@ import com.epam.tr.task04.paymentsapp.service.ServiceFactory;
 import com.epam.tr.task04.paymentsapp.service.exception.NotAuthorizedException;
 import com.epam.tr.task04.paymentsapp.service.exception.ServiceException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -75,23 +74,20 @@ public class LoginationCommand implements Command {
                         session.setAttribute(Message.MESSAGE_TO_USER, Message.ACCOUNT_BLOCKED);
                     }
                 }
-                RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.USER_PAGE);
-                dispatcher.forward(request, response);
+                response.sendRedirect(PagePath.USER_PAGE);
 
             } else if (role == 2) {
                 list = CASH_REQUEST_SERVICE.getAllCashoutRequests();
                 request.setAttribute(Utils.ALL_REQUESTS, list);
                 list1 = ACCOUNT_SERVICE.getAllBlockedAccounts();
                 request.setAttribute(Utils.ALL_ACCOUNTS_BLOCKED, list1);
-                RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ADMIN_PAGE);
-                dispatcher.forward(request, response);
+                response.sendRedirect(PagePath.ADMIN_PAGE);
             }
         } catch (NotAuthorizedException e) {
             session.setAttribute(Message.MESSAGE_TO_USER, Message.WRONG_LOGIN_PASSWORD);
             response.sendRedirect(PagePath.HOME_PAGE);
         } catch (ServiceException e) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ERROR_PAGE);
-            dispatcher.forward(request, response);
+            response.sendRedirect(PagePath.ERROR_PAGE);
         }
     }
 }
