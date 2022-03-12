@@ -32,7 +32,7 @@ public class RegistrationCommand implements Command {
             USER_SERVICE.registration(name, surname, login, password, passport);
             response.sendRedirect("controller?command=GO_TO_HOME_PAGE&registrationInfo=" + "Successfully registered");
         } catch (ServiceException e) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ERROR_PAGE);
+            RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ERROR_PAGE);//todo redirect
             dispatcher.forward(request, response);
         }
     }

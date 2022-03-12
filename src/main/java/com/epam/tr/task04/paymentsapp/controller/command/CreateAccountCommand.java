@@ -42,7 +42,7 @@ public class CreateAccountCommand implements Command {
 
 
             } catch (ServiceException e) {
-                RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ERROR_PAGE);
+                RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ERROR_PAGE);//todo redirect
                 dispatcher.forward(request, response);
             }
         } else {

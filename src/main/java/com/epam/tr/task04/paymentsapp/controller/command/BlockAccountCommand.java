@@ -34,7 +34,7 @@ public class BlockAccountCommand implements Command {
             response.sendRedirect(PagePath.URL_USERS_PAGE);
 
         } catch (ServiceException e) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ERROR_PAGE);
+            RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ERROR_PAGE);//todo redirect
             dispatcher.forward(request, response);
         }
     }

@@ -26,7 +26,7 @@ public class GoToUsersPageCommand implements Command {
         try {
             ACCOUNT_SERVICE.getAccountByUserId(id);
         } catch (ServiceException e) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ERROR_PAGE);
+            RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ERROR_PAGE);//todo redirect
             dispatcher.forward(request, response);
         }
         RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.USER_PAGE);
