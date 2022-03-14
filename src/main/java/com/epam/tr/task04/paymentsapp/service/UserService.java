@@ -19,16 +19,12 @@ public interface UserService {
     User authorisation(String login, String password) throws ServiceException;
 
     /**
-     * Regiger new user
+     * Register new user
      *
-     * @param name user first name
-     * @param surname user surname
-     * @param login user login
-     * @param password user password
-     * @param passport user passport
+     * @param user new User
      * @return if user successfully registered
      * @throws ServiceException when dao exception occurs
      */
-    boolean registration(String name, String surname, String login, String password, String passport) throws ServiceException;
+    boolean registration(User user) throws ServiceException;
 
 }

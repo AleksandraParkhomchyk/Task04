@@ -43,24 +43,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean registration(String name, String surname, String login, String password, String passport) throws ServiceException {
-
-        User newUser = new User();
-        newUser.setName(name);
-        newUser.setSurname(surname);
-        newUser.setLogin(login);
-        newUser.setPassword(password);
-        newUser.setPassport(passport);
+    public boolean registration(User user) throws ServiceException {
 
         try {
-            USER_VALIDATOR.validate(newUser);
+            USER_VALIDATOR.validate(user);
         } catch (ValidatorException e) {
             LOG.error("Unable to validate user registration data", e);
 
             throw new ServiceException(e);
         }
         try {
-            USER_DAO.saveUser(newUser);
+            USER_DAO.saveUser(user);
         } catch (DAOException e) {
             LOG.error("Exception while saving new user", e);
             throw new ServiceException(e);

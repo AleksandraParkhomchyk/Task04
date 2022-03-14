@@ -6,6 +6,7 @@ public final class Utils {
 
     public static final String URL = "url";
 
+    public static final String ROLE = "role";
     public static final String NAME = "name";
     public static final String SURNAME = "surname";
     public static final String LOGIN = "login";
