@@ -48,12 +48,14 @@ public class LoginationCommand implements Command {
             if (user.getRole() == null) {
                 throw new ServiceException();
             }
+            session.setAttribute(Utils.ROLE, role);
 
             Integer id = user.getId();
             session.setAttribute(Utils.ID, id);
 
             if (role == 1) {
                 Account account = ACCOUNT_SERVICE.getAccountByUserId(id);
+
 
                 if (account.getId() == null) {
                     session.setAttribute(Message.MESSAGE_TO_USER, Message.CREATE_ACCOUNT);
