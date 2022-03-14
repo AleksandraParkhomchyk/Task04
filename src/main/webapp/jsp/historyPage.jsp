@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ taglib uri="/WEB-INF/tld/taglib.tld" prefix="mytag"%>
+<%@ taglib uri="/WEB-INF/tld/taglib.tld" prefix="mytag" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +9,7 @@
     <title>History page</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
-    <jsp:include page="include/header.jsp" />
+    <jsp:include page="include/header.jsp"/>
 </head>
 <body>
 <h2>History page</h2>
@@ -17,12 +17,12 @@
     <table class="table">
         <thead>
         <tr>
-            <th>Transaction id</th>
-            <th>Transaction date</th>
-            <th>Amount</th>
-            <th>Balance</th>
-            <th>Balance</th>
-            <th>Target account</th>
+            <th scope="col">Transaction id</th>
+            <th scope="col">Transaction date</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Balance</th>
+            <th scope="col">Balance</th>
+            <th scope="col">Target account</th>
         </tr>
         </thead>
         <c:forEach items="${requestScope.allTransactions}" var="transaction">

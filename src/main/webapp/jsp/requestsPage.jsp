@@ -8,7 +8,7 @@
     <title>Requests page</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
-    <jsp:include page="include/header.jsp" />
+    <jsp:include page="include/header.jsp"/>
 </head>
 
 <body>
@@ -17,10 +17,10 @@
     <table class="table">
         <thead>
         <tr>
-            <th>Request id</th>
-            <th>Request date</th>
-            <th>Amount</th>
-            <th>Status</th>
+            <th scope="col">Request id</th>
+            <th scope="col">Request date</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Status</th>
         </tr>
         </thead>
         <c:forEach items="${requestScope.userRequests}" var="request">

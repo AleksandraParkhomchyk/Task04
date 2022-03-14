@@ -17,10 +17,10 @@
     <table class="table">
         <thead>
         <tr>
-            <th>Request id</th>
-            <th>Request date</th>
-            <th>Amount</th>
-            <th>Status</th>
+            <th scope="col">Request id</th>
+            <th scope="col">Request date</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Status</th>
         </tr>
         </thead>
         <c:forEach items="${requestScope.allRequests}" var="request">
@@ -65,11 +65,11 @@
     <table class="table">
         <thead>
         <tr>
-            <th>Account id</th>
-            <th>Owner id</th>
-            <th>Number</th>
-            <th>Balance</th>
-            <th>Status</th>
+            <th scope="col">Account id</th>
+            <th scope="col">Owner id</th>
+            <th scope="col">Number</th>
+            <th scope="col">Balance</th>
+            <th scope="col">Status</th>
         </tr>
         </thead>
         <c:forEach items="${requestScope.allAccountsBlocked}" var="account">

@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" errorPage="errorPage.jsp" %>//todo дописать этот аттрибут во все странцы
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
@@ -28,6 +28,7 @@
     <jsp:include page="include/header.jsp"/>
 </head>
 <body>
+<p><c:out value="Hallo"/></p>
 
 <%
     String regInfo = request.getParameter("registrationInfo");
