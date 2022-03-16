@@ -1,20 +1,11 @@
-<%@ page contentType="text/html;charset=UTF-8" errorPage="errorPage.jsp" %>//todo дописать этот аттрибут во все странцы
+<%@ page contentType="text/html;charset=UTF-8" errorPage="errorPage.jsp" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ page import="com.epam.tr.task04.paymentsapp.controller.constant.*" %>
+<%@ include file="changeLanguageTags.jsp" %>
 
 <!DOCTYPE>
 <html lang="en">
-<fmt:setLocale value="${sessionScope.locale}"/>
-<fmt:setBundle basename="local" var="loc"/>
-
-<fmt:message bundle="${loc}" key="home.page.name" var="page_name"/>
-<fmt:message bundle="${loc}" key="home.page.title" var="home_title"/>
-
-<fmt:message bundle="${loc}" key="home.page.login" var="login"/>
-<fmt:message bundle="${loc}" key="home.page.password" var="password"/>
-<fmt:message bundle="${loc}" key="home.page.enter" var="enter"/>
-<fmt:message bundle="${loc}" key="home.page.message" var="home_page_message"/>
-<fmt:message bundle="${loc}" key="home.page.sign.up" var="sign_up"/>
 
 <head>
     <title>${page_name}</title>
@@ -28,18 +19,6 @@
     <jsp:include page="include/header.jsp"/>
 </head>
 <body>
-<p><c:out value="${requestScope.message}" /></p>
-
-<%
-    String info = request.getParameter("message");
-    if (info != null) {
-%>
-<c:out value="info" />
-    <%
-
-        }
-    %>
-
 
 <div class="login_form_wrapper">
     <div class="container">
@@ -47,7 +26,7 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="login_wrapper">
                     <h2>${home_title}</h2>
-                    <form action="${pageContext.request.contextPath}/controller" method="post">
+                    <form action="${pageContext.request.contextPath}/controller" method="get">
                         <input type="hidden" name="command" value="LOGINATION">
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">${login}</label>
@@ -70,12 +49,20 @@
                         </div>
                     </form>
                     <div class="login_message">
-                        <p>${home_page_message} <a href="${pageContext.request.contextPath}/controller?command=GO_TO_REGISTRATION_PAGE">${sign_up}</a></p>
+                        <p>${home_page_message} <a href="${pageContext.request.contextPath}/controller?command=GO_TO_REGISTRATION_PAGE">${sign_up}</a>
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<c:if test="${not empty sessionScope.error}">
+
+    <p class="error">
+        <c:out value="Error" />
+    </p>
+</c:if>
+<c:remove var="error" />
 </body>
 </html>

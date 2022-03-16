@@ -1,4 +1,4 @@
-package com.epam.tr.task04.paymentsapp.controller.command;
+package com.epam.tr.task04.paymentsapp.controller.command.gotopage;
 
 import com.epam.tr.task04.paymentsapp.controller.Command;
 import com.epam.tr.task04.paymentsapp.controller.constant.PagePath;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class GoToUsersPageCommand implements Command {
+public class GoToUserPageCommand implements Command {
     private static final ServiceFactory SERVICE_FACTORY = ServiceFactory.getInstance();
     private static final AccountService ACCOUNT_SERVICE = SERVICE_FACTORY.getAccountService();
 

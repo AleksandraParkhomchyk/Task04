@@ -36,7 +36,7 @@
 <p>
 <div class="card">
     <div class="card-body">
-        <form action="${pageContext.request.contextPath}/controller" method="get">
+        <form action="${pageContext.request.contextPath}/controller" method="post">
             <input type="hidden" name="command" value="CREATE_ACCOUNT">
             <button type="submit" class="btn btn-primary">${create_account}</button>
         </form>
@@ -121,6 +121,7 @@
     <c:if test="${sessionScope.status == 2}">
 <p></p>
 </c:if>
+
 
 </body>
 </html>

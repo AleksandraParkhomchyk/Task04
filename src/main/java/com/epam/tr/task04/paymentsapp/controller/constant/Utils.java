@@ -13,6 +13,8 @@ public final class Utils {
     public static final String PASSWORD = "password";
     public static final String PASSPORT = "passport";
 
+    public static final String ERROR = "error";
+
     public static final String ID = "id";
     public static final String ACCOUNT_ID = "accountId";
     public static final String ACCOUNT_NUMBER = "accountNumber";

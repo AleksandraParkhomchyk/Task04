@@ -1,6 +1,6 @@
 package com.epam.tr.task04.paymentsapp.controller.constant;
 
-public class Message {
+public final class Message {
 
     private Message() {  }
 
