@@ -1,4 +1,4 @@
-package com.epam.tr.task04.paymentsapp.dao.impl;
+/*package com.epam.tr.task04.paymentsapp.dao.impl;
 
 import com.epam.tr.task04.paymentsapp.dao.DAOFactory;
 import com.epam.tr.task04.paymentsapp.dao.UserDAO;
@@ -10,8 +10,9 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;*/
 
+/*
 class UserDAOImplTest {
     private static final DAOFactory DAO_FACTORY = DAOFactory.getInstance();
     private static final UserDAO USER_DAO = DAO_FACTORY.getUserDAO();
@@ -65,4 +66,4 @@ class UserDAOImplTest {
             e.printStackTrace();
         }
     }
-}
+}*/

@@ -27,13 +27,10 @@ public class LoginationCommand implements Command {
     private static final AccountService ACCOUNT_SERVICE = SERVICE_FACTORY.getAccountService();
     private static final CashRequestService CASH_REQUEST_SERVICE = SERVICE_FACTORY.getCashRequestService();
 
-    private static final String URL_NAME = "/payments/controller?command=GO_TO_USERS_PAGE";
-
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         HttpSession session = request.getSession(true);
-        session.setAttribute(Utils.URL, URL_NAME);
 
         String login = request.getParameter(Utils.LOGIN);
         String password = request.getParameter(Utils.PASSWORD);
@@ -58,7 +55,7 @@ public class LoginationCommand implements Command {
 
 
                 if (account.getId() == null) {
-                    session.setAttribute(Message.MESSAGE_TO_USER, Message.CREATE_ACCOUNT);
+                    request.setAttribute(Message.MESSAGE_TO_USER, Message.CREATE_ACCOUNT);
 
                 } else {
                     session.setAttribute(Utils.ACCOUNT_ID, account.getId());
@@ -67,7 +64,7 @@ public class LoginationCommand implements Command {
                     session.setAttribute(Utils.STATUS, account.getStatus());
 
                     if (account.getStatus() == 2) {
-                        session.setAttribute(Message.MESSAGE_TO_USER, Message.ACCOUNT_BLOCKED);
+                        request.setAttribute(Message.MESSAGE_TO_USER, Message.ACCOUNT_BLOCKED);
                     }
                 }
                 response.sendRedirect(PagePath.USER_PAGE);
@@ -80,7 +77,7 @@ public class LoginationCommand implements Command {
                 response.sendRedirect(PagePath.ADMIN_PAGE);
             }
         } catch (NotAuthorizedException e) {
-            session.setAttribute(Message.MESSAGE_TO_USER, Message.WRONG_LOGIN_PASSWORD);
+            request.setAttribute(Message.MESSAGE_TO_USER, Message.WRONG_LOGIN_PASSWORD);
             response.sendRedirect(PagePath.HOME_PAGE);
         } catch (ServiceException e) {
             response.sendRedirect(PagePath.ERROR_PAGE);

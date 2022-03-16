@@ -36,7 +36,7 @@
 <p>
 <div class="card">
     <div class="card-body">
-        <form action="${pageContext.request.contextPath}/controller" method="post">
+        <form action="${pageContext.request.contextPath}/controller" method="get">
             <input type="hidden" name="command" value="CREATE_ACCOUNT">
             <button type="submit" class="btn btn-primary">${create_account}</button>
         </form>

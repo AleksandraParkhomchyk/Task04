@@ -28,18 +28,18 @@
     <jsp:include page="include/header.jsp"/>
 </head>
 <body>
-<p><c:out value="Hallo"/></p>
+<p><c:out value="${requestScope.message}" /></p>
 
 <%
-    String regInfo = request.getParameter("registrationInfo");
-    if (regInfo != null) {
+    String info = request.getParameter("message");
+    if (info != null) {
 %>
-<h2>
+<c:out value="info" />
     <%
-        out.println(regInfo);
+
         }
     %>
-</h2>
+
 
 <div class="login_form_wrapper">
     <div class="container">
@@ -47,7 +47,7 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="login_wrapper">
                     <h2>${home_title}</h2>
-                    <form action="${pageContext.request.contextPath}/controller" method="get">
+                    <form action="${pageContext.request.contextPath}/controller" method="post">
                         <input type="hidden" name="command" value="LOGINATION">
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">${login}</label>

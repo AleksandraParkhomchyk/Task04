@@ -3,7 +3,6 @@ package com.epam.tr.task04.paymentsapp.controller.command;
 import com.epam.tr.task04.paymentsapp.controller.Command;
 import com.epam.tr.task04.paymentsapp.controller.constant.PagePath;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +16,6 @@ public class LogOutCommand implements Command {
         HttpSession session = request.getSession(false);
         session.invalidate();
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.INDEX_PAGE);
-        dispatcher.forward(request, response);
+        response.sendRedirect(PagePath.TO_HOME_PAGE);
     }
 }
