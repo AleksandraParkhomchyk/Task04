@@ -29,8 +29,13 @@
     <jsp:include page="include/header.jsp"/>
 </head>
 <body>
+<c:if test="${not empty sessionScope.message}">
 
-<p><c:out value="${sessionScope.message}"/></p>
+    <div class="message">
+        <c:out value="message" />
+    </div>
+</c:if>
+<c:remove var="message" />
 
 <c:if test="${sessionScope.accountId == null}">
 <p>

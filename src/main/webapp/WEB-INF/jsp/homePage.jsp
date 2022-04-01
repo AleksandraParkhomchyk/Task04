@@ -52,17 +52,18 @@
                         <p>${home_page_message} <a href="${pageContext.request.contextPath}/controller?command=GO_TO_REGISTRATION_PAGE">${sign_up}</a>
                         </p>
                     </div>
+                    <c:if test="${not empty error}">
+                        <fmt:message bundle="${loc}" key="${error}" var="error_msg" />
+                        <p class="error">
+                            <c:out value="${error_msg}" />
+                        </p>
+                    </c:if>
+                    <c:remove var="error" />
                 </div>
             </div>
         </div>
     </div>
 </div>
-<c:if test="${not empty sessionScope.error}">
 
-    <p class="error">
-        <c:out value="Error" />
-    </p>
-</c:if>
-<c:remove var="error" />
 </body>
 </html>
