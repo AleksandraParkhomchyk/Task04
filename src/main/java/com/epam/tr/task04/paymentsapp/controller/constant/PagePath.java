@@ -14,6 +14,6 @@ public final class PagePath {
     public static final String REQUESTS_PAGE = "/WEB-INF/jsp/requestsPage.jsp";
 
     public static final String TO_HOME_PAGE = "/payments/controller?command=GO_TO_HOME_PAGE";
-    public static final String URL_USERS_PAGE = "/payments/controller?command=GO_TO_USERS_PAGE";
+    public static final String URL_USERS_PAGE = "/payments/controller?command=GO_TO_USER_PAGE";
     public static final String URL_REQUESTS_PAGE = "/payments/controller?command=GET_USERS_REQUESTS";
 }

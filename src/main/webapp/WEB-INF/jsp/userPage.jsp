@@ -29,11 +29,11 @@
     <jsp:include page="include/header.jsp"/>
 </head>
 <body>
-<c:if test="${not empty sessionScope.message}">
-
-    <div class="message">
-        <c:out value="message" />
-    </div>
+<c:if test="${not empty message}">
+    <fmt:message bundle="${loc}" key="${message}" var="msg" />
+    <p class="message">
+        <c:out value="${msg}" />
+    </p>
 </c:if>
 <c:remove var="message" />
 
@@ -63,7 +63,7 @@
 <div class="card">
     <div class="card-body">
         <form action="${pageContext.request.contextPath}/controller" method="post">
-            <input type="hidden" name="command" value="PAYMENT_ACCOUNT">
+            <input type="hidden" name="command" value="PAYMENT">
             <label class="col-sm-2 col-form-label">${target_account}</label>
             <div class="col-sm-7">
                 <label>

@@ -4,6 +4,7 @@ public final class Utils {
 
     private Utils() { }
 
+    public static final String MESSAGE = "message";
     public static final String URL = "url";
 
     public static final String ROLE = "role";
@@ -12,8 +13,6 @@ public final class Utils {
     public static final String LOGIN = "login";
     public static final String PASSWORD = "password";
     public static final String PASSPORT = "passport";
-
-    public static final String ERROR = "error";
 
     public static final String ID = "id";
     public static final String ACCOUNT_ID = "accountId";

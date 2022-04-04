@@ -18,7 +18,7 @@ public class GoToUserPageCommand implements Command {
     private static final ServiceFactory SERVICE_FACTORY = ServiceFactory.getInstance();
     private static final AccountService ACCOUNT_SERVICE = SERVICE_FACTORY.getAccountService();
 
-    private static final String URL_NAME = "/payments/controller?command=GO_TO_USERS_PAGE";
+    private static final String URL_NAME = "/payments/controller?command=GO_TO_USER_PAGE";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

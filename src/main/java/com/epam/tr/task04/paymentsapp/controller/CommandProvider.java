@@ -25,7 +25,7 @@ public final class CommandProvider {
 
         commands.put("CHANGE_LANGUAGE", new ChangeLanguage());
         commands.put("CREATE_ACCOUNT", new CreateAccountCommand());
-        commands.put("PAYMENT_ACCOUNT", new PaymentCommand());
+        commands.put("PAYMENT", new PaymentCommand());
 
         commands.put("GET_USERS_TRANSACTIONS", new GetUsersTransactionsCommand());
         commands.put("CASHOUT_REQUEST", new CashoutRequestCommand());

@@ -5,11 +5,11 @@ public final class Message {
     private Message() {
     }
 
-    public static final String MESSAGE_TO_USER = "message";
-
+    public static final String WRONG_LOGIN_PASSWORD = "wrong.login.or.password";
     public static final String SUCCESS_PAYMENT = "payment.success";
 
-    public static final String WRONG_LOGIN_PASSWORD = "wrong.login.or.password";
+    public static final String MESSAGE_TO_USER = "message";
+
     public static final String FAILURE_PAYMENT = "You have insufficient funds";
     public static final String SUCCESS_CASHOUT = "Cashout request was made successful";
     public static final String FAILURE_CASHOUT = "You have insufficient funds";

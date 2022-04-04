@@ -77,7 +77,7 @@ public class LoginationCommand implements Command {
                 response.sendRedirect(Redirect.TO_ADMIN_PAGE);
             }
         } catch (NotAuthorizedException e) {
-            session.setAttribute(Utils.ERROR, Message.WRONG_LOGIN_PASSWORD);
+            session.setAttribute(Utils.MESSAGE, Message.WRONG_LOGIN_PASSWORD);
             response.sendRedirect(Redirect.TO_HOME_PAGE);
         } catch (ServiceException e) {
             response.sendRedirect(PagePath.ERROR_PAGE);

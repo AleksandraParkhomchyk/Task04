@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" errorPage="errorPage.jsp" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ page import="com.epam.tr.task04.paymentsapp.controller.constant.*" %>
 <%@ include file="changeLanguageTags.jsp" %>
 
 <!DOCTYPE>
@@ -52,13 +51,13 @@
                         <p>${home_page_message} <a href="${pageContext.request.contextPath}/controller?command=GO_TO_REGISTRATION_PAGE">${sign_up}</a>
                         </p>
                     </div>
-                    <c:if test="${not empty error}">
-                        <fmt:message bundle="${loc}" key="${error}" var="error_msg" />
-                        <p class="error">
-                            <c:out value="${error_msg}" />
+                    <c:if test="${not empty message}">
+                        <fmt:message bundle="${loc}" key="${message}" var="msg" />
+                        <p class="message">
+                            <c:out value="${msg}" />
                         </p>
                     </c:if>
-                    <c:remove var="error" />
+                    <c:remove var="message" />
                 </div>
             </div>
         </div>

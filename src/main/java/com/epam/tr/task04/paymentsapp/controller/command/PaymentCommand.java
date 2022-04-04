@@ -35,7 +35,7 @@ public class PaymentCommand implements Command {
             boolean result = ACCOUNT_SERVICE.accountPayment(account, targetAccount, amount, userId);
             Account accountUPD = ACCOUNT_SERVICE.getAccountByUserId(userId);
             if (result) {
-                session.setAttribute(Message.MESSAGE_TO_USER, Message.SUCCESS_PAYMENT);
+                session.setAttribute(Utils.MESSAGE, Message.SUCCESS_PAYMENT);
                 session.setAttribute(Utils.BALANCE, accountUPD.getBalance());
                 response.sendRedirect(PagePath.URL_USERS_PAGE);
             }
