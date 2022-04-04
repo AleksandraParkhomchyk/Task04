@@ -37,14 +37,14 @@ public class PaymentCommand implements Command {
             if (result) {
                 session.setAttribute(Utils.MESSAGE, Message.SUCCESS_PAYMENT);
                 session.setAttribute(Utils.BALANCE, accountUPD.getBalance());
-                response.sendRedirect(PagePath.URL_USERS_PAGE);
+                response.sendRedirect(PagePath.TO_USER_PAGE);
             }
         } catch (InsufficientFundsException e) {
-            session.setAttribute(Message.MESSAGE_TO_USER, Message.FAILURE_PAYMENT);
-            response.sendRedirect(PagePath.URL_USERS_PAGE);
+            session.setAttribute(Utils.MESSAGE, Message.INSUFFICIENT_FUNDS);
+            response.sendRedirect(PagePath.TO_USER_PAGE);
         } catch (ValidatorException e) {
-            session.setAttribute(Message.MESSAGE_TO_USER, Message.INVALID_ACCOUNT_OR_AMOUNT);
-            response.sendRedirect(PagePath.URL_USERS_PAGE);
+            session.setAttribute(Utils.MESSAGE, Message.INVALID_DETAILS);
+            response.sendRedirect(PagePath.TO_USER_PAGE);
         } catch (ServiceException e) {
             response.sendRedirect(PagePath.ERROR_PAGE);
         }

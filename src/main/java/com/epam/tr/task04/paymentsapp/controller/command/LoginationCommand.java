@@ -57,14 +57,14 @@ public class LoginationCommand implements Command {
                 Account account = ACCOUNT_SERVICE.getAccountByUserId(id);
 
                 if (account.getId() == null) {
-                    session.setAttribute(Message.MESSAGE_TO_USER, Message.CREATE_ACCOUNT);
+                    session.setAttribute(Utils.MESSAGE, Message.CREATE_ACCOUNT);
                 } else {
                     session.setAttribute(Utils.ACCOUNT_ID, account.getId());
                     session.setAttribute(Utils.ACCOUNT_NUMBER, account.getAccountNumber());
                     session.setAttribute(Utils.BALANCE, account.getBalance());
                     session.setAttribute(Utils.STATUS, account.getStatus());
                     if (account.getStatus() == 2) {
-                        session.setAttribute(Message.MESSAGE_TO_USER, Message.ACCOUNT_BLOCKED);
+                        session.setAttribute(Utils.MESSAGE, Message.ACCOUNT_BLOCKED);
                     }
                 }
                 response.sendRedirect(Redirect.TO_USER_PAGE);

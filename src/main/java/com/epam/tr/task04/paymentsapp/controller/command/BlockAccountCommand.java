@@ -30,8 +30,8 @@ public class BlockAccountCommand implements Command {
             ACCOUNT_SERVICE.blockAccount(id);
             Account account = ACCOUNT_SERVICE.getAccountByUserId(id);
             session.setAttribute(Utils.STATUS, account.getStatus());
-            session.setAttribute(Message.MESSAGE_TO_USER, Message.ACCOUNT_BLOCKED);
-            response.sendRedirect(PagePath.URL_USERS_PAGE);
+            session.setAttribute(Utils.MESSAGE, Message.ACCOUNT_BLOCKED);
+            response.sendRedirect(PagePath.TO_USER_PAGE);
 
         } catch (ServiceException e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ERROR_PAGE);//todo redirect

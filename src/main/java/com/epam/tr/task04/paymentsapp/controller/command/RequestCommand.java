@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class CashoutRequestCommand implements Command {
+public class RequestCommand implements Command {
     private static final ServiceFactory SERVICE_FACTORY = ServiceFactory.getInstance();
     private static final AccountService ACCOUNT_SERVICE = SERVICE_FACTORY.getAccountService();
     private static final CashRequestService CASH_REQUEST_SERVICE = SERVICE_FACTORY.getCashRequestService();
@@ -32,15 +32,15 @@ public class CashoutRequestCommand implements Command {
         try {
             Account account = ACCOUNT_SERVICE.getAccountByUserId(userId);
             CASH_REQUEST_SERVICE.cashout(account, amount);
-            session.setAttribute(Message.MESSAGE_TO_USER, Message.SUCCESS_CASHOUT);
-            response.sendRedirect(PagePath.URL_USERS_PAGE);
+            session.setAttribute(Utils.MESSAGE, Message.SUCCESS_REQUEST);
+            response.sendRedirect(PagePath.TO_USER_PAGE);
 
         } catch (InsufficientFundsException e) {
-            session.setAttribute(Message.MESSAGE_TO_USER, Message.FAILURE_CASHOUT);
-            response.sendRedirect(PagePath.URL_USERS_PAGE);
+            session.setAttribute(Utils.MESSAGE, Message.INSUFFICIENT_FUNDS);
+            response.sendRedirect(PagePath.TO_USER_PAGE);
         } catch (ValidatorException e) {
-            session.setAttribute(Message.MESSAGE_TO_USER, Message.INVALID_AMOUNT);
-            response.sendRedirect(PagePath.URL_USERS_PAGE);
+            session.setAttribute(Utils.MESSAGE, Message.INVALID_AMOUNT);
+            response.sendRedirect(PagePath.TO_USER_PAGE);
         } catch (ServiceException e) {
             response.sendRedirect(PagePath.ERROR_PAGE);
         }

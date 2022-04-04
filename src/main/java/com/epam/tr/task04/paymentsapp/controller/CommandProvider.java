@@ -28,7 +28,7 @@ public final class CommandProvider {
         commands.put("PAYMENT", new PaymentCommand());
 
         commands.put("GET_USERS_TRANSACTIONS", new GetUsersTransactionsCommand());
-        commands.put("CASHOUT_REQUEST", new CashoutRequestCommand());
+        commands.put("CASHOUT_REQUEST", new RequestCommand());
         commands.put("GET_ALL_CASHOUT_REQUESTS", new GetAllCashoutRequestsCommand());
         commands.put("APPROVE_REQUEST", new ApproveRequestCommand());
         commands.put("DECLINE_REQUEST", new DeclineRequestCommand());
