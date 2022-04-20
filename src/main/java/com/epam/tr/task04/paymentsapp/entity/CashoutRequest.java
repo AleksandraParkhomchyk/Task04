@@ -1,9 +1,8 @@
 package com.epam.tr.task04.paymentsapp.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class CashoutRequest implements Serializable {
+public class CashoutRequest {
     private Integer id;
     private Date date;
     private Double amount;

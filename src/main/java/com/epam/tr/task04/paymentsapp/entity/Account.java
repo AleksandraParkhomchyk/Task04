@@ -1,9 +1,8 @@
 package com.epam.tr.task04.paymentsapp.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class Account implements Serializable {
+public class Account {
     private Integer id;
     private String accountNumber;
     private double balance;
